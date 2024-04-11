@@ -3,6 +3,7 @@ import "./globals.css";
 import NavBar from "@/ui/header/navbar";
 import HeroSection from "@/ui/landingPage/heroSection";
 import ChickenSection from "@/ui/landingPage/chickenShowcase";
+import OurFlockSection from "@/ui/landingPage/ourFlock";
 import { londrina } from "@/ui/fonts"
 
 
@@ -22,6 +23,9 @@ export default function Home() {
       </div>
       <div>
         <ChickenSection></ChickenSection>
+      </div>
+      <div>
+      <OurFlockSection></OurFlockSection>
       </div>
     </main>
   );
