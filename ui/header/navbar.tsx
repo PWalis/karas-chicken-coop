@@ -22,7 +22,9 @@ export default function NavBar() {
           <h2 className="text-lg md:text-xl">Kara's Chicken Coop</h2>
         </div>
         <div className="flex md:order-2 space-x-3 gap-3 md:space-x-0 rtl:space-x-reverse">
-          <ShopButton>Shop</ShopButton>
+          <div className="hidden sm:block">
+            <ShopButton>Shop</ShopButton>
+          </div>
           <div className="hidden md:block">
             <JoinTheFlockButton></JoinTheFlockButton>
           </div>
@@ -45,7 +47,7 @@ export default function NavBar() {
               navMenu ? "flex-col min-w-full" : ""
             )}
           >
-            <li className="">
+            <li>
               <a
                 href="#"
                 className="block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40 jose"
@@ -68,6 +70,17 @@ export default function NavBar() {
               >
                 Socials
               </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="block py-2 px-3 md:p-0  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40"
+              >
+                Join the flock
+              </a>
+            </li>
+            <li className={clsx(navMenu ? "block sm:hidden" : "hidden")}>
+              <ShopButton>Shop</ShopButton>
             </li>
           </ul>
         </div>

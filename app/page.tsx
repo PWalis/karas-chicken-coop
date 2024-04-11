@@ -5,9 +5,6 @@ import HeroSection from "@/ui/landingPage/heroSection";
 import ChickenSection from "@/ui/landingPage/chickenShowcase";
 import { londrina } from "@/ui/fonts"
 
-
-
-
 export const metadata: Metadata = {
   title: "Kara's Chickens",
   description: "Landing page for Kara's Chickens facebook page",

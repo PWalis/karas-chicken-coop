@@ -1,5 +1,7 @@
 // NAVBAR BUTTONS
 import React from "react";
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export function Logo({}: Readonly<{}>) {
   return (
@@ -42,9 +44,14 @@ export function ShopButton({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const router = useRouter()
+  const handleClick = () => {
+    router.push('/shop')
+  }
+
   return (
-    <button className="hidden sm:block pr-5 pl-5 pt-3 pb-3 bg-floc-yellow uppercase">
-      Shop
+    <button onClick={handleClick} className="w-full h-full sm:block pr-5 pl-5 pt-3 pb-3 bg-floc-yellow uppercase">
+      <Link className="w-full h-full" key="shop" href="/shop">Shop</Link>
     </button>
   );
 }
