@@ -6,6 +6,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./ui/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/flowbite-react/lib/**/*.js",
   ],
   theme: {
     extend: {
@@ -15,11 +16,16 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        "floc-yellow": "F9E215",
-        "flock-gray": "1E1E1E",
+        "floc-yellow": "#F9E215",
+        "floc-gray": "#1E1E1E",
       },
+      fontFamily: {
+        'josefin-sans': ['"Josefin Sans"', 'sans-serif'],
+      },
+      
+      
     },
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 };
 export default config;

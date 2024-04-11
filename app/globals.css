@@ -1,33 +1,61 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-/* 
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100..700&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&display=swap');
+
+@layer base {
+  @font-face   {
+    font-family: "Josefin Slab", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    src: url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100..700&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&display=swap');
+  }
+}
+
+
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-} */
+}  */
 
-/* body {
+html * {
+  margin:0;
+  padding:0;
+}
+body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-} */
+  background: white;
+  margin-left: 5px;
+  margin-right: 5px;
+  /* padding-left: 5px;
+  padding-right: 5px; */
+}
+section {
+  /* margin-top: 5%; */
+  margin-bottom: 5%;
+  height: 100%;
+  width: 100%;
+}
 
-/* @layer utilities {
+button {
+  border-radius: 3px;
+}
+
+@layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-} */
+}

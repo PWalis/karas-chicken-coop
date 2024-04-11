@@ -1,9 +1,21 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Josefin_Sans, Londrina_Solid } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/ui/header/navbar";
+import heroSection from "@/ui/landingPage/heroSection";
+import HeroSection from "@/ui/landingPage/heroSection";
+import ChickenSection from "@/ui/landingPage/chickenShowcase";
 
-const inter = Inter({ subsets: ["latin"] });
+export const josefin = Josefin_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+})
+ 
+export const londrina = Londrina_Solid({
+  weight: ['400', '900'],
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: "Kara's Chickens",
@@ -17,9 +29,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={londrina.className}>
         <div>
           <NavBar></NavBar>
+          <div className={londrina.className}>
+          <HeroSection></HeroSection>
+          </div>
+          <div>
+            <ChickenSection></ChickenSection>
+          </div>
         </div>
         {children}
       </body>
