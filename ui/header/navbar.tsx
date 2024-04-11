@@ -26,21 +26,23 @@ export default function NavBar() {
           <div className="hidden md:block">
             <JoinTheFlockButton></JoinTheFlockButton>
           </div>
-          <HamburgerMenu
-            handleHamburgerClick={handleHamburgerClick}
-          ></HamburgerMenu>
+          <div className="pr-2">
+            <HamburgerMenu
+              handleHamburgerClick={handleHamburgerClick}
+            ></HamburgerMenu>
+          </div>
         </div>
         <div
           className={clsx(
-            "items-center justify-between md:flex md:w-auto md:order-1 text-floc-gray",
-            navMenu ? "flex" : "hidden w-full"
+            "items-center w-full justify-between md:flex md:w-auto md:order-1 text-floc-gray",
+            navMenu ? "flex relative pr-2.5" : "hidden"
           )}
           id="navbar-cta"
         >
           <ul
             className={clsx(
-              "flex p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white",
-              navMenu ? "flex-col" : ""
+              "flex p-4 md:p-0 mt-4 border w-full border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white",
+              navMenu ? "flex-col min-w-full" : ""
             )}
           >
             <li className="">
