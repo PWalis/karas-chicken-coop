@@ -16,7 +16,7 @@ export default function NavBar() {
 
   return (
     <nav className="bg-white/90 border-gray-200 dark:bg-gray-900 font-bold text-sm uppercase fixed w-full top-0 z-50">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto">
+      <div className="max-w-screen-xl flex flex-wrap gap-1 items-center justify-between mx-auto">
         <div className="flex justify-end items-center">
           <Kcc3 className="h-20 lg:h-28 p-2 flex justify-end items-center w-auto" />
           <h2 className="text-lg md:text-xl">Kara's Chicken Coop</h2>
@@ -36,8 +36,8 @@ export default function NavBar() {
         </div>
         <div
           className={clsx(
-            "items-center w-full justify-between md:flex md:w-auto md:order-1 text-floc-gray",
-            navMenu ? "flex relative pr-2.5" : "hidden"
+            "items-center justify-between md:flex md:w-auto md:order-1 text-floc-gray",
+            navMenu ? "flex relative pr-2.5 w-full" : "hidden"
           )}
           id="navbar-cta"
         >
@@ -71,10 +71,10 @@ export default function NavBar() {
                 Socials
               </a>
             </li>
-            <li>
+            <li className={clsx(navMenu ? "block sm:hidden" : "hidden")}>
               <a
                 href="#"
-                className="block py-2 px-3 md:p-0  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40"
+                className={clsx(" py-2 px-3 md:p-0  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40", navMenu ? "block md:hidden" : "hidden")}
               >
                 Join the flock
               </a>
