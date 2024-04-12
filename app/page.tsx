@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import NavBar from "@/ui/header/navbar";
+
 import HeroSection from "@/ui/landingPage/heroSection";
 import ChickenSection from "@/ui/landingPage/chickenShowcase";
 import OurFlockSection from "@/ui/landingPage/ourFlock";
+import BecomeFamilySection from "@/ui/landingPage/becomeFamily";
+import ShopSection from "@/ui/landingPage/shopSection";
+import JoinTheFlock from "@/ui/landingPage/joinTheflock";
 import { londrina } from "@/ui/fonts"
 
 export const metadata: Metadata = {
@@ -14,7 +17,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main>
-      <NavBar></NavBar>
       <div className={londrina.className}>
         <HeroSection></HeroSection>
       </div>
@@ -24,6 +26,9 @@ export default function Home() {
       <div>
       <OurFlockSection></OurFlockSection>
       </div>
+      <div> <BecomeFamilySection></BecomeFamilySection></div>
+      <div> <ShopSection></ShopSection></div>
+      <div> <JoinTheFlock></JoinTheFlock></div>
     </main>
   );
 }

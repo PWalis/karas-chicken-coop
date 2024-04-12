@@ -5,7 +5,6 @@ import { ShopButton, HamburgerMenu, Logo, JoinTheFlockButton } from "./buttons";
 import clsx from "clsx";
 import { useState } from "react";
 import Kcc3 from "../assets/svgs/Kcc3";
-import KKChickenOnlyLogo from "../assets/svgs/kcc-chicken-only-logo";
 export default function NavBar() {
   const [navMenu, setNavMenu] = useState(false);
 
