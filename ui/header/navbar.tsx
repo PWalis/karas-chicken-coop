@@ -74,7 +74,10 @@ export default function NavBar() {
             <li className={clsx(navMenu ? "block sm:hidden" : "hidden")}>
               <a
                 href="#"
-                className={clsx(" py-2 px-3 md:p-0  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40", navMenu ? "block md:hidden" : "hidden")}
+                className={clsx(
+                  " py-2 px-3 md:p-0  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40",
+                  navMenu ? "block md:hidden" : "hidden"
+                )}
               >
                 Join the flock
               </a>

@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main>
-      <NavBar></NavBar>
       <div className={londrina.className}>
         <HeroSection></HeroSection>
       </div>
