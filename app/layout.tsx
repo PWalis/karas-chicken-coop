@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { londrina } from "@/ui/fonts";
-import NavBar from "@/ui/header/navbar"
 import "./globals.css";
 import NavBar from "@/ui/header/navbar";
 import Footer from "@/ui/footer/footer";
