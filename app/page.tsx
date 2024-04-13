@@ -20,9 +20,7 @@ export default function Home() {
       <div className={londrina.className}>
         <HeroSection></HeroSection>
       </div>
-      <div>
         <ChickenSection></ChickenSection>
-      </div>
       <div>
       <OurFlockSection></OurFlockSection>
       </div>
