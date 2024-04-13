@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import { londrina } from "@/ui/fonts"
+import { londrina } from "@/ui/fonts";
 import "./globals.css";
 import NavBar from "@/ui/header/navbar";
 import Footer from "@/ui/footer/footer";
-
-
 
 export default function RootLayout({
   children,
