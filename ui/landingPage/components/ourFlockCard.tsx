@@ -1,20 +1,39 @@
-import barnhouseraster from "../../assets/barnhouseraster.png"
-import Image from "next/image"
+import barnhouseraster from "../../assets/barnhouseraster.png";
+import Image from "next/image";
 
-export function FlockCard({}: Readonly<{}>) {
-    return (
-<div className="max-w-[300px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <a href="#">
-        <div>
-        <Image src={barnhouseraster} width={500} height={500} alt="Picture of Cornelious The Rooster" />
+interface Props {
+  src: any;
+  alt: string;
+  name: string;
+  description: string;
+}
+
+export function FlockCard({ src, alt, name, description }: Props) {
+  return (
+    <div className="max-w-[300px]">
+    <div className="group"> 
+      <a href="#">
+        <div className="">
+          <Image
+            src={src}
+
+            alt={alt}
+            className="object-cover w-full h-80 rounded-lg"
+          />
         </div>
-    </a>
-    <div className="p-5">
+      </a>
+      
+      <div className="p-5 ease-in transition-opacity duration-300">
         <a href="#">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Kara,</h5>
+          <h4 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {name},
+          </h4>
         </a>
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Cornelius was the first rooster to join the hall of fame and go viral on facebook! He stands proud as a candy corn polish rooster.</p>
-    </div>
-</div>
-    );
+        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+  {description}
+        </p>
+        </div>
+      </div>
+      </div>
+  );
 }

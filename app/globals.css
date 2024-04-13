@@ -35,6 +35,8 @@ html * {
   margin:0;
   padding:0;
 }
+
+
 body {
   color: rgb(var(--foreground-rgb));
   background: white;
