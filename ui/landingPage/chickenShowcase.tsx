@@ -1,13 +1,16 @@
+"use client";
 import corn from "../assets/corn_cutout_illustration-01.png";
 import Image from "next/image";
 import pengu from "../assets/pengu.jpg";
+import { SectionWrapper } from "../assets/animation/section-wrapper";
 /**
  * Renders a section with a grid of images showcasing chickens.
  * This component is used on the landing page to display a visual representation of chickens.
  */
 export default function ChickenSection() {
   return (
-    <section className="justify-center w-screen lg:px-4 lg:py-8">
+    <SectionWrapper>
+    <section className="justify-center w-screen lg:px-4 lg:py-8 h-screen place-content-center">
       <h2 className="text-4xl md:text-5xl lg:text-7xl uppercase justify-center text-center mb-5 lg:mb-20">
         Meet The Chickens
       </h2>
@@ -65,5 +68,6 @@ export default function ChickenSection() {
         </div>
       </div>
     </section>
+    </SectionWrapper>
   );
 }
