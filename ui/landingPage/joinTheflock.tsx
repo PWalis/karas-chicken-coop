@@ -1,8 +1,10 @@
-
+"use client";
 import barnhousefooter from "../assets/barnhouse-footer.png";
 import Image from "next/image"
+import { SectionWrapper } from "../assets/animation/section-wrapper";
 export default function JoinTheFlock() {
     return (
+<SectionWrapper>
 <section className="bg-center bg-no-repeat relative">
 {/* <Image src={barnhousefooter} alt="NewsLetter Sign Up Background"></Image> */}
 <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
@@ -29,5 +31,6 @@ export default function JoinTheFlock() {
       </div>
   </div>
 </section>
+</SectionWrapper>
     );
   }

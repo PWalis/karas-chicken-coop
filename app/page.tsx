@@ -9,6 +9,7 @@ import ShopSection from "@/ui/landingPage/shopSection";
 import JoinTheFlock from "@/ui/landingPage/joinTheflock";
 import { londrina } from "@/ui/fonts"
 
+
 export const metadata: Metadata = {
   title: "Kara's Chickens",
   description: "Landing page for Kara's Chickens facebook page",
@@ -18,7 +19,9 @@ export default function Home() {
   return (
     <main>
       <div className={londrina.className}>
-        <HeroSection></HeroSection>
+        <div>
+            <HeroSection></HeroSection> 
+        </div>
       </div>
         <ChickenSection></ChickenSection>
       <div>

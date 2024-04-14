@@ -1,13 +1,16 @@
+"use client";
 import Cassidy from "../assets/cassidy_1.jpg";
 import Kara from "../assets/kara_1.jpg";
 import Joshua from "../assets/joshua_1.jpg";
 import Autumn from "../assets/autumn_1.jpg";
 import { FlockCard } from "./components/ourFlockCard";
+import { SectionWrapper } from "../assets/animation/section-wrapper";
 
 export default function OurFlockSection() {
   return (
-    <section className="justify-center px-4 py-8 mx-auto">
-      <h2 className="text-4xl md:text-5xl lg:text-7xl uppercase justify-center text-center mb-20">
+    <SectionWrapper>
+    <section className="justify-center px-4 py-8 mx-auto h-auto">
+      <h2 className="text-4xl md:text-5xl lg:text-7xl uppercase justify-center text-center mb-5 lg:mb-20">
         Our Flock
       </h2>
       <div className="flex flex-wrap justify-center gap-4">
@@ -57,5 +60,6 @@ export default function OurFlockSection() {
         </div>
       </div>
     </section>
+    </SectionWrapper>
   );
 }
