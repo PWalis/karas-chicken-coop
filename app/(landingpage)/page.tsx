@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 
 import HeroSection from "@/ui/landingPage/heroSection";
 import ChickenSection from "@/ui/landingPage/chickenShowcase";
