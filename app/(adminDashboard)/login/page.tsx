@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Login() {
   return (
-    <main>
+    <div>
       <h1>Login</h1>
       <form>
         <label>
@@ -15,6 +15,6 @@ export default function Login() {
         </label>
         <button type="submit">Login</button>
       </form>
-    </main>
+    </div>
   );
 }

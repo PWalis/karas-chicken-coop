@@ -17,8 +17,9 @@ model products {
   id          Int      @id @default(autoincrement())
   name        String
   description String
-  price       Float
-  category    categories?
+  priceInCents BigInt
+  category    categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId  Int 
   inventory   inventory? 
   images      String[]
   createdAt   DateTime @default(now())
@@ -27,10 +28,8 @@ model products {
 
 model categories {
   id          Int      @id @default(autoincrement())
-  name        String
-  productId   Int     @unique
-  product     products? @relation(fields: [productId], references: [id])
-  description String
+  name        String   @unique
+  product     products[] 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -38,8 +37,13 @@ model categories {
 model inventory {
   id          Int      @id @default(autoincrement())
   productId   Int      @unique
-  product     products? @relation(fields: [productId], references: [id])
-  quantity    Int
+  product     products? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  xs_quantity    Int
+  s_quantity     Int
+  m_quantity     Int
+  l_quantity     Int
+  xl_quantity    Int
+  xxl_quantity   Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

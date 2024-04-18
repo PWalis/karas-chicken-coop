@@ -5,11 +5,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={londrina.className}>
-        {children}
-      </body>
-    </html>
-  );
+  return <>{children}</>;
 }
