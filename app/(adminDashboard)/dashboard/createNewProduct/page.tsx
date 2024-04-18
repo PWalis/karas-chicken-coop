@@ -1,20 +1,22 @@
+'use client'
+
 import { Categories } from "@/ui/dashboard/categories";
 import React from "react";
+import { createProduct } from "@/app/lib/actions";
 
 export default function CreateNewProductPage() {
+
   return (
     <div className="flex justify-center w-full">
-      <form className="flex flex-col gap-3 w-[40%] pt-24">
+      <form action={createProduct} className="flex flex-col gap-3 w-[40%] pt-24">
         <label htmlFor="name">Name</label>
         <input type="text" id="name" name="name" required />
         <label htmlFor="price">Price</label>
         <input type="number" id="price" name="price" required />
         <label htmlFor="description">Description</label>
         <textarea id="description" name="description" required />
-        <label htmlFor="image">Image</label>
-        <select id="category" name="category" required>
-          <Categories />
-        </select>
+        <label htmlFor="category">Category</label>
+        <Categories />
         <ul className="flex flex-row gap-8">
           <li className="flex flex-col">
             <label htmlFor="xs">XS</label>
@@ -35,6 +37,7 @@ export default function CreateNewProductPage() {
               id="small"
               name="small"
               required
+              defaultValue={0}
             />
           </li>
           <li className="flex flex-col">
@@ -45,6 +48,7 @@ export default function CreateNewProductPage() {
               id="medium"
               name="medium"
               required
+              defaultValue={0}
             />
           </li>
           <li className="flex flex-col">
@@ -55,6 +59,7 @@ export default function CreateNewProductPage() {
               id="large"
               name="large"
               required
+              defaultValue={0}
             />
           </li>
           <li className="flex flex-col">
@@ -65,6 +70,7 @@ export default function CreateNewProductPage() {
               id="xl"
               name="xl"
               required
+              defaultValue={0}
             />
           </li>
           <li className="flex flex-col">
@@ -75,11 +81,12 @@ export default function CreateNewProductPage() {
               id="xxl"
               name="xxl"
               required
+              defaultValue={0}
             />
           </li>
         </ul>
-        <input type="file" id="image" name="image" required />
-        <label htmlFor="category">Category</label>
+        <label htmlFor="image">Image</label>
+        <input type="file" id="image" name="image" multiple required />
         <button type="submit">Submit</button>
       </form>
     </div>
