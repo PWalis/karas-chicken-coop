@@ -3,9 +3,18 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import prisma from "./data";
-import { uploadProductImagesAndReturnUrls } from "./S3Controller";
+import {
+  uploadProductImagesAndReturnUrls,
+  deleteFile,
+  getPresignedUrl,
+} from "./S3Controller";
 import { redirect } from "next/navigation";
 import { unstable_noStore } from "next/cache";
+import {
+  parseDateString,
+  expiryStringToInt,
+  getSignedURLImageName,
+} from "./utils";
 
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 7; //7MB
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
@@ -19,12 +28,6 @@ const ImageSchema = z
   .refine((file) => {
     return ACCEPTED_IMAGE_TYPES.includes(file!.type);
   }, "File type must be either jpeg or png");
-
-// const ImageSchema = z.object({
-//   size: z.number().max(MAX_UPLOAD_SIZE, "File size must be less than 7MB"),
-//   type
-//   type: z.string().refine((value) => ACCEPTED_IMAGE_TYPES.includes(value), "File type must be either jpeg or png"),
-// });
 
 // this object will be used to validate the form data
 const FormSchema = z.object({
@@ -49,6 +52,56 @@ export const fetchAllProducts = async () => {
         inventory: true,
       },
     });
+
+    //check if image urls are expired and update them if they are
+    for (let product of products) {
+      // loop through images
+      let imageExpired = false;
+      let newImageArray = [];
+
+      // loop over images and check if they are expired
+      for (let image of product.images) {
+        const imageDateAsString = image
+          .split("-Amz-")
+          .filter((item) => item.includes("Date"))[0]
+          .split("=")[1];
+        const imageDate = parseDateString(imageDateAsString);
+        const imageExpires = image
+          .split("-Amz-")
+          .filter((item) => item.includes("Expires"))[0]
+          .split("=")[1];
+        const expiry = expiryStringToInt(imageExpires);
+        const expiresAt = imageDate.setSeconds(imageDate.getSeconds() + expiry);
+
+        // get new signed urls for expired images and add them to array of urls
+        if (expiresAt < Date.now()) {
+          console.log("\nTHIS IMAGE IS EXPIRED", image);
+          imageExpired = true;
+          const imageName = getSignedURLImageName(image);
+          const url = await getPresignedUrl(imageName ?? "");
+          newImageArray.push(url);
+        } else {
+          newImageArray.push(image);
+        }
+
+        // if expired update product images with new array of signed urls
+        if (imageExpired) {
+          try {
+            await prisma.products.update({
+              where: {
+                id: product.id,
+              },
+              data: {
+                images: newImageArray,
+              },
+            });
+            console.log("\nupdated product with new signed urls")
+          } catch (error) {
+            return { message: error };
+          }
+        }
+      }
+    }
     return products;
   } catch (error) {
     return error;
@@ -56,7 +109,7 @@ export const fetchAllProducts = async () => {
 };
 
 export const fetchProductById = async (id: number) => {
-  unstable_noStore()
+  unstable_noStore();
   try {
     const product = await prisma.products.findUnique({
       where: {
@@ -162,4 +215,37 @@ export async function createProduct(formData: FormData) {
   revalidatePath("/dashboard/products");
   revalidatePath("/shop");
   redirect("/dashboard/products");
+}
+
+export async function deleteImage(imageName: string, productId: number) {
+  //deletes the file from S3 and postgresql db
+  try {
+    const product = await prisma.products.findUnique({
+      where: {
+        id: productId,
+      },
+    });
+    const imageArray = product?.images;
+    const newImageArray = imageArray?.filter(
+      (item) => !item.includes(imageName)
+    );
+
+    await prisma.products.update({
+      where: {
+        id: productId,
+      },
+      data: {
+        images: newImageArray,
+      },
+    });
+  } catch (error) {
+    return { message: error };
+  }
+  console.log("successfully delete image");
+
+  try {
+    await deleteFile(imageName);
+  } catch (error) {
+    return { message: error };
+  }
 }

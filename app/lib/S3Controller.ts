@@ -57,26 +57,24 @@ export const uploadFile = async (file: any, filename: string) => {
 
 //get presigned url
 export const getPresignedUrl = async (
-  bucketName: string,
   fileName: string,
-  expiry: number
 ) => {
   console.log("getting presigned url");
   const params = {
-    Bucket: bucketName,
+    Bucket: process.env.AWS_BUCKET_NAME,
     Key: fileName,
   };
   const command = new GetObjectCommand(params);
   const signedUrl = await getSignedUrl(s3Client, command, {
-    expiresIn: expiry,
+    expiresIn: 604800,
   });
   return signedUrl;
 };
 
 // delete file from s3
-export const deleteFile = async (bucketName: string, fileName: string) => {
+export const deleteFile = async (fileName: string) => {
   const params = {
-    Bucket: bucketName,
+    Bucket: process.env.AWS_BUCKET_NAME,
     Key: fileName,
   };
   await s3Client
@@ -94,8 +92,7 @@ export const uploadImageAndReturnUrl = async (file: any) => {
   const filename = await hashFilename(file.name);
   console.log("\nuploading image and returning url", file, filename);
   await uploadFile(file, filename);
-  const bucketName = process.env.AWS_BUCKET_NAME || ""; // Ensure bucketName is defined
-  const url = await getPresignedUrl(bucketName, filename, 60000);
+  const url = await getPresignedUrl(filename);
   return url;
 };
 

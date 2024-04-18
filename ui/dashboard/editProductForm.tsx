@@ -5,6 +5,7 @@ import { Categories } from "@/ui/dashboard/categories";
 import { formatCurrency } from "@/app/lib/utils";
 import { ImageEditor } from "./imageEditor";
 interface ProductProps {
+    productId: number;
     name: string;
     price: BigInt;
     description: string;
@@ -20,7 +21,7 @@ interface ProductProps {
     };
   }
 
-export const EditProductForm: React.FC<ProductProps> = ({name, price, description, category, inventory, images}) => {
+export const EditProductForm: React.FC<ProductProps> = ({name, price, description, category, inventory, images, productId}) => {
   return (
     <form className="flex flex-col gap-3 w-[40%] pt-24">
       <label htmlFor="name">Name</label>
@@ -104,7 +105,7 @@ export const EditProductForm: React.FC<ProductProps> = ({name, price, descriptio
       <div className="flex flex-row justify-center gap-2">
       {images.map((image, index) => {
         return (
-          <ImageEditor image={image} key={index}/>
+          <ImageEditor image={image} key={index} productId={productId}/>
         )
       })}</div>
       <button type="submit">Submit</button>
