@@ -14,44 +14,44 @@ export default function Footer() {
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
               <div>
-                  <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">HOME</h2>
-                  <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                  <h2 className="mb-6 text-sm font-semibold text-floc-gray uppercase">HOME</h2>
+                  <ul className="text-floc-gray/70 font-medium">
                       <li className="mb-4">
-                          <a href="https://flowbite.com/" className="hover:underline">Meet The Chickens</a>
+                          <a href="https://flowbite.com/" className="hover:text-floc-gray/40">Meet The Chickens</a>
                       </li>
                       <li className="mb-4">
-                          <a href="https://tailwindcss.com/" className="hover:underline">Our Flock</a>
+                          <a href="https://tailwindcss.com/" className="hover:text-floc-gray/40">Our Flock</a>
                       </li>
                       <li className="mb-4">
-                          <a href="https://tailwindcss.com/" className="hover:underline">Socials</a>
+                          <a href="https://tailwindcss.com/" className="hover:text-floc-gray/40">Socials</a>
                       </li>
                   </ul>
               </div>
               <div>
                   <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
-                  <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                  <ul className="text-floc-gray/70 dark:text-gray-400 font-medium">
                       <li className="mb-2">
-                          <a href="https://github.com/themesberg/flowbite" className="hover:underline ">Facebook</a>
+                          <a href="https://github.com/themesberg/flowbite" className="hover:text-floc-gray/40">Facebook</a>
                       </li>
                       <li  className="mb-2">
-                          <a href="https://discord.gg/4eeurUVvTy" className="hover:underline">Instagram</a>
+                          <a href="https://discord.gg/4eeurUVvTy" className="hover:text-floc-gray/40">Instagram</a>
                       </li>
                       <li className="mb-2">
-                          <a href="https://discord.gg/4eeurUVvTy" className="hover:underline">Tik Tok</a>
+                          <a href="https://discord.gg/4eeurUVvTy" className="hover:text-floc-gray/40">Tik Tok</a>
                       </li>
                       <li>
-                          <a href="https://discord.gg/4eeurUVvTy" className="hover:underline">Youtube</a>
+                          <a href="https://discord.gg/4eeurUVvTy" className="hover:text-floc-gray/40">Youtube</a>
                       </li>
                   </ul>
               </div>
               <div>
                   <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
-                  <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                  <ul className="text-floc-gray/70 dark:text-gray-400 font-medium">
                       <li className="mb-4">
-                          <a href="#" className="hover:underline">Privacy Policy</a>
+                          <a href="#" className="hover:text-floc-gray/40">Privacy Policy</a>
                       </li>
                       <li>
-                          <a href="#" className="hover:underline">Return &amp; Refund Policy</a>
+                          <a href="#" className="hover:text-floc-gray/40">Return &amp; Refund Policy</a>
                       </li>
                   </ul>
               </div>
@@ -59,10 +59,10 @@ export default function Footer() {
       </div>
       <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
       <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="https://flowbite.com/" className="hover:underline">Kara's Chicken Coop™</a>. All Rights Reserved.
+          <span className="text-sm text-floc-gray/60 sm:text-center dark:text-gray-400">© 2024 <a href="https://flowbite.com/" className="hover:text-floc-gray/30">Kara's Chicken Coop™</a>. All Rights Reserved.
           </span>
           <div className="flex mt-4 sm:justify-center sm:mt-0">
-              <a href="#" className="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+              <a href="#" className="text-floc-gray/40 hover:text-floc-gray/20 dark:hover:text-white">
                   <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">
                         <path fill-rule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clip-rule="evenodd"/>
                     </svg>

@@ -27,6 +27,18 @@ interface Props {
   alt11: string;
   src12: StaticImageData;
   alt12: string;
+  src13: StaticImageData;
+  alt13: string;
+  src14: StaticImageData;
+  alt14: string;
+  src15: StaticImageData;
+  alt15: string;
+  src16: StaticImageData;
+  alt16: string;
+  src17: StaticImageData;
+  alt17: string;
+  src18: StaticImageData;
+  alt18: string;
 }
 
 export function FamilyGallery({ 
@@ -42,9 +54,15 @@ export function FamilyGallery({
   src10, alt10, 
   src11, alt11,
   src12, alt12,
+  alt13, alt14,
+  alt15, alt16,
+  alt17, alt18,
+  src13, src14, 
+  src15, src16,
+  src17, src18,
 }: Props) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
       <div className="grid gap-4">
         <SectionWrapper>
         <div className="">
@@ -109,7 +127,41 @@ export function FamilyGallery({
         </SectionWrapper>
         <SectionWrapper>
         <div>
-          <Image className="h-auto max-w-full rounded-lg" src={src12} alt={alt1} />
+          <Image className="h-auto max-w-full rounded-lg" src={src12} alt={alt12} />
+        </div>
+        </SectionWrapper>
+      </div>
+      <div className="grid gap-4">
+        <SectionWrapper>
+        <div>
+          <Image className="h-auto max-w-full rounded-lg" src={src13} alt={alt13} />
+        </div>
+        </SectionWrapper>
+        <SectionWrapper>
+        <div>
+          <Image className="h-auto max-w-full rounded-lg" src={src14} alt={alt14} />
+        </div>
+        </SectionWrapper>
+        <SectionWrapper>
+        <div>
+          <Image className="h-auto max-w-full rounded-lg" src={src15} alt={alt15} />
+        </div>
+        </SectionWrapper>
+      </div>
+      <div className="grid gap-4">
+        <SectionWrapper>
+        <div>
+          <Image className="h-auto max-w-full rounded-lg" src={src16} alt={alt16} />
+        </div>
+        </SectionWrapper>
+        <SectionWrapper>
+        <div>
+          <Image className="h-auto max-w-full rounded-lg" src={src17} alt={alt17} />
+        </div>
+        </SectionWrapper>
+        <SectionWrapper>
+        <div>
+          <Image className="h-auto max-w-full rounded-lg" src={src18} alt={alt18} />
         </div>
         </SectionWrapper>
       </div>

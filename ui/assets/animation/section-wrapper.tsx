@@ -5,7 +5,7 @@ interface Props {
     delay?: number;
 }
 
-export const SectionWrapper = ({ children, delay =.75 }: Props) => (
+export const SectionWrapper = ({ children, delay =.50 }: Props) => (
 <AnimatePresence>
 <motion.section
     initial={{ opacity: 0, y: 20 }}
