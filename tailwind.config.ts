@@ -23,6 +23,7 @@ const config: Config = withMT({
       },
       fontFamily: {
         'josefin-sans': ['"Josefin Sans"', 'sans-serif'],
+        'lodrina-solid': ['"Lord Rina Solid"', 'cursive'],
       },
       
       

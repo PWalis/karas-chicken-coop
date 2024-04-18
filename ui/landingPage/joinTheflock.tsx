@@ -5,12 +5,12 @@ import { SectionWrapper } from "../assets/animation/section-wrapper";
 export default function JoinTheFlock() {
     return (
 <SectionWrapper>
-<section id="JoinTheFlockSection" className="bg-cover relative newsletter h-screen">
-{/* <Image src={barnhousefooter} alt="NewsLetter Sign Up Background"></Image> */}
+<section id="JoinTheFlock" className="bg-cover relative newsletter h-screen">
 <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div className="mx-auto max-w-screen-md sm:text-center">
-          <h2 className="mb-4 text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl ">Join The Flock</h2>
+          <h2 className="mb-4 text-3xl tracking-tight font-extrabold text-floc-gray sm:text-6xl mt-20 uppercase">Join The Flock</h2>
           <p className="mx-auto mb-2 font-light text-gray-500 md:mb-4 sm:text-xl max-w-screen-sm">join our newsletter and be among the first to discover specials, re-stocks, and so much more!</p>
+          <SectionWrapper>
           <form action="#">
               <div className="items-center mx-auto mb-3 space-y-4 max-w-screen-sm sm:flex sm:space-y-0 gap-3">
                   <div className="relative w-full">
@@ -28,6 +28,7 @@ export default function JoinTheFlock() {
               </div>
               <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer ">You can unsubscribe at any time through your email. </div>
           </form>
+          </SectionWrapper>
       </div>
   </div>
 </section>
