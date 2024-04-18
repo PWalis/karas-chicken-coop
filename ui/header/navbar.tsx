@@ -24,7 +24,7 @@ export default function NavBar() {
           <div className="hidden sm:block">
             <ShopButton>Shop</ShopButton>
           </div>
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <JoinTheFlockButton></JoinTheFlockButton>
           </div>
           <div className="pr-2">
@@ -57,7 +57,7 @@ export default function NavBar() {
             <li>
               <a
                 href="#"
-                className="block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40 "
+                className="block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40"
               >
                 Who We Are
               </a>

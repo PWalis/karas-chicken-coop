@@ -58,9 +58,11 @@ export function ShopButton({
 
 export function JoinTheFlockButton({}: Readonly<{}>) {
   return (
+    <Link href="#JoinTheFlockSection">
     <button className=" pr-5 pl-5 pt-3 pb-3 border-solid border-[.25em] border-floc-gray text-floc-gray uppercase">
       Join The Flock
     </button>
+    </Link>
   );
 }
 

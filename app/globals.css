@@ -2,6 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+
 /* import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100..700&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&display=swap');
 
@@ -40,6 +41,7 @@ html * {
 body {
   color: rgb(var(--foreground-rgb));
   background: white;
+  scroll-behavior: smooth;
   /* margin-left: 5px;
   margin-right: 5px; */
   /* padding-left: 5px;
@@ -55,6 +57,10 @@ section {
 
 button {
   border-radius: 3px;
+}
+
+.newsletter {
+  background-image: url(../ui/assets/barnhouse-footer.png);
 }
 
 @layer utilities {

@@ -5,7 +5,7 @@ import { SectionWrapper } from "../assets/animation/section-wrapper";
 export default function JoinTheFlock() {
     return (
 <SectionWrapper>
-<section className="bg-center bg-no-repeat relative">
+<section id="JoinTheFlockSection" className="bg-cover relative newsletter h-screen">
 {/* <Image src={barnhousefooter} alt="NewsLetter Sign Up Background"></Image> */}
 <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div className="mx-auto max-w-screen-md sm:text-center">
@@ -26,7 +26,7 @@ export default function JoinTheFlock() {
                       <button type="submit" className="py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300  bg-floc-gray">SUBMIT</button>
                   </div>
               </div>
-              <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer ">We care about the protection of your data. <a href="#" className="font-medium text-primary-600  hover:underline">Read our Privacy Policy</a>.</div>
+              <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer ">You can unsubscribe at any time through your email. </div>
           </form>
       </div>
   </div>

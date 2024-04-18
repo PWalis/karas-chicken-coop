@@ -9,6 +9,7 @@ import { SectionWrapper } from "../assets/animation/section-wrapper";
 export default function HeroSection() {
   return (
     <SectionWrapper>
+      <section id="HeroSection">
       <div className="grid max-w-screen-xl h-screen px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-10 lg:grid-cols-12 place-content-center">
         <div className="mr-auto lg:place-self-center lg:col-span-6 sm:text-left text-center place-items-center">
           <h1 className="max-w-2xl  text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-none uppercase tracking-widest">
@@ -32,6 +33,7 @@ export default function HeroSection() {
           />
         </div>
       </div>
+      </section>
   </SectionWrapper>
   );
 }

@@ -5,10 +5,13 @@ import { ShopCarousel } from "./components/shopCarousel";
 export default function ShopSection() {
     return (
         <SectionWrapper>
-<section className="justify-center text-center px-4 py-8 mx-auto">
+<section id="ShopSection" className="justify-center text-center px-4 py-8 mx-auto max-w-screen-lg">
 <h2 className="text-4xl md:text-5xl lg:text-7xl uppercase justify-center text-center mb-5 ">Shop Our Newest Styles</h2>
         <div className="flex justify-center"> 
+        <div className="mx-auto">
             <ShopCarousel></ShopCarousel>
+            </div>
+            
         </div>
 
         <SectionWrapper>
