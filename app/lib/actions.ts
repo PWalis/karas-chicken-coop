@@ -202,8 +202,8 @@ export async function createProduct(formData: FormData) {
         description: data.description,
         category: {
           connectOrCreate: {
-            where: { name: data.category as any},
-            create: { name: data.category as any},
+            where: { name: data.category as string | undefined},
+            create: { name: data.category as string},
           },
         },
         images: imageUrls,
