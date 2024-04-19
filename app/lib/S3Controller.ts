@@ -105,3 +105,4 @@ export const uploadProductImagesAndReturnUrls = async (files: any) => {
   return urls;
   // console.log(files);
 };
+

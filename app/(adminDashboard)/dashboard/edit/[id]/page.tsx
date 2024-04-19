@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchProductById } from "@/app/lib/actions";
+import { fetchProductById, fetchCategories } from "@/app/lib/actions";
 import { EditProductForm } from "@/ui/dashboard/editProductForm";
 
 export default async function EditProductPage({
@@ -9,6 +9,9 @@ export default async function EditProductPage({
 }) {
   const id = params.id;
   const product = (await fetchProductById(Number(id))) as any;
+  const categories = (await fetchCategories()) as any;
+
+  console.log(categories)
 
   return (
     <div className="flex justify-center w-full">
@@ -20,6 +23,7 @@ export default async function EditProductPage({
         inventory={product.inventory}
         category={product.category.name}
         images={product.images}
+        categories={categories}
       />
     </div>
   );

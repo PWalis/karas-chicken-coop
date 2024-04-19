@@ -19,6 +19,11 @@ import {
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 7; //7MB
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
 
+type updateBindData = {
+  productId: number;
+  images: string[];
+};
+
 const ImageSchema = z
   .instanceof(File)
   .optional()
@@ -35,7 +40,8 @@ const FormSchema = z.object({
   price: z.coerce.number({ required_error: "Price is required" }),
   description: z.string({ required_error: "Description is required" }),
   image: z.array(ImageSchema).nonempty({ message: "Image is required" }),
-  category: z.string({ required_error: "Category is required" }),
+  category: z.string().nullable(),
+  newCategory: z.string().nullable(),
   xs: z.coerce.number({ required_error: "XS is required" }),
   small: z.coerce.number({ required_error: "Small is required" }),
   medium: z.coerce.number({ required_error: "Medium is required" }),
@@ -45,6 +51,7 @@ const FormSchema = z.object({
 });
 
 export const fetchAllProducts = async () => {
+  unstable_noStore();
   try {
     const products = await prisma.products.findMany({
       include: {
@@ -95,7 +102,7 @@ export const fetchAllProducts = async () => {
                 images: newImageArray,
               },
             });
-            console.log("\nupdated product with new signed urls")
+            console.log("\nupdated product with new signed urls");
           } catch (error) {
             return { message: error };
           }
@@ -129,12 +136,19 @@ export const fetchProductById = async (id: number) => {
 
 export async function createProduct(formData: FormData) {
   // this may not work as expected
-  const validatedData = FormSchema.safeParse({
+  const validatedData = FormSchema.refine(
+    (data) => data.newCategory || data.category,
+    {
+      message: "At least one of newCategory or category is required",
+      path: ["newCategory", "category"],
+    }
+  ).safeParse({
     name: formData.get("name"),
     price: formData.get("price"),
     description: formData.get("description"),
     image: formData.getAll("image"),
     category: formData.get("category"),
+    newCategory: formData.get("newCategory"),
     xs: formData.get("xs"),
     small: formData.get("small"),
     medium: formData.get("medium"),
@@ -147,8 +161,8 @@ export async function createProduct(formData: FormData) {
 
   if (!validatedData.success) {
     console.log(
-      validatedData.error.flatten().fieldErrors,
-      formData.getAll("image")
+      validatedData.error.flatten().fieldErrors
+      // formData.getAll("image")
     );
     return {
       error: validatedData.error.flatten().fieldErrors,
@@ -161,7 +175,9 @@ export async function createProduct(formData: FormData) {
     name: validatedData.data.name,
     price: validatedData.data.price,
     description: validatedData.data.description,
-    category: validatedData.data.category,
+    category: validatedData.data.newCategory
+      ? validatedData.data.newCategory
+      : validatedData.data.category,
     image: validatedData.data.image,
     xs: validatedData.data.xs,
     small: validatedData.data.small,
@@ -186,8 +202,8 @@ export async function createProduct(formData: FormData) {
         description: data.description,
         category: {
           connectOrCreate: {
-            where: { name: data.category },
-            create: { name: data.category },
+            where: { name: data.category as string },
+            create: { name: data.category as string },
           },
         },
         images: imageUrls,
@@ -214,6 +230,7 @@ export async function createProduct(formData: FormData) {
 
   revalidatePath("/dashboard/products");
   revalidatePath("/shop");
+  revalidatePath("/dashboard/createNewProduct")
   redirect("/dashboard/products");
 }
 
@@ -245,6 +262,150 @@ export async function deleteImage(imageName: string, productId: number) {
 
   try {
     await deleteFile(imageName);
+  } catch (error) {
+    return { message: error };
+  }
+  revalidatePath("/dashboard/products");
+}
+
+export async function deleteProduct(productId: number) {
+  try {
+    const product = await prisma.products.findUnique({
+      where: {
+        id: productId,
+      },
+    });
+
+    const images = product?.images;
+
+    for (let image of images!) {
+      const imageName = getSignedURLImageName(image);
+      await deleteFile(imageName ?? "");
+    }
+
+    await prisma.products.delete({
+      where: {
+        id: productId,
+      },
+    });
+  } catch (error) {
+    return { message: error };
+  }
+  console.log("Product Deleted");
+}
+
+export async function updateProduct(
+  { productId, images }: updateBindData,
+  formData: FormData
+) {
+  const FormSchemaNoImageRequired = FormSchema.omit({ image: true });
+
+  const validatedData = FormSchemaNoImageRequired.refine(
+    (data) => data.newCategory || data.category,
+    {
+      message: "At least one of newCategory or category is required",
+      path: ["newCategory", "category"],
+    }
+  ).safeParse({
+    name: formData.get("name"),
+    price: formData.get("price"),
+    description: formData.get("description"),
+    category: formData.get("category"),
+    newCategory: formData.get("newCategory"),
+    xs: formData.get("xs"),
+    small: formData.get("small"),
+    medium: formData.get("medium"),
+    large: formData.get("large"),
+    xl: formData.get("xl"),
+    xxl: formData.get("xxl"),
+  });
+
+  // console.log("validation step", formData.getAll("image"));
+
+  if (!validatedData.success) {
+    console.log(
+      validatedData.error.flatten().fieldErrors,
+      formData.getAll("image")
+    );
+    return {
+      error: validatedData.error.flatten().fieldErrors,
+      message: "Validation failed",
+    };
+  }
+
+  //prepare data for insertion
+  const data = {
+    name: validatedData.data.name,
+    price: validatedData.data.price,
+    description: validatedData.data.description,
+    category: validatedData.data.newCategory
+      ? validatedData.data.newCategory
+      : validatedData.data.category,
+    image: formData.getAll("image") as any,
+    xs: validatedData.data.xs,
+    small: validatedData.data.small,
+    medium: validatedData.data.medium,
+    large: validatedData.data.large,
+    xl: validatedData.data.xl,
+    xxl: validatedData.data.xxl,
+  };
+
+  // console.log("\nimages", data.image[0].size)
+
+  if (data.image[0].size != 0) {
+    const imageUrls = await uploadProductImagesAndReturnUrls(data.image);
+    images = images.concat(imageUrls);
+  }
+
+  const priceInCents = data.price * 100;
+
+  try {
+    const product = await prisma.products.update({
+      where: {
+        id: productId,
+      },
+      data: {
+        name: data.name,
+        priceInCents: priceInCents,
+        description: data.description,
+        category: {
+          connectOrCreate: {
+            where: { name: data.category as string },
+            create: { name: data.category as string },
+          },
+        },
+        images: images,
+        inventory: {
+          update: {
+            xs_quantity: data.xs,
+            s_quantity: data.small,
+            m_quantity: data.medium,
+            l_quantity: data.large,
+            xl_quantity: data.xl,
+            xxl_quantity: data.xxl,
+          },
+        },
+      },
+      include: {
+        category: true,
+        inventory: true,
+      },
+    });
+    console.log(product);
+  } catch (error) {
+    return { message: error };
+  }
+
+  revalidatePath("/dashboard/products");
+  revalidatePath("/shop");
+  revalidatePath("/dashboard/createNewProduct")
+  redirect("/dashboard/products");
+}
+
+export async function fetchCategories() {
+  try {
+    const categories = await prisma.categories.findMany();
+    return categories;
   } catch (error) {
     return { message: error };
   }
