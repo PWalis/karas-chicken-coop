@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { fetchCategories } from "@/app/lib/actions";
 import { CreateProductForm } from "@/ui/dashboard/createProductForm";
