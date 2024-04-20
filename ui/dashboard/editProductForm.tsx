@@ -36,8 +36,8 @@ export const EditProductForm: React.FC<ProductProps> = ({
     images: images,
   });
 
-  const options = categories.map((category: any) => {
-    return <option value={category.name}>{category.name}</option>;
+  const options = categories.map((category: any, index: number) => {
+    return <option value={category.name} key={index}>{category.name}</option>;
   });
 
   return (
