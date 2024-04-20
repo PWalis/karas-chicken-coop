@@ -403,6 +403,7 @@ export async function updateProduct(
 }
 
 export async function fetchCategories() {
+  unstable_noStore()
   try {
     const categories = await prisma.categories.findMany();
     return categories;

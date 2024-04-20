@@ -6,8 +6,8 @@ interface CreateProps {
 }
 
 export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
-  const options = categories.map((category: any) => {
-    return <option value={category.name}>{category.name}</option>;
+  const options = categories.map((category: any, index: number) => {
+    return <option value={category.name} key={index}>{category.name}</option>;
   });
 
   return (
