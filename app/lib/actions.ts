@@ -266,6 +266,7 @@ export async function deleteImage(imageName: string, productId: number) {
     return { message: error };
   }
   revalidatePath("/dashboard/products");
+  revalidatePath("/shop")
 }
 
 export async function deleteProduct(productId: number) {
@@ -291,7 +292,9 @@ export async function deleteProduct(productId: number) {
   } catch (error) {
     return { message: error };
   }
-  console.log("Product Deleted");
+  revalidatePath("/dashboard/products")
+  revalidatePath("/shop")
+  revalidatePath("/dashboard")
 }
 
 export async function updateProduct(
