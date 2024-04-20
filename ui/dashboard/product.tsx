@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
+import React, {useState} from "react";
 import { formatCurrency } from "@/app/lib/utils";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { deleteProduct } from "@/app/lib/actions";
+import clsx from "clsx";
 
 interface ProductProps {
   productId: number;
@@ -32,8 +32,18 @@ export const Product: React.FC<ProductProps> = ({
   category,
   inventory,
 }) => {
+
+  const [deleting, setDeleting] = useState(false)
+  const [visible, setVisible] = useState(true)
+
+  const handleDelete = async() => {
+    setDeleting(true)
+    await deleteProduct(productId)
+    setVisible(false)
+  }
+
   return (
-    <div className="flex flex-row bg-gray-200 rounded-2xl shadow-2xl max-w-[85%]">
+    <div className={clsx("flex flex-row bg-gray-200 rounded-2xl shadow-2xl max-w-[85%]", visible ? "" : "hidden")}>
       <div className="flex flex-row gap-5 justify-center overflow-auto max-h-36 w-[30%]">
         {images.map((image, index) => {
           return (
@@ -61,11 +71,14 @@ export const Product: React.FC<ProductProps> = ({
         <p className="text-lg">XL: {inventory.xl_quantity}</p>
         <p className="text-lg">XXL: {inventory.xxl_quantity}</p>
       </div>
-      <Link href={`/dashboard/edit/${productId}`}>
-        <button className="bg-blue-500 text-white p-2 rounded-xl max-h-10 m-auto">
-          Edit Product
-        </button>
-      </Link>
+      <div className="flex justify-center h-full">
+        <Link href={`/dashboard/edit/${productId}`}>
+          <button className="bg-blue-500 text-white p-2 rounded-xl max-h-10 m-auto">
+            Edit Product
+          </button>
+        </Link>
+        <button onClick={handleDelete} className="max-h-10 px-2 rounded-xl bg-red-500">{deleting ? "In Progress..." : "Delete"}</button>
+      </div>
     </div>
   );
 };

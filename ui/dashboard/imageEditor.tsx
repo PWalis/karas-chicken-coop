@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import { useHover } from "usehooks-ts";
 import clsx from "clsx";
 import { deleteImage } from "@/app/lib/actions";
-import { getSignedURLImageName } from "@/app/lib/utils"
+import { getSignedURLImageName } from "@/app/lib/utils";
 
 interface imageEditorProps {
   image: string;
@@ -17,7 +17,7 @@ export const ImageEditor: React.FC<imageEditorProps> = ({
 }) => {
   const hoverRef = useRef(null);
   const isHover = useHover(hoverRef);
-  const imageName = getSignedURLImageName(image)
+  const imageName = getSignedURLImageName(image);
   const [isLoading, setIsLoading] = useState(false);
   const [visible, setVisible] = useState(true);
 
@@ -33,10 +33,7 @@ export const ImageEditor: React.FC<imageEditorProps> = ({
 
   return (
     <div
-      className={clsx(
-        "relative flex flex-row flex-wrap justify-center max-h-32 gap-2 hover:cursor-pointer",
-        visible ? "" : "hidden"
-      )}
+      className="relative flex flex-row flex-wrap justify-center max-h-32 gap-2 hover:cursor-pointer"
       ref={hoverRef}
       onClick={deleteImageHandler}
     >
