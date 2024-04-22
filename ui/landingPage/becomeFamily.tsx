@@ -1,38 +1,38 @@
 "use client";
-import Image from "next/image";
-import pengu from "../assets/FamilyGallery/pengu.jpg";
-import river from "../assets/FamilyGallery/river.jpg";
+
 import bonnie1 from "../assets/FamilyGallery/bonnie_1.jpg";
 import americauna from "../assets/FamilyGallery/americauna.jpg";
 import bean from "../assets/FamilyGallery/bean_1.jpg";
 import silkies from "../assets/FamilyGallery/silkies.jpg";
-import skeet_1 from "../assets/FamilyGallery/skeet_1.jpg";
 import cowboy from "../assets/FamilyGallery/cowboy.jpg";
 import hen_1 from "../assets/FamilyGallery/hen_1.jpg";
 import rocky from "../assets/FamilyGallery/rocky.jpg";
 import chicks_1 from "../assets/FamilyGallery/chicks_1.jpg";
-import corn_2 from "../assets/FamilyGallery/corn_2.jpg";
 import hen_2 from "../assets/FamilyGallery/hen_2.jpg";
 import frizzle1 from "../assets/FamilyGallery/frizzle1.jpg";
-import whitechick from "../assets/FamilyGallery/whitechick.jpg"
-import lucy from "../assets/FamilyGallery/lucy.jpg"
-import peacock from "../assets/FamilyGallery/peacock.jpg"
-import penguemo from "../assets/FamilyGallery/penguemo.jpg"
-import river2 from "../assets/FamilyGallery/river_2.jpg"
-import bean2 from "../assets/FamilyGallery/bean_2.jpg"
-
+import whitechick from "../assets/FamilyGallery/whitechick.jpg";
+import lucy from "../assets/FamilyGallery/lucy.jpg";
+import peacock from "../assets/FamilyGallery/peacock.jpg";
+import penguemo from "../assets/FamilyGallery/penguemo.jpg";
+import river2 from "../assets/FamilyGallery/river_2.jpg";
+import bean2 from "../assets/FamilyGallery/bean_2.jpg";
 import chicks_3 from "../assets/FamilyGallery/chicks_3.jpg";
+
 import { FamilyGallery } from "./components/familyGallery";
 import { SectionWrapper } from "../assets/animation/section-wrapper";
 import FacebookIcon from "../assets/icons/Facebook-icon";
 import InstagramIcon from "../assets/icons/Instagram-icon";
 import YoutubeIcon from "../assets/icons/Youtube-icon";
+import TiktokIcon from "../assets/icons/tiktok-icon";
 
 export default function BecomeFamilySection() {
   return (
     <SectionWrapper>
-      <section id={"BecomeFamilySection"} className="justify-center px-4 py-8 mx-auto max-w-[1400px]">
-        <h2 className="text-4xl md:text-5xl lg:text-7xl uppercase justify-center text-center mb-5 lg:mb-10">
+      <section
+        id={"ChickenGallery"}
+        className="justify-center px-4 py-8 mx-auto max-w-[1400px]"
+      >
+        <h2 className="text-4xl mt-20 md:text-5xl lg:text-7xl uppercase justify-center text-center mb-20">
           Become Part Of Our Family
         </h2>
         <div className="justify-between mx-auto">
@@ -76,17 +76,42 @@ export default function BecomeFamilySection() {
               alt18="lucy"
             ></FamilyGallery>
           </div>
-          <div className=" flex justify-center place-self-center gap-10 ">
-            <a href="#">
+          <SectionWrapper>
+          <div className=" flex flex-wrap justify-center place-self-center gap-10 ">
+            <a
+              style={{ display: "table-cell" }}
+              href="https://www.facebook.com/FlaminHotChickens"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FacebookIcon className="h-[90px] w-[90px] lg:h-[100px] lg:w-[100px] mb-6 text-floc-gray group"></FacebookIcon>
             </a>
-            <a href="#">
+            <a
+              style={{ display: "table-cell" }}
+              href="https://www.instagram.com/karaschickens/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <InstagramIcon className="h-[90px] w-[90px] lg:h-[100px] lg:w-[100px] mb-6"></InstagramIcon>
             </a>
-            <a href="#">
+            <a
+              style={{ display: "table-cell" }}
+              href="https://www.youtube.com/channel/UCs5wYfoADhI94TLGWbEMdYQ"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <YoutubeIcon className="h-[90px] w-[90px] lg:h-[100px] lg:w-[100px] mb-6"></YoutubeIcon>
             </a>
+            <a
+              style={{ display: "table-cell" }}
+              href="https://www.tiktok.com/@karas.chicken.coop"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <TiktokIcon className="h-[90px] w-[90px] lg:h-[100px] lg:w-[100px] mb-6"></TiktokIcon>
+            </a>
           </div>
+          </SectionWrapper>
         </div>
       </section>
     </SectionWrapper>

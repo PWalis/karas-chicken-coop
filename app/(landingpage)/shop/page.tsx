@@ -1,21 +1,56 @@
+"use client";
 import React from "react";
 import { Products } from "@/ui/shop/products";
 import { ProductFilter } from "@/ui/shop/filter";
+import mike_shirt1 from "@/ui/assets/mike_shirt1.jpg";
+import mike_shirt2 from "@/ui/assets/mike_shirt2.jpg";
+import autumn_shirt1 from "@/ui/assets/autumn_shirt1.jpg";
+import autumn_shirt2 from "@/ui/assets/autumn_1.jpg";
+import { ShopCarousel } from "@/ui/landingPage/components/shopCarousel";
+import { SectionWrapper } from "@/ui/assets/animation/section-wrapper";
+import NavBar from "@/ui/header/navbar";
+import Footer from "@/ui/footer/footer";
+import { FAQ } from "@/ui/shop/FAQ";
+
 
 export default function Shop() {
   return (
-    <main className="mt-20">
-      <div className="flex justify-center pt-10">
-        <h1 className="text-6xl text-center">Welcome to Kara's Chicken Shop</h1>
-      </div>
-      <div className="block justify-center sm:grid sm:grid-cols-6">
-        <div className="sticky top-14 sm:fixed flex sm:top-52 sm:left-10 justify-center pt-5 sm:pt-10">
-          <ProductFilter />
+      <main>
+      <NavBar></NavBar>
+      <SectionWrapper>
+        <div className="flex justify-center pt-10">
+          <h1 className="text-6xl text-center mt-20 mb-10">
+            KARA'S CHICKEN COOP SHOP
+          </h1>
         </div>
-        <div className="flex justify-center pt-5 sm:pt-10 sm:col-start-2 sm:col-span-4">
-          <Products />
+        <div className="flex justify-center">
+          <div className="max-w-screen-lg">
+            <ShopCarousel
+              image1={mike_shirt1}
+              image2={autumn_shirt1}
+              image3={autumn_shirt2}
+              image4={mike_shirt2}
+            ></ShopCarousel>
+          </div>
         </div>
-      </div>
-    </main>
+        <h2 className="text-4xl text-center justify-center mt-10 uppercase">
+          {" "}
+          Products{" "}
+        </h2>
+        <ProductFilter></ProductFilter>
+        <div className="block justify-center sm:grid sm:grid-cols-6">
+          <div className="flex justify-center pt-5 sm:pt-2 sm:col-start-2 sm:col-span-4">
+            <Products />
+          </div>
+        </div>
+        <h2 className="text-4xl text-center mb-10 uppercase mt-10"> COMMON SHOP FAQ </h2>
+        <div className="flex justify-center">
+          <div className="max-w-screen-xl">
+            <FAQ></FAQ>
+          </div>
+        </div>
+        </SectionWrapper>
+        <Footer></Footer>
+      </main>
   );
 }

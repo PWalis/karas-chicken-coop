@@ -1,7 +1,7 @@
 "use client";
 import Image, { StaticImageData } from "next/image";
 import pengu from "../assets/pengu.jpg";
-import river from "../assets/river.jpg";
+import river from "../assets/FamilyGallery/river_2.jpg";
 import bonnie_3 from "../assets/FamilyGallery/bonnie_3.jpg";
 import skeet from "../assets/FamilyGallery/skeet_1.jpg";
 import corn from "../assets/FamilyGallery/corn_2.jpg";
@@ -40,13 +40,13 @@ export default function ChickenSection() {
   
 
   const chickens: Chicken[] = [
-    { name: "Corn", description: "Description for Corn.", image: corn },
-    { name: "Bonnie", description: "Description for Bonnie.", image: bonnie_3 },
-    { name: "Skeet", description: "Description for Skeet.", image: skeet },
-    { name: "Pengu", description: "Description for Pengu.", image: pengu },
-    { name: "Skeet", description: "Description for Skeet.", image: bean },
-    { name: "Skeet", description: "Description for Skeet.", image: fiona },
-    { name: "Skeet", description: "Description for Skeet.", image: crunch },
+    { name: "Cornelius", description: "Cornelius was the first rooster to join the hall of fame and go viral on facebook! He loves flying in the snow and many akin him to a snowy barn owl. He stands proud as a barred candy corn polish rooster..", image: corn },
+    { name: "Bonnie", description: "Bonnie has his name because Kara originally thought he was a hen! Bonnie quickly stole the hearts of everyone watching and became a star (and a house rooster!) we love our Bo! ", image: bonnie_3 },
+    { name: "Skeet", description: "Skeet became famous through his videos of running when he hears his name. He is a lovable, loud, goofy proud polish rooster.", image: skeet },
+    { name: "Pengu", description: "Pengu, one of the runner ups in the flock! Pengu is known for his sassy emo hair and long legs. He is a tolblunt polish rooster.", image: pengu },
+    { name: "Bean", description: "Description for Skeet.", image: fiona },
+    { name: "Fiona", description: "Fiona (another househen!) is an adorable barred polish hen. She is Bonnies girl.", image: fiona },
+    { name: "Crunch", description: "Crunch is related to Mr. Frizzle (one of the original chickens!), he is a candy corn frizzle", image: crunch },
     { name: "River", description: "Description for River.", image: river },
   ];
   const [mainImage, setMainImage] = useState<StaticImageData>(
@@ -59,13 +59,13 @@ export default function ChickenSection() {
 
   return (
     <SectionWrapper>
-    <section id="ChickenShowcaseSection" className="max-w-[1500px] lg:px-4 lg:py-8 mx-auto">
-      <h2 className="text-4xl md:text-5xl lg:text-7xl uppercase text-center mb-5 lg:mb-20">
+    <section id="MeetTheChickens" className="max-w-[1500px] lg:px-4 lg:py-8 mx-auto">
+      <h2 className="text-4xl mt-20 md:text-5xl lg:text-7xl uppercase text-center mb-5 lg:mb-20">
         Meet The Chickens
       </h2>
-      <div className="flex flex-col lg:flex-row">
+      <div className="flex flex-col lg:flex-row lg:gap-4">
         {/* Container for the main image */}
-        <div className="w-full lg:w-3/4 pr-8">
+        <div className="w-full lg:w-3/4">
           <div className="w-full">
             <Image
               id="mainImageContainer"
@@ -80,7 +80,7 @@ export default function ChickenSection() {
           </div>
         </div>
         {/* Container for the name, description, and thumbnails */}
-        <div className="flex flex-col lg:w-1/2 justify-evenly">
+        <div className="flex flex-col lg:w-1/2 justify-around">
           <div className="items-center my-12 mx-4 lg:my-0 lg:mx-0">
             <SectionWrapper>
             <h3 id="ChickenName" className="text-3xl lg:text-4xl mb-2">
@@ -88,7 +88,7 @@ export default function ChickenSection() {
             </h3>
             <p
               id="ChickenDescription"
-              className="max-w-[400px] text-xl lg:text-xl lg:max-w-[600px]"
+              className="max-w-[300px] text-xl lg:text-xl lg:max-w-[450px] text-floc-gray/80"
             >
               {chickenDescription}
             </p>
@@ -96,7 +96,7 @@ export default function ChickenSection() {
           </div>
           <div
             id="thumbnailContainer"
-            className="flex overflow-x-auto gap-2 md:grid md:grid-cols-5 md:gap-4 cursor-pointer"
+            className="flex overflow-x-auto gap-2 md:grid md:grid-cols-4 md:gap-4 cursor-pointer"
           >
             {chickens.map((chicken, index) => (
               <div key={index}>

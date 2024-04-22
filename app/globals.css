@@ -54,7 +54,7 @@ body {
 }
 section {
   /* margin-top: 5%; */
-  margin-bottom: 5%;
+  margin-bottom: 3%;
   height: 100%;
   width: 100%;
 }
@@ -66,6 +66,10 @@ button {
 
 .newsletter {
   background-image: url(../ui/assets/barnhouse-footer.png);
+}
+
+.loading-bg {
+  background-image: url(../ui/assets/karaschickenpattern-01.jpg);
 }
 
 @layer utilities {
