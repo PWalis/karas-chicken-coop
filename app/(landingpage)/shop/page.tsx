@@ -8,15 +8,18 @@ import autumn_shirt1 from "@/ui/assets/autumn_shirt1.jpg";
 import autumn_shirt2 from "@/ui/assets/autumn_1.jpg";
 import { ShopCarousel } from "@/ui/landingPage/components/shopCarousel";
 import { SectionWrapper } from "@/ui/assets/animation/section-wrapper";
+import NavBar from "@/ui/header/navbar";
+import Footer from "@/ui/footer/footer";
 import { FAQ } from "@/ui/shop/FAQ";
 
 
 export default function Shop() {
   return (
-    <SectionWrapper>
-      <main className="mt-20">
+      <main>
+      <NavBar></NavBar>
+      <SectionWrapper>
         <div className="flex justify-center pt-10">
-          <h1 className="text-6xl text-center mb-10">
+          <h1 className="text-6xl text-center mt-20 mb-10">
             KARA'S CHICKEN COOP SHOP
           </h1>
         </div>
@@ -40,13 +43,14 @@ export default function Shop() {
             <Products />
           </div>
         </div>
-        <h2 className="text-4xl text-center mb-10 uppercase mt-10"> COMMON FAQ </h2>
+        <h2 className="text-4xl text-center mb-10 uppercase mt-10"> COMMON SHOP FAQ </h2>
         <div className="flex justify-center">
           <div className="max-w-screen-xl">
             <FAQ></FAQ>
           </div>
         </div>
+        </SectionWrapper>
+        <Footer></Footer>
       </main>
-    </SectionWrapper>
   );
 }

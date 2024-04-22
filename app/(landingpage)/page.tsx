@@ -7,29 +7,42 @@ import OurFlockSection from "@/ui/landingPage/ourFlock";
 import BecomeFamilySection from "@/ui/landingPage/becomeFamily";
 import ShopSection from "@/ui/landingPage/shopSection";
 import JoinTheFlock from "@/ui/landingPage/joinTheflock";
-import { londrina } from "@/ui/fonts"
-
+import NavBar from "@/ui/header/navbar";
+import Footer from "@/ui/footer/footer";
+import { londrina } from "@/ui/fonts";
 
 export const metadata: Metadata = {
   title: "Kara's Chickens",
   description: "Landing page for Kara's Chickens facebook page",
 };
 
-export default function Home() {
+export default async function Home() {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
   return (
     <main>
       <div className={londrina.className}>
+      <NavBar></NavBar>
         <div>
-            <HeroSection></HeroSection> 
+          <HeroSection></HeroSection>
         </div>
       </div>
-        <ChickenSection></ChickenSection>
+      <ChickenSection></ChickenSection>
       <div>
-      <OurFlockSection></OurFlockSection>
+        <OurFlockSection></OurFlockSection>
       </div>
-      <div> <BecomeFamilySection></BecomeFamilySection></div>
-      <div> <ShopSection></ShopSection></div>
-      <div> <JoinTheFlock></JoinTheFlock></div>
+      <div>
+        {" "}
+        <BecomeFamilySection></BecomeFamilySection>
+      </div>
+      <div>
+        {" "}
+        <ShopSection></ShopSection>
+      </div>
+      <div>
+        {" "}
+        <JoinTheFlock></JoinTheFlock>
+      </div>
+      <Footer></Footer>
     </main>
   );
 }

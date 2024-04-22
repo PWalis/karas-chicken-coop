@@ -58,11 +58,11 @@ export function ShopButton({
 
 export function JoinTheFlockButton({}: Readonly<{}>) {
   return (
-    <Link href="#JoinTheFlock">
+    <a href="/#JoinTheFlock">
     <button className=" pr-5 pl-5 pt-3 pb-3 border-solid border-[.25em] border-floc-gray text-floc-gray uppercase">
       Join The Flock
     </button>
-    </Link>
+    </a>
   );
 }
 
@@ -103,7 +103,7 @@ export const HamburgerMenu: React.FC<hamburger> = ({handleHamburgerClick}) => {
 export function HeroCTA({}: Readonly<{}>) {
   return (
     <a
-      href="#JoinTheFlock"
+      href="/#JoinTheFlock"
       className="inline-flex items-center justify-center px-5 py-3 text-xl text-center text-floc-gray  bg-floc-yellow uppercase"
     >
       Join The Flock
