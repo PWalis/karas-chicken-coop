@@ -1,3 +1,5 @@
+'use client';
+
 import { motion, useScroll, AnimatePresence } from "framer-motion";
 
 interface Props {

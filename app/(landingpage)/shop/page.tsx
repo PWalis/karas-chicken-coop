@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import React from "react";
 import { Products } from "@/ui/shop/products";
 import { ProductFilter } from "@/ui/shop/filter";
@@ -39,7 +39,7 @@ export default function Shop() {
         </h2>
         <ProductFilter></ProductFilter>
         <div className="block justify-center sm:grid sm:grid-cols-6">
-          <div className="flex justify-center pt-5 sm:pt-2 sm:col-start-2 sm:col-span-4">
+          <div className="flex justify-center pt-5 sm:pt-2 sm:col-start-2 sm:col-span-4"> 
             <Products />
           </div>
         </div>

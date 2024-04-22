@@ -5,6 +5,7 @@ import NavBar from "@/ui/header/navbar";
 import Footer from "@/ui/footer/footer";
 import Loading from "./loading";
 import { Suspense } from "react";
+import { CartProvider } from "@/app/context/cartContext";
 
 export default function RootLayout({
   children,
@@ -14,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={londrina.className}>
-        {children}
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );

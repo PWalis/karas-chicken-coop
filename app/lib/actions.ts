@@ -50,6 +50,22 @@ const FormSchema = z.object({
   xxl: z.coerce.number({ required_error: "XXL is required" }),
 });
 
+const ItemOrderSchema = z.object({
+  productId: z.number(),
+  quantity: z.number(),
+  size: z.string(),
+  price: z.number(),
+});
+
+const CartSchema = z.object({
+  itemOrder: z.array(ItemOrderSchema).nonempty(),
+  name: z.string(),
+  address: z.string(),
+  state: z.string(),
+  zip: z.string(),
+  email: z.string(),
+});
+
 export const fetchAllProducts = async () => {
   unstable_noStore();
   try {
@@ -413,4 +429,35 @@ export async function fetchCategories() {
   } catch (error) {
     return { message: error };
   }
+}
+
+export async function createOrder(formData: FormData) {
+  //create order
+  const validatedData = CartSchema.safeParse({
+    itemOrder: formData.get("itemOrder"),
+    name: formData.get("name"),
+    address: formData.get("address"),
+    state: formData.get("state"),
+    zip: formData.get("zip"),
+    email: formData.get("email"),
+  });
+
+  if (!validatedData.success) {
+    console.log(validatedData.error.flatten().fieldErrors);
+    return {
+      error: validatedData.error.flatten().fieldErrors,
+      message: "Validation failed",
+    };
+  }
+
+  const data = {
+    itemOrder: validatedData.data.itemOrder,
+    name: validatedData.data.name,
+    address: validatedData.data.address,
+    state: validatedData.data.state,
+    zip: validatedData.data.zip,
+    email: validatedData.data.email,
+  };
+
+  //create order
 }
