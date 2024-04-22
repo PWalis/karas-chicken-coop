@@ -10,7 +10,7 @@ import { SectionWrapper } from "../assets/animation/section-wrapper";
 export default function OurFlockSection() {
   return (
     <SectionWrapper>
-    <section id="OurFlock" className="justify-center px-4 py-8 mx-auto h-auto">
+    <section id="OurFlock" className="justify-center md:px-4 py-8 mx-auto h-auto">
       <h2 className="text-4xl md:text-5xl lg:text-7xl uppercase justify-center text-center mb-5 mt-20 lg:mb-20">
         Our Flock
       </h2>

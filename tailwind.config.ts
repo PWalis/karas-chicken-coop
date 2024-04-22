@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import daisyui from "daisyui";
 const withMT = require("@material-tailwind/react/utils/withMT");
 
 const config: Config = withMT({
@@ -29,7 +30,10 @@ const config: Config = withMT({
       
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [
+    require("flowbite/plugin"),
+    require("daisyui"),
+  ],
 
 });
 export default config;

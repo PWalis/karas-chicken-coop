@@ -68,6 +68,10 @@ button {
   background-image: url(../ui/assets/barnhouse-footer.png);
 }
 
+.loading-bg {
+  background-image: url(../ui/assets/karaschickenpattern-01.jpg);
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

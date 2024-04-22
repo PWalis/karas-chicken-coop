@@ -8,7 +8,7 @@ export default function Layout({
   return (
     <>
       {/* <Header /> */}
-      <div className="flex">
+      <div className="flex h-screen">
         <SideNav />
         {children}
       </div>

@@ -77,7 +77,7 @@ export default function BecomeFamilySection() {
             ></FamilyGallery>
           </div>
           <SectionWrapper>
-          <div className=" flex justify-center place-self-center gap-10 ">
+          <div className=" flex flex-wrap justify-center place-self-center gap-10 ">
             <a
               style={{ display: "table-cell" }}
               href="https://www.facebook.com/FlaminHotChickens"
