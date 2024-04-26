@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import React from "react";
 import { Products } from "@/ui/shop/products";
 import { ProductFilter } from "@/ui/shop/filter";
@@ -8,7 +8,7 @@ import autumn_shirt1 from "@/ui/assets/autumn_shirt1.jpg";
 import autumn_shirt2 from "@/ui/assets/autumn_1.jpg";
 import { ShopCarousel } from "@/ui/landingPage/components/shopCarousel";
 import { SectionWrapper } from "@/ui/assets/animation/section-wrapper";
-import NavBar from "@/ui/header/navbar";
+import ShopNavBar from "@/ui/shop/shopNavBar";
 import Footer from "@/ui/footer/footer";
 import { FAQ } from "@/ui/shop/FAQ";
 
@@ -16,7 +16,7 @@ import { FAQ } from "@/ui/shop/FAQ";
 export default function Shop() {
   return (
       <main>
-      <NavBar></NavBar>
+      <ShopNavBar></ShopNavBar>
       <SectionWrapper>
         <div className="flex justify-center pt-10">
           <h1 className="text-6xl text-center mt-20 mb-10">
@@ -39,7 +39,7 @@ export default function Shop() {
         </h2>
         <ProductFilter></ProductFilter>
         <div className="block justify-center sm:grid sm:grid-cols-6">
-          <div className="flex justify-center pt-5 sm:pt-2 sm:col-start-2 sm:col-span-4">
+          <div className="flex justify-center pt-5 sm:pt-2 sm:col-start-2 sm:col-span-4"> 
             <Products />
           </div>
         </div>
