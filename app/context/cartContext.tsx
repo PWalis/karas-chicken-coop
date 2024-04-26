@@ -1,44 +1,71 @@
-'use client'
+"use client";
 
 import { createContext, useContext, useReducer } from "react";
 
-const CartContext = createContext([]);
-
-const CartDispatchContext = createContext<React.Dispatch<any> | null>(null);
-
-export function CartProvider({
-    children,
-}: Readonly<{
-    children: React.ReactNode;
-}>) {
-    const [cart, dispatch] = useReducer(cartReducer, []);
-
-    return (
-        <CartContext.Provider value={cart}>
-            <CartDispatchContext.Provider value={dispatch}>
-                {children}
-            </CartDispatchContext.Provider>
-        </CartContext.Provider>
-    );
+interface CartItem {
+  name: string;
+  price: string;
+  description: string;
+  images: string[];
+  category: string;
+  inventory: number;
+  productId: number;
+  stripePriceKey: string;
 }
 
-export function useCart() {
-  return useContext(CartContext);
+interface CartState {
+  items: CartItem[];
 }
 
-export function useCartDispatch() {
-  return useContext(CartDispatchContext);
-}
+type CartAction =
+  | { type: "ADD"; payload: CartItem }
+  | { type: "REMOVE"; payload: number };
 
-function cartReducer(state: any, action: any) {
+const CartStateContext = createContext<CartState | undefined>(undefined);
+
+const CartDispatchContext = createContext<
+  React.Dispatch<CartAction> | undefined
+>(undefined);
+
+const cartReducer = (state: CartState, action: CartAction) => {
   switch (action.type) {
     case "ADD":
-      return [...state, action.payload];
+      return { items: [...state.items, action.payload] };
     case "REMOVE":
-      return state.filter((item: any) => item.id !== action.payload.id);
-    case "CLEAR":
-      return [];
+      return {
+        items: state.items.filter((item) => item.productId !== action.payload),
+      };
     default:
       return state;
   }
-}
+};
+
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [state, dispatch] = useReducer(cartReducer, { items: [] });
+
+  return (
+    <CartStateContext.Provider value={state}>
+      <CartDispatchContext.Provider value={dispatch}>
+        {children}
+      </CartDispatchContext.Provider>
+    </CartStateContext.Provider>
+  );
+};
+
+export const useCart = () => {
+  const context = useContext(CartStateContext);
+  if (context === undefined) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
+};
+
+export const useCartDispatch = () => {
+  const context = useContext(CartDispatchContext);
+  if (context === undefined) {
+    throw new Error("useCartDispatch must be used within a CartProvider");
+  }
+  return context;
+};

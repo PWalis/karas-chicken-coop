@@ -2,11 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ShopButton, HamburgerMenu, Logo, JoinTheFlockButton } from "./buttons";
+import {
+  ShopButton,
+  HamburgerMenu,
+  Logo,
+  JoinTheFlockButton,
+} from "../header/buttons";
 import clsx from "clsx";
 import { useState } from "react";
 import Kcc3 from "../assets/svgs/Kcc3";
-export default function NavBar() {
+import { CartButton } from "./buttons";
+
+export default function ShopNavBar() {
   const [navMenu, setNavMenu] = useState(false);
 
   const handleHamburgerClick = () => {
@@ -25,7 +32,7 @@ export default function NavBar() {
         </div>
         <div className="flex md:order-2 space-x-3 gap-3 md:space-x-0 rtl:space-x-reverse">
           <div className="hidden sm:block">
-            <ShopButton>Shop</ShopButton>
+            <CartButton>Shop</CartButton>
           </div>
           <div className="hidden lg:block">
             <JoinTheFlockButton></JoinTheFlockButton>
@@ -85,7 +92,7 @@ export default function NavBar() {
               </a>
             </li>
             <li className={clsx(navMenu ? "block sm:hidden" : "hidden")}>
-              <ShopButton>Shop</ShopButton>
+              <CartButton>Cart</CartButton>
             </li>
           </ul>
         </div>

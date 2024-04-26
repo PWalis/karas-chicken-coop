@@ -18,6 +18,7 @@ export const Products: React.FC = async() => {
                 category={product.category.name}
                 inventory={product.inventory}
                 key={product.id}
+                stripePriceKey={product.stripePriceKey}
             />
         );
     });
