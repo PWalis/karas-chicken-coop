@@ -6,12 +6,9 @@ export default function Layout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <>
-      {/* <Header /> */}
-      <div className="flex h-screen">
+      <div className="flex h-fit">
         <SideNav />
         {children}
       </div>
-    </>
   );
 }

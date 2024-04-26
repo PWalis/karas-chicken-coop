@@ -225,7 +225,7 @@ export async function createProduct(formData: FormData) {
     });
     console.log(product);
   } catch (error) {
-    return { message: error };
+    console.log(error);
   }
 
   revalidatePath("/dashboard/products");
