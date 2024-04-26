@@ -9,6 +9,9 @@ export default async function CreateNewProductPage() {
   const CategoryArray = isCategoriesArray ? categories : []
   
   return (
+    <div className="w-full h-fit min-h-screen">
+      <div className="mt-28"> <h1 className="text-4xl my-auto text-center uppercase mb-4"> Create A New Product </h1></div>
     <CreateProductForm categories={CategoryArray}/>
+    </div>
   );
 }

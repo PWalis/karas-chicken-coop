@@ -35,14 +35,14 @@ const handleHamburgerClick = () => {
         >
           <ul
             className={clsx(
-              "flex p-4 md:p-0 border min-w-full border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white",
+              "flex p-4 md:p-0 border min-w-full border-gray-100 rounded-lg bg-gray-50 md:bg-transparent md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0",
               navMenu ? "flex-col min-w-full" : ""
             )}
           >
             <li>
               <a
                 href="/dashboard/orders"
-                className="block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40 jose"
+                className="block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/80 jose"
               >
                 View Orders
               </a>
@@ -50,7 +50,7 @@ const handleHamburgerClick = () => {
             <li>
               <a
                 href="/dashboard/products"
-                className="block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40"
+                className="block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/80"
               >
                 View Products
               </a>
@@ -58,7 +58,7 @@ const handleHamburgerClick = () => {
             <li>
               <a
                 href="/dashboard/newproduct"
-                className="block py-2 px-3 md:p-0  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40"
+                className="block py-2 px-3 md:p-0  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/80"
               >
                 New Product
               </a>

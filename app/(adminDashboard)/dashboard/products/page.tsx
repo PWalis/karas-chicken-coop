@@ -4,9 +4,8 @@ import React from "react";
 export default function ProductsPage() {
 
   return (
-    <div className="w-full">
-      <h1>Products</h1>
-      <p>Here you can manage your products</p>
+    <div className="w-full min-h-screen">
+      <h2 className="text-4xl my-auto mb-10 mt-28 text-center uppercase"> Manage Products </h2>
       <ProductsList />
     </div>
   );
