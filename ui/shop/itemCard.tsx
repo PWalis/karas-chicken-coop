@@ -3,7 +3,7 @@
 import React from "react";
 import { AddToCardButton } from "./buttons";
 import { useContext } from "react";
-import { useCartDispatch, useCart } from "@/app/context/cartContext";
+import { useCart, useCartDispatch } from "@/app/context/cartContext";
 
 interface ItemCardProps {
   name: string;
@@ -13,6 +13,7 @@ interface ItemCardProps {
   category: string;
   inventory: number;
   productId: number;
+  stripePriceKey: string;
 }
 
 export const ItemCard: React.FC<ItemCardProps> = ({
@@ -23,6 +24,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
   category,
   inventory,
   productId,
+  stripePriceKey,
 }) => {
   const dispatch = useCartDispatch();
   const cart = useCart();
@@ -39,6 +41,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           category,
           inventory,
           productId,
+          stripePriceKey,
         },
       });
       console.log(cart);
@@ -57,7 +60,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           <AddToCardButton onClick={clickHandler}></AddToCardButton>
         </div>
       </div>
-      {/* <p>{cart}</p> */}
+      {/* <p>{JSON.stringify(cart)}</p> */}
     </div>
   );
 };

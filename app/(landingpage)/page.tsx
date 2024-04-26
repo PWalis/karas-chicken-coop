@@ -17,11 +17,10 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
   return (
     <main>
       <div className={londrina.className}>
-      <NavBar></NavBar>
+        <NavBar></NavBar>
         <div>
           <HeroSection></HeroSection>
         </div>
@@ -31,15 +30,12 @@ export default async function Home() {
         <OurFlockSection></OurFlockSection>
       </div>
       <div>
-        {" "}
         <BecomeFamilySection></BecomeFamilySection>
       </div>
       <div>
-        {" "}
         <ShopSection></ShopSection>
       </div>
       <div>
-        {" "}
         <JoinTheFlock></JoinTheFlock>
       </div>
       <Footer></Footer>
