@@ -1,12 +1,8 @@
-"use client";
-
 import React from "react";
 import { londrina } from "@/ui/fonts";
 import NavBar from "@/ui/header/navbar";
 import Footer from "@/ui/footer/footer";
-import { useCart } from "@/app/context/cartContext";
-import { createCheckoutSession } from "@/app/lib/stripe";
-import { StripeEmbeddedCheckout } from "@/ui/checkout/stripeEmbeddedCheckout";
+import StripeCheckout from "@/ui/checkout/stripeCheckout";
 
 export default function Checkout() {
   return (
@@ -17,7 +13,7 @@ export default function Checkout() {
           <div className="flex flex-col justify-between h-[750px] w-full bg-purple-400">
             <div className="bg-purple-500">
               <h2 className="text-2xl">Shopping Cart</h2>
-              <StripeEmbeddedCheckout />
+              <StripeCheckout />
             </div>
             <div className="bg-purple-600">
               <p>
