@@ -6,11 +6,12 @@ import Footer from "@/ui/footer/footer";
 import autumn_shirt1 from "@/ui/assets/autumn_shirt1.jpg";
 import { ProductGallery } from "@/ui/shop/productGallery";
 import { FAQ } from "@/ui/shop/FAQ";
+import ShopNavBar from "@/ui/shop/shopNavBar";
 
 export default function ProductPage() {
   return (
     <main className="min-h-screen h-fit bg-white">
-      <NavBar />
+      <ShopNavBar />
       <div className=" bg-gray-50 flex justify-center">
         <div className="lg:flex h-fit place-items-center justify-center items-center gap-20 p-2">
           <div className="flex-col">
