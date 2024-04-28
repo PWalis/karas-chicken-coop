@@ -70,6 +70,37 @@ const CartSchema = z.object({
   email: z.string(),
 });
 
+export const fetchProductPrices = async (productId: number[]) => {
+  try {
+    const prices = await prisma.products.findMany({
+      where: {
+        id: {
+          in: productId,
+        },
+      },
+      select: {
+        id: true,
+        priceInCents: true,
+      },
+    });
+    return prices;
+  } catch (error) {
+    console.log("error getting product prices ", error);
+  }
+};
+
+export const fetchProductsTotal = async (productId: number[]) => {
+  try {
+    const prices = await fetchProductPrices(productId);
+    const total = prices!.reduce((acc, item) => {
+      return acc + Number(item.priceInCents);
+    }, 0);
+    return total;
+  } catch (error) {
+    console.log("error getting products total ", error);
+  }
+}
+
 export const fetchAllProducts = async () => {
   try {
     const products = await prisma.products.findMany({

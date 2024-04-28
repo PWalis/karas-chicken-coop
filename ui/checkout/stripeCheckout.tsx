@@ -1,29 +1,35 @@
-import React, { useState, useEffect } from "react";
+"use client";
+
+import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useCart } from "@/app/context/cartContext";
-import { stripeCreatePaymentIntent } from "@/app/lib/stripe";
+
+import CheckoutForm from "@/ui/checkout/checkoutForm";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
-const stripePublicKey = process.env.STRIPE_PUBLIC_KEY || " ";
-const stripePromise = loadStripe(stripePublicKey);
+const stripePromise = loadStripe("pk_test_51Jra2XLG2GmA2ElmqyWFRkyDKs91573iTTJi6Z3tehA6FvPFCYvuB7X1r9WffXNCNnMZjw0PftZMGT5hENZCQWhu00mYVlgC9Z");
 
-export default async function StripeCheckout() {
-  const cart = useCart() as any;
-  const [clientSecret, setClientSecret] = useState(null);
-  const fetchClientSecret = async () => {
-     const secret = await stripeCreatePaymentIntent(cart) as any;
-     setClientSecret(secret);
-  };
+export default function App() {
+  const [clientSecret, setClientSecret] = React.useState("");
+  const cart = useCart();
+  const productIds = cart.items.map((item) => item.productId);
 
-  useEffect(() => {
-    fetchClientSecret();
-  }, [cart]);
+  React.useEffect(() => {
+    // Create PaymentIntent as soon as the page loads
+    fetch("/api/paymentIntent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productIds: productIds }),
+    })
+      .then((res) => res.json())
+      .then((data) => setClientSecret(data.clientSecret));
+  }, []);
 
   const appearance = {
-    theme: "stripe",
+    theme: 'stripe',
   };
   const options = {
     clientSecret,
@@ -32,9 +38,9 @@ export default async function StripeCheckout() {
 
   return (
     <div className="App">
-      {clientSecret != null && (
-        <Elements options={options} stripe={stripePromise}>
-          
+      {clientSecret && (
+        <Elements options={options as any} stripe={stripePromise}>
+          <CheckoutForm />
         </Elements>
       )}
     </div>

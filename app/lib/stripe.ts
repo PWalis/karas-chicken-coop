@@ -1,14 +1,15 @@
 "use server";
 
-import React, { useCallback } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
+import React, { useCallback } from "react";
+import { loadStripe } from "@stripe/stripe-js";
 import {
   EmbeddedCheckoutProvider,
-  EmbeddedCheckout
-} from '@stripe/react-stripe-js';
+  EmbeddedCheckout,
+} from "@stripe/react-stripe-js";
 import Stripe from "stripe";
+import { fetchProductPrices } from "./actions";
 
-const stripe_secret = process.env.STRIPE_SECRET || " ";
+const stripe_secret = process.env.STRIPE_SECRET_KEY || " ";
 
 const stripe = new Stripe(stripe_secret);
 
@@ -91,11 +92,32 @@ export const createCheckoutSession = async (line_items: any[]) => {
       mode: "payment",
       return_url: "http://localhost:3000/shop",
     });
-    // console.log("STRIPE CHECKOUT SESSION", session); 
+    // console.log("STRIPE CHECKOUT SESSION", session);
     return session.client_secret;
   } catch (error) {
     console.log("\nERROR creating stripe checkout session\n", error);
   }
 };
 
+// fetches products from DB and sums prices to calculate order amount
+const calculateOrderAmount = async (productIds: number[]) => {
+  const prices = await fetchProductPrices(productIds);
+  // return prices!.reduce((acc, item) => {
+  //   return acc + Number(item.priceInCents);
+  // }, 0);
+  return prices
+};
 
+// ingests an array of product ids and returns a client secret for the payment intent
+// export const stripeCreatePaymentIntent = async (productIds: number[]) => {
+//   try {
+//     const price = await calculateOrderAmount(productIds);
+//     const paymentIntent = await stripe.paymentIntents.create({
+//       amount: price!,
+//       currency: "usd",
+//     });
+//     return paymentIntent.client_secret;
+//   } catch (error) {
+//     console.log("error creating stripe payment intent", error);
+//   }
+// };
