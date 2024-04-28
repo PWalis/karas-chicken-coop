@@ -59,6 +59,7 @@ export default function ChickenSection() {
 
   return (
     <SectionWrapper>
+      <div className="bg-gray-50"> 
     <section id="MeetTheChickens" className="max-w-[1500px] lg:px-4 lg:py-8 mx-auto">
       <h2 className="text-4xl mt-20 md:text-5xl lg:text-7xl uppercase text-center mb-5 lg:mb-20">
         Meet The Chickens
@@ -115,6 +116,7 @@ export default function ChickenSection() {
         </div>
       </div>
     </section>
+    </div>
   </SectionWrapper>
   );
 }
