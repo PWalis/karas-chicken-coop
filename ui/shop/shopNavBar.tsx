@@ -12,16 +12,26 @@ import clsx from "clsx";
 import { useState } from "react";
 import Kcc3 from "../assets/svgs/Kcc3";
 import { CartButton } from "./buttons";
+import SlideCart from "./slideCart";
 
 export default function ShopNavBar() {
   const [navMenu, setNavMenu] = useState(false);
 
+  const [open, setOpen] = useState(false);
+
+  const handleCartButtonClick = () => {
+    setOpen(!open); // Toggle the state of open
+  };
+
   const handleHamburgerClick = () => {
     setNavMenu(!navMenu);
     console.log("nav clicked");
+
+
   };
 
   return (
+    <>
     <nav className="bg-white/90 border-gray-200 dark:bg-gray-900 font-bold text-sm uppercase fixed w-full top-0 z-50">
       <div className="max-w-screen-xl flex flex-wrap gap-1 items-center justify-between mx-auto">
         <div className="flex justify-end items-center">
@@ -30,12 +40,12 @@ export default function ShopNavBar() {
             <h2 className="text-lg block md:text-xl">Kara's Chicken Coop</h2>
           </Link>
         </div>
-        <div className="flex md:order-2 space-x-3 gap-3 md:space-x-0 rtl:space-x-reverse">
-          <div className="hidden sm:block">
-            <CartButton>Shop</CartButton>
+        <div className="flex md:order-2 space-x-3 lg:gap-3 md:space-x-0 rtl:space-x-reverse items-center">
+          <div className="hidden sm:block ">
           </div>
+          <CartButton onClick={handleCartButtonClick}>Shop</CartButton>
           <div className="hidden lg:block">
-            <JoinTheFlockButton></JoinTheFlockButton>
+            <button className=" pr-5 pl-5 pt-3 pb-3 border-solid border-[.25em] border-floc-gray text-floc-gray uppercase"> Checkout </button>
           </div>
           <div className="pr-2">
             <HamburgerMenu
@@ -80,23 +90,22 @@ export default function ShopNavBar() {
                 Follow Us
               </a>
             </li>
-            <li className={clsx(navMenu ? "block sm:hidden" : "hidden")}>
+            <li className={clsx(navMenu ? "block md:hidden" : "hidden")}>
               <a
                 href="#"
                 className={clsx(
-                  " py-2 px-3 md:p-0  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40",
+                  " py-2 px-3 md:p-0 bg-floc-gray text-gray-100 tracking-wider text-center rounded hover:bg-floc-gray/90 md:hover:bg-transparent md:hover:text-floc-gray/40",
                   navMenu ? "block md:hidden" : "hidden"
                 )}
               >
-                Join the flock
+                Checkout
               </a>
-            </li>
-            <li className={clsx(navMenu ? "block sm:hidden" : "hidden")}>
-              <CartButton>Cart</CartButton>
             </li>
           </ul>
         </div>
       </div>
     </nav>
+    {<SlideCart open={open} setOpen={setOpen}></SlideCart>}
+    </>
   );
 }

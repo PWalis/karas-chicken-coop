@@ -1,4 +1,6 @@
 import React from "react"
+import { ReactNode } from "react";
+import CartIcon from "../assets/icons/CartIcon";
 import Link from "next/link"
 
 export const AddToCardButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
@@ -13,8 +15,8 @@ export const FilterButton: React.FC<{ children: React.ReactNode }> = ({ children
     )
 }
 
-export const CartButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
+export const CartButton: React.FC<{ onClick: () => void; children: ReactNode }> = ({ onClick }) => {
     return (
-        <button onClick={onClick} className="w-full h-full sm:block pr-5 pl-5 pt-3 pb-3 bg-floc-yellow uppercase"><Link className="w-full h-full" key="checkout" href="/checkout">Cart</Link></button>
+        <button onClick={onClick} className="w-9 place-items-center"><CartIcon></CartIcon></button>
     )
 }
