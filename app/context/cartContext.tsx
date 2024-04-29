@@ -4,13 +4,15 @@ import { createContext, useContext, useReducer } from "react";
 
 interface CartItem {
   name: string;
-  price: string;
+  priceInCents: number;
   description: string;
   images: string[];
+  primaryImage: string;
   category: string;
   inventory: number;
-  productId: number;
+  id: number;
   stripePriceKey: string;
+  quantity: number;
 }
 
 interface CartState {
@@ -33,7 +35,7 @@ const cartReducer = (state: CartState, action: CartAction) => {
       return { items: [...state.items, action.payload] };
     case "REMOVE":
       return {
-        items: state.items.filter((item) => item.productId !== action.payload),
+        items: state.items.filter((item) => item.id !== action.payload), // this will not work yet because we don't have a unique id for each productsize
       };
     default:
       return state;

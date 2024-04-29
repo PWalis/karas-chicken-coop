@@ -17,7 +17,7 @@ model products {
   id          Int      @id @default(autoincrement())
   name        String
   description String
-  priceInCents BigInt
+  priceInCents Int
   category    categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId  Int 
   inventory   inventory? 
