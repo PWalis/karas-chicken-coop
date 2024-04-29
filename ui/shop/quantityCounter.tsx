@@ -1,10 +1,10 @@
 export const QuantityCounter: React.FC = () => {
   return (
     <div className="flex gap-2 mb-2">
-      <form className="flex place-items-baseline gap-2 flex-row max-w-xs">
+      <form className="flex gap-2 flex-col max-w-xs place-items-center">
         <label
           htmlFor="quantity-input"
-          className="block mb-2 text-md font-medium text-gray-900 dark:text-white"
+          className="block text-md font-medium text-gray-900 dark:text-white"
         >
           Choose Quantity:
         </label>
