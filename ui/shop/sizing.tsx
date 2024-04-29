@@ -2,20 +2,26 @@
 import React, { useState } from 'react';
 import SizingButton from './sizingButton';
 
-const Sizing: React.FC = () => {
-  const [selectedSize, setSelectedSize] = useState('');
+interface SizingProps {
+  size: string;
+  setSize: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export const Sizing: React.FC<SizingProps> = ({ size, setSize }) => {
 
   const handleSelectSize = (size: string) => {
-    setSelectedSize(size);
+    setSize(size);
   };
+
+
 
   return (
     <div className="flex gap-2 mb-3">
-      <SizingButton size="XS" selected={selectedSize === "XS"} onClick={() => handleSelectSize("XS")} />
-      <SizingButton size="S" selected={selectedSize === "S"} onClick={() => handleSelectSize("S")} />
-      <SizingButton size="M" selected={selectedSize === "M"} onClick={() => handleSelectSize("M")} />
-      <SizingButton size="L" selected={selectedSize === "L"} onClick={() => handleSelectSize("L")} />
-      <SizingButton size="XXL" selected={selectedSize === "XXL"} onClick={() => handleSelectSize("XXL")} />
+      <SizingButton size="XS" selected={size === "XS"} onClick={() => handleSelectSize("XS")} />
+      <SizingButton size="S" selected={size === "S"} onClick={() => handleSelectSize("S")} />
+      <SizingButton size="M" selected={size === "M"} onClick={() => handleSelectSize("M")} />
+      <SizingButton size="L" selected={size === "L"} onClick={() => handleSelectSize("L")} />
+      <SizingButton size="XXL" selected={size === "XXL"} onClick={() => handleSelectSize("XXL")} />
     </div>
   );
 };

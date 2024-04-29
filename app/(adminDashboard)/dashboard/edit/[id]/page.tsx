@@ -11,15 +11,16 @@ export default async function EditProductPage({
   const product = (await fetchProductById(Number(id))) as any;
   const categories = (await fetchCategories()) as any;
 
-  console.log(categories)
+  console.log(categories);
 
   return (
-    <div className="flex justify-center w-full">
+    <div className="flex justify-center w-full overflow-auto">
       <EditProductForm
         productId={product.id}
         name={product.name}
         description={product.description}
         price={product.priceInCents}
+        primaryImage={product.primaryImage}
         inventory={product.inventory}
         category={product.category.name}
         images={product.images}

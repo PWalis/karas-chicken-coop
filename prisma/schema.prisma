@@ -17,10 +17,11 @@ model products {
   id          Int      @id @default(autoincrement())
   name        String
   description String
-  priceInCents BigInt
+  priceInCents Int
   category    categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId  Int 
   inventory   inventory? 
+  primaryImage String
   images      String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -41,12 +42,14 @@ model inventory {
   id          Int      @id @default(autoincrement())
   productId   Int      @unique
   product     products? @relation(fields: [productId], references: [id], onDelete: Cascade)
-  xs_quantity    Int
-  s_quantity     Int
-  m_quantity     Int
-  l_quantity     Int
-  xl_quantity    Int
-  xxl_quantity   Int
+  quantity    Int
+  hasSizes    Boolean
+  xs_quantity    Int  @default(0)
+  s_quantity     Int  @default(0)
+  m_quantity     Int  @default(0)
+  l_quantity     Int  @default(0)
+  xl_quantity    Int  @default(0)
+  xxl_quantity   Int  @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
