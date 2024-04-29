@@ -8,7 +8,7 @@ export default function JoinTheFlock() {
 <section id="JoinTheFlock" className="bg-cover relative newsletter h-screen">
 <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div className="mx-auto max-w-screen-md sm:text-center">
-          <h2 className="mb-4 text-3xl tracking-tight font-extrabold text-floc-gray sm:text-6xl mt-20 uppercase">Join The Flock</h2>
+          <h2 className="mb-4 text-3xl font-extrabold text-floc-gray sm:text-6xl lg:text-8xl mt-20 uppercase">Join The Flock</h2>
           <p className="mx-auto mb-2 font-light text-gray-500 md:mb-4 sm:text-xl max-w-screen-sm">join our newsletter and be among the first to discover specials, re-stocks, and so much more!</p>
           <SectionWrapper>
           <form action="#">

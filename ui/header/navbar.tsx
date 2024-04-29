@@ -16,7 +16,7 @@ export default function NavBar() {
 
   return (
     <nav className="bg-white/90 backdrop-blur-md border-gray-200 dark:bg-gray-900 font-bold text-sm uppercase fixed w-full top-0 z-50">
-      <div className="max-w-screen-xl flex flex-wrap gap-1 items-center justify-between mx-auto">
+      <div className="max-w-screen-2xl flex flex-wrap gap-1 items-center justify-between mx-auto">
         <div className="flex justify-end items-center">
           <Link className="flex items-center" href="/">
             <Kcc3 className="h-20 lg:h-[90px] p-2 flex justify-end items-center w-auto" />

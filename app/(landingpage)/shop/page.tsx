@@ -10,6 +10,7 @@ import { ShopCarousel } from "@/ui/landingPage/components/shopCarousel";
 import { SectionWrapper } from "@/ui/assets/animation/section-wrapper";
 import ShopNavBar from "@/ui/shop/shopNavBar";
 import Footer from "@/ui/footer/footer";
+import silkie_doodle_2 from "@/ui/assets/silkie_doodle_2.png";
 import { FAQ } from "@/ui/shop/FAQ";
 
 
@@ -19,23 +20,23 @@ export default function Shop() {
       <ShopNavBar></ShopNavBar>
       <SectionWrapper>
         <div className="flex justify-center pt-10">
-          <h1 className="text-6xl text-center mt-20 mb-10">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl text-center mt-20 mb-10">
             KARA'S CHICKEN COOP SHOP
           </h1>
         </div>
         <div className="flex justify-center">
-          <div className="max-w-screen-lg">
-            <ShopCarousel
+          <div className="max-w-screen-sm">
+            {/* <ShopCarousel
               image1={mike_shirt1}
               image2={autumn_shirt1}
               image3={autumn_shirt2}
               image4={mike_shirt2}
-            ></ShopCarousel>
+            ></ShopCarousel> */}
           </div>
         </div>
-        <h2 className="text-4xl text-center justify-center mt-10 uppercase">
-          {" "}
-          Products{" "}
+        <hr className=" border-gray-200 w-[40%] sm:mx-auto dark:border-gray-700" />
+        <h2 className="text-5xl text-center justify-center mt-10 uppercase">
+          Products
         </h2>
         <ProductFilter></ProductFilter>
         <div className="block justify-center sm:grid sm:grid-cols-6">
@@ -43,9 +44,10 @@ export default function Shop() {
             <Products />
           </div>
         </div>
-        <h2 className="text-4xl text-center mb-10 uppercase mt-10"> COMMON SHOP FAQ </h2>
+        <hr className="mt-10 border-gray-200 w-[40%] sm:mx-auto dark:border-gray-700" />
+        <h2 className="text-5xl text-center mb-10 uppercase mt-10 "> COMMON SHOP FAQ </h2>
         <div className="flex justify-center">
-          <div className="max-w-screen-xl">
+          <div className="max-w-screen-md mb-20">
             <FAQ></FAQ>
           </div>
         </div>
