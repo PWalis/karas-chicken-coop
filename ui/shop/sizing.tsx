@@ -1,23 +1,23 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from 'react';
+import SizingButton from './sizingButton';
 
-export const Sizing: React.FC = () => {
+const Sizing: React.FC = () => {
+  const [selectedSize, setSelectedSize] = useState('');
 
-    const [isActive, setIsActive] = useState(false);
-  
-    const handleClick = () => {
-      setIsActive(!isActive);
-    };
+  const handleSelectSize = (size: string) => {
+    setSelectedSize(size);
+  };
 
   return (
     <div className="flex gap-2 mb-3">
-      <button className={`bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-sm w-10 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none ${isActive ? 'bg-gray-200 dark:bg-gray-600' : ''}`}
-      onClick={handleClick}> XS </button>
-      <button className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-sm w-10 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"> S </button>
-      <button className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-sm w-10 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"> M </button>
-      <button className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-sm w-10 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"> L </button>
-      <button className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-sm w-10 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"> XXL </button>
-      <button className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-sm w-10 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"> S </button>
+      <SizingButton size="XS" selected={selectedSize === "XS"} onClick={() => handleSelectSize("XS")} />
+      <SizingButton size="S" selected={selectedSize === "S"} onClick={() => handleSelectSize("S")} />
+      <SizingButton size="M" selected={selectedSize === "M"} onClick={() => handleSelectSize("M")} />
+      <SizingButton size="L" selected={selectedSize === "L"} onClick={() => handleSelectSize("L")} />
+      <SizingButton size="XXL" selected={selectedSize === "XXL"} onClick={() => handleSelectSize("XXL")} />
     </div>
   );
 };
+
+export default Sizing;
