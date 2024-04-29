@@ -1,5 +1,5 @@
 "use client";
-import { createProduct, fetchCategories } from "@/app/lib/actions";
+import { createProduct } from "@/app/lib/actions";
 import { CheckMark } from "./checkmark";
 import React, { useState } from "react";
 
@@ -9,6 +9,7 @@ interface CreateProps {
 
 export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
   const [showOptions, setShowOptions] = useState(false);
+  const createProductWithSize = createProduct.bind(null, { size: showOptions });
 
   const toggleOptions = () => {
     setShowOptions(!showOptions);
@@ -24,7 +25,7 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
   return (
     <div className="flex justify-center w-full h-fit">
       <form
-        action={createProduct}
+        action={createProductWithSize}
         className="flex flex-col gap-2 min-w-[346px] w-fit justify-center drop-shadow-md bg-white h-fill border rounded-md p-3"
       >
         <label htmlFor="name">Name</label>
@@ -129,6 +130,8 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
             </ul>
           )}
         </div>
+        <label htmlFor="primaryImage">Primary Image</label>
+        <input type="file" id="primaryImage" name="primaryImage" required />
         <label htmlFor="image">Choose Images</label>
         <input type="file" id="image" name="image" multiple required />
         <div className="flex justify-center">
