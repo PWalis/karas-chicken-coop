@@ -6,6 +6,7 @@ import {
   uploadProductImagesAndReturnUrls,
   deleteFile,
   getPresignedUrl,
+  uploadImageAndReturnUrl,
 } from "./S3Controller";
 import { redirect } from "next/navigation";
 import {
@@ -20,12 +21,17 @@ import {
   stripeUpdateProduct,
 } from "./stripe";
 
-const MAX_UPLOAD_SIZE = 1024 * 1024 * 7; //7MB
+const MAX_UPLOAD_SIZE = 1024 * 1024 * 30; //30MB
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
 
 type updateBindData = {
   productId: number;
   images: string[];
+  primaryImage: string;
+};
+
+type createProductBindData = {
+  size: boolean;
 };
 
 const ImageSchema = z
@@ -43,15 +49,16 @@ const FormSchema = z.object({
   name: z.string({ required_error: "Name is required" }),
   price: z.coerce.number({ required_error: "Price is required" }),
   description: z.string({ required_error: "Description is required" }),
+  primaryImage: z.array(ImageSchema).nonempty({ message: "Image is required" }),
   image: z.array(ImageSchema).nonempty({ message: "Image is required" }),
   category: z.string().nullable(),
   newCategory: z.string().nullable(),
-  xs: z.coerce.number({ required_error: "XS is required" }),
-  small: z.coerce.number({ required_error: "Small is required" }),
-  medium: z.coerce.number({ required_error: "Medium is required" }),
-  large: z.coerce.number({ required_error: "Large is required" }),
-  xl: z.coerce.number({ required_error: "XL is required" }),
-  xxl: z.coerce.number({ required_error: "XXL is required" }),
+  xs: z.coerce.number().nullable(),
+  small: z.coerce.number().nullable(),
+  medium: z.coerce.number().nullable(), 
+  large: z.coerce.number().nullable(),
+  xl: z.coerce.number().nullable(),
+  xxl: z.coerce.number().nullable(),
 });
 
 const ItemOrderSchema = z.object({
@@ -184,8 +191,7 @@ export const fetchProductById = async (id: number) => {
   }
 };
 
-export async function createProduct(formData: FormData) {
-  // this may not work as expected
+export async function createProduct({size}: createProductBindData, formData: FormData ) {
   const validatedData = FormSchema.refine(
     (data) => data.newCategory || data.category,
     {
@@ -196,6 +202,7 @@ export async function createProduct(formData: FormData) {
     name: formData.get("name"),
     price: formData.get("price"),
     description: formData.get("description"),
+    primaryImage: formData.getAll("primaryImage"),
     image: formData.getAll("image"),
     category: formData.get("category"),
     newCategory: formData.get("newCategory"),
@@ -206,8 +213,6 @@ export async function createProduct(formData: FormData) {
     xl: formData.get("xl"),
     xxl: formData.get("xxl"),
   });
-
-  // console.log("validation step", formData.getAll("image"));
 
   if (!validatedData.success) {
     console.log(
@@ -228,6 +233,7 @@ export async function createProduct(formData: FormData) {
     category: validatedData.data.newCategory
       ? validatedData.data.newCategory
       : validatedData.data.category,
+    primaryImage: validatedData.data.primaryImage,
     image: validatedData.data.image,
     xs: validatedData.data.xs,
     small: validatedData.data.small,
@@ -241,6 +247,7 @@ export async function createProduct(formData: FormData) {
 
   //upload images and get urls
   const imageUrls = await uploadProductImagesAndReturnUrls(data.image);
+  const primaryImageUrl = await uploadProductImagesAndReturnUrls(data.primaryImage);
 
   const priceInCents = data.price * 100;
 
@@ -264,15 +271,18 @@ export async function createProduct(formData: FormData) {
             create: { name: data.category! },
           },
         },
+        primaryImage: primaryImageUrl[0],
         images: imageUrls,
         inventory: {
           create: {
-            xs_quantity: data.xs,
-            s_quantity: data.small,
-            m_quantity: data.medium,
-            l_quantity: data.large,
-            xl_quantity: data.xl,
-            xxl_quantity: data.xxl,
+            hasSizes: size,
+            quantity: 0,
+            xs_quantity: data.xs != null ? data.xs : 0,
+            s_quantity: data.small != null ? data.small : 0,
+            m_quantity: data.medium != null ? data.medium : 0,
+            l_quantity: data.large != null ? data.large : 0,
+            xl_quantity: data.xl != null ? data.xl : 0,
+            xxl_quantity: data.xxl != null ? data.xxl : 0,
           },
         },
       },
@@ -354,10 +364,10 @@ export async function deleteProduct(productId: number) {
 }
 
 export async function updateProduct(
-  { productId, images }: updateBindData,
+  { productId, images, primaryImage }: updateBindData,
   formData: FormData
 ) {
-  const FormSchemaNoImageRequired = FormSchema.omit({ image: true });
+  const FormSchemaNoImageRequired = FormSchema.omit({ image: true, primaryImage: true});
 
   const validatedData = FormSchemaNoImageRequired.refine(
     (data) => data.newCategory || data.category,
@@ -400,6 +410,7 @@ export async function updateProduct(
     category: validatedData.data.newCategory
       ? validatedData.data.newCategory
       : validatedData.data.category,
+    primaryImage: formData.get("primaryImage") as any,
     image: formData.getAll("image") as any,
     xs: validatedData.data.xs,
     small: validatedData.data.small,
@@ -414,6 +425,11 @@ export async function updateProduct(
   if (data.image[0].size != 0) {
     const imageUrls = await uploadProductImagesAndReturnUrls(data.image);
     images = images.concat(imageUrls);
+  }
+
+  if (data.primaryImage.size != 0) {
+    const primaryImageUrl = await uploadImageAndReturnUrl(data.primaryImage);
+    primaryImage = primaryImageUrl;
   }
 
   const priceInCents = data.price * 100;
@@ -433,15 +449,16 @@ export async function updateProduct(
             create: { name: data.category! },
           },
         },
+        primaryImage: primaryImage,
         images: images,
         inventory: {
           update: {
-            xs_quantity: data.xs,
-            s_quantity: data.small,
-            m_quantity: data.medium,
-            l_quantity: data.large,
-            xl_quantity: data.xl,
-            xxl_quantity: data.xxl,
+            xs_quantity: data.xs!,
+            s_quantity: data.small!,
+            m_quantity: data.medium!,
+            l_quantity: data.large!,
+            xl_quantity: data.xl!,
+            xxl_quantity: data.xxl!,
           },
         },
       },

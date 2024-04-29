@@ -13,7 +13,8 @@ interface ProductProps {
   name: string;
   price: number;
   description: string;
-  images: string[];
+  primaryImage: string; 
+  // images: string[];
   category: string;
   inventory: {
     xs_quantity: number;
@@ -30,7 +31,8 @@ export const Product: React.FC<ProductProps> = ({
   name,
   price,
   description,
-  images,
+  primaryImage,
+  // images,
   category,
   inventory,
 }) => {
@@ -53,7 +55,7 @@ export const Product: React.FC<ProductProps> = ({
       )}
     >
       <div className="flex flex-col justify-center place-items-center overflow-auto h-fit w-fit pr-2">
-        {images.map((image, index) => {
+        {/* {images.map((image, index) => {
           return (
             <img
               src={image}
@@ -62,7 +64,13 @@ export const Product: React.FC<ProductProps> = ({
               key={index}
             />
           );
-        })}
+        })} */}
+        <img
+              src={primaryImage}
+              alt={"1"}
+              className="object-cover w-32 h-32 rounded-xl mt-1"
+              key={"1"}
+            />
         <h3 className="text-2xl font-bold">{name}</h3>
       </div>
       <div className="flex flex-col  gap-2">

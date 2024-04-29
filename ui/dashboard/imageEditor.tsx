@@ -33,7 +33,7 @@ export const ImageEditor: React.FC<imageEditorProps> = ({
 
   return (
     <div
-      className="relative flex flex-row flex-wrap justify-center max-h-32 gap-2 hover:cursor-pointer"
+      className="relative flex flex-row shrink-0 justify-center max-h-32 gap-2 hover:cursor-pointer"
       ref={hoverRef}
       onClick={deleteImageHandler}
     >

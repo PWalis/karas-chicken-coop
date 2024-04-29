@@ -14,7 +14,7 @@ export const ProductsList: React.FC = async () => {
             name={product.name}
             price={product.priceInCents}
             description={product.description}
-            images={product.images}
+            primaryImage={product.primaryImage}
             category={product.category.name}
             inventory={product.inventory}
             key={product.id}

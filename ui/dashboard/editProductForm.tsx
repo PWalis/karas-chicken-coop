@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { ImageEditor } from "./imageEditor";
 import { updateProduct } from "@/app/lib/actions";
 interface ProductProps {
@@ -8,6 +9,7 @@ interface ProductProps {
   name: string;
   price: BigInt;
   description: string;
+  primaryImage: string;
   images: string[];
   category: string;
   categories: any;
@@ -27,17 +29,23 @@ export const EditProductForm: React.FC<ProductProps> = ({
   description,
   category,
   inventory,
+  primaryImage,
   images,
   productId,
-  categories
+  categories,
 }) => {
   const updateProductWithProductId = updateProduct.bind(null, {
     productId: productId,
     images: images,
+    primaryImage: primaryImage,
   });
 
   const options = categories.map((category: any, index: number) => {
-    return <option value={category.name} key={index}>{category.name}</option>;
+    return (
+      <option value={category.name} key={index}>
+        {category.name}
+      </option>
+    );
   });
 
   return (
@@ -68,7 +76,7 @@ export const EditProductForm: React.FC<ProductProps> = ({
         name="category"
         defaultValue={category ? category : ""}
       >
-        <option value={category ? category : ""} disabled hidden>
+        <option value={category ? category : ""} hidden>
           {category ? category : "Select an option"}
         </option>
         {options}
@@ -143,14 +151,37 @@ export const EditProductForm: React.FC<ProductProps> = ({
           />
         </li>
       </ul>
-      <label htmlFor="image">Image</label>
-      <input type="file" id="image" name="image" multiple />
-      <div className="flex flex-row justify-center gap-2">
-        {images.map((image, index) => {
-          return (
-            <ImageEditor image={image} key={index} productId={productId} />
-          );
-        })}
+      <div className="flex flex-row">
+        <div>
+          <label htmlFor="primaryImage">Primary Image</label>
+          <input type="file" id="primaryImage" name="primaryImage" />
+        </div>
+        <div>
+          <label htmlFor="image">Add Image</label>
+          <input type="file" id="image" name="image" multiple />
+        </div>
+      </div>
+      <div className="flex flex-row gap-10">
+        <div className="w-36">
+          <label>Primary Image</label>
+          <Image
+            src={primaryImage}
+            alt="Primary Image"
+            key="primaryImage"
+            width={144}
+            height={144}
+          />
+        </div>
+        <div className="">
+          <label>Images</label>
+          <div className="flex flex-row gap-2">
+            {images.map((image, index) => {
+              return (
+                <ImageEditor image={image} key={index} productId={productId} />
+              );
+            })}
+          </div>
+        </div>
       </div>
       <button type="submit">Submit</button>
     </form>
