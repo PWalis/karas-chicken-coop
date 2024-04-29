@@ -77,7 +77,7 @@ export default function BecomeFamilySection() {
             ></FamilyGallery>
           </div>
           <SectionWrapper>
-          <div className=" flex flex-wrap justify-center place-self-center gap-10 ">
+          <div className="flex flex-wrap justify-center place-self-center gap-5 lg:gap-10">
             <a
               style={{ display: "table-cell" }}
               href="https://www.facebook.com/FlaminHotChickens"
@@ -94,12 +94,14 @@ export default function BecomeFamilySection() {
             >
               <InstagramIcon className="h-[90px] w-[90px] lg:h-[100px] lg:w-[100px] mb-6"></InstagramIcon>
             </a>
+            <div className="flex gap-5 lg:gap-10">
             <a
               style={{ display: "table-cell" }}
               href="https://www.youtube.com/channel/UCs5wYfoADhI94TLGWbEMdYQ"
               target="_blank"
               rel="noopener noreferrer"
             >
+            
               <YoutubeIcon className="h-[90px] w-[90px] lg:h-[100px] lg:w-[100px] mb-6"></YoutubeIcon>
             </a>
             <a
@@ -110,6 +112,7 @@ export default function BecomeFamilySection() {
             >
               <TiktokIcon className="h-[90px] w-[90px] lg:h-[100px] lg:w-[100px] mb-6"></TiktokIcon>
             </a>
+            </div>
           </div>
           </SectionWrapper>
         </div>
