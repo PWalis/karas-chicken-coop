@@ -45,10 +45,11 @@ export default function ShopNavBar() {
               <CartButton onClick={handleCartButtonClick}>Shop</CartButton>
             </div>
             <div className="hidden lg:block">
-              <button className=" pr-5 pl-5 pt-3 pb-3 border-solid border-[.25em] border-floc-gray text-floc-gray uppercase">
-                {" "}
-                Checkout{" "}
-              </button>
+              <Link href="/checkout">
+                <button className=" pr-5 pl-5 pt-3 pb-3 border-solid border-[.25em] border-floc-gray text-floc-gray uppercase">
+                  Checkout
+                </button>
+              </Link>
             </div>
             <div className="pr-2">
               <HamburgerMenu

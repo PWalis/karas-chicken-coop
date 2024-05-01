@@ -41,7 +41,7 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
   }, [showAlert]);
 
   const addToCartHandler = () => {
-    dispatch({ type: "ADD", payload: { ...product, size, quantity } });
+    dispatch({ type: "ADD", payload: { ...product, size: size, quantity: quantity } });
     setQuantity(1);
     // Show the alert when the item is added to the cart
     setShowAlert(true);
