@@ -13,15 +13,20 @@ interface CartItem {
   id: number;
   stripePriceKey: string;
   quantity: number;
+  itemId: string;
+  size: string;
 }
 
 interface CartState {
   items: CartItem[];
+  paymentIntentId: string;
 }
 
 type CartAction =
   | { type: "ADD"; payload: CartItem }
-  | { type: "REMOVE"; payload: number };
+  | { type: "REMOVE"; payload: string }
+  | { type: "SET_PAYMENT_INTENT_ID"; payload: string }
+  | { type: "SET_QUANTITY"; payload: { itemId: string, quantity: number } };
 
 const CartStateContext = createContext<CartState | undefined>(undefined);
 
@@ -32,10 +37,41 @@ const CartDispatchContext = createContext<
 const cartReducer = (state: CartState, action: CartAction) => {
   switch (action.type) {
     case "ADD":
-      return { items: [...state.items, action.payload] };
+      const uuid = Math.random().toString(36).substring(7);
+      // update the quantity of the item if it already exists in the cart
+      const existingItem = state.items.find(
+        (item) => item.id === action.payload.id && item.size === action.payload.size
+      );
+      if (existingItem) {
+        return {
+          ...state,
+          items: state.items.map((item) =>
+            item.id === action.payload.id
+              ? { ...item, quantity: item.quantity + action.payload.quantity }
+              : item
+          ),
+        };
+      }
+      action.payload.itemId = uuid;
+      return {...state, items: [...state.items, action.payload] };
     case "REMOVE":
       return {
-        items: state.items.filter((item) => item.id !== action.payload), // this will not work yet because we don't have a unique id for each productsize
+        ...state,
+        items: state.items.filter((item) => item.itemId !== action.payload),
+      };
+    case "SET_PAYMENT_INTENT_ID":
+      return {
+        ...state,
+        paymentIntentId: action.payload,
+      };
+    case "SET_QUANTITY":
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.itemId === action.payload.itemId
+            ? { ...item, quantity: action.payload.quantity }
+            : item
+        ),
       };
     default:
       return state;
@@ -45,7 +81,7 @@ const cartReducer = (state: CartState, action: CartAction) => {
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [state, dispatch] = useReducer(cartReducer, { items: [] });
+  const [state, dispatch] = useReducer(cartReducer, { items: [], paymentIntentId: "" } as CartState);
 
   return (
     <CartStateContext.Provider value={state}>
