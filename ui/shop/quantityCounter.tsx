@@ -23,8 +23,8 @@ export const QuantityCounter: React.FC<QuantityCounterProps> = ({ quantity, setQ
   };
 
   return (
-    <div className="flex gap-2 mb-2">
-      <form className="flex gap-2 flex-col max-w-xs place-items-center">
+    <div className="flex mb-2">
+      <form className="flex flex-col justify-center max-w-xs">
         <label
           htmlFor="quantity-input"
           className="block text-md font-medium text-gray-900 dark:text-white"

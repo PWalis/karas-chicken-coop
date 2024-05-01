@@ -35,7 +35,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
             <div className="flex flex-col text-center lg:text-left place-items-center lg:place-items-start">
               <ProductDescription description={product?.description!} name={product?.name!} />
               <EditQuantityAndSize product={product}/>
-              <div className="max-w-[600px]">
+              <div className="max-w-[600px]  mt-4 mx-4">
                 <FAQ></FAQ>
               </div>
           </div>

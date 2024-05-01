@@ -20,6 +20,7 @@ const config: Config = withMT({
       },
       colors: {
         "floc-yellow": "#F9E215",
+        "light-yellow": "#fce96a",
         "floc-gray": "#1E1E1E",
       },
       fontFamily: {

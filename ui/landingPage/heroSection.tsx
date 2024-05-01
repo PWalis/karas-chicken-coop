@@ -32,7 +32,7 @@ export default function HeroSection() {
             </h2>
             <div className="flex mt-8 gap-3">
           <HeroCTA />
-          <button className="inline-flex items-center justify-center px-5 py-2 text-xl text-center text-white border-[.15em] bg-floc-gray border-floc-gray uppercase"> SHOP STYLES </button>
+          <button className="inline-flex items-center justify-center px-5 py-2 text-xl text-center text-white tracking-wide bg-floc-gray hover:bg-floc-gray/90 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-md uppercase"> SHOP STYLES </button>
           </div>
         </div>
         <div className="mt-0 lg:col-span-6 lg:order-last flex w-auto order-first max-w-[800px] just">

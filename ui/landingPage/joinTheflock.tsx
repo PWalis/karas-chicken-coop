@@ -26,7 +26,7 @@ export default function JoinTheFlock() {
                       <button type="submit" className="py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300  bg-floc-gray">SUBMIT</button>
                   </div>
               </div>
-              <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer ">You can unsubscribe at any time through your email. </div>
+              <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer ">by submitting your email, you agree to sign up for our newsletter and receive promotional emails. You may unsubscribe at any time. </div>
           </form>
           </SectionWrapper>
       </div>
