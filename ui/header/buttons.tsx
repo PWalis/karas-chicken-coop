@@ -104,7 +104,7 @@ export function HeroCTA({}: Readonly<{}>) {
   return (
     <a
       href="/#JoinTheFlock"
-      className="inline-flex items-center justify-center px-5 py-3 text-xl text-center text-floc-gray  bg-floc-yellow uppercase"
+      className="inline-flex items-center justify-center px-5 py-3 text-xl text-center bg-floc-yellow uppercase hover:bg-light-yellow focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-md"
     >
       Join The Flock
     </a>

@@ -6,7 +6,7 @@ import TiktokIcon from "@/ui/assets/icons/tiktok-icon";
 
 export default function Footer() {
   return (
-    <footer className="bg-white dark:bg-gray-900">
+    <footer className="bg-gray-50 dark:bg-gray-900">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
@@ -16,6 +16,24 @@ export default function Footer() {
                 Kara's Chicken Coop
               </span>
             </a>
+            <div className="flex-col flex lg:flex-row justify-center place-items-center lg:place-items-baseline lg:gap-2 text-center mt-4 m-2">
+              <p className="text-xl text-center sm:text-left"> Join the Flock! </p>
+              <div className="max-w-[300px]">
+                <label className="input input-bordered flex items-center gap-2 bg-white text-floc-gray">
+                  Email
+                  <input
+                    type="text"
+                    className="grow border-white text-gray-500"
+                    placeholder="youremail@site.com"
+                  />
+                </label>
+                <p className="text-xs text-floc-gray/70 pt-2">
+                  by submitting your email, you agree to sign up for our
+                  newsletter and receive promotional emails. You may unsubscribe
+                  at any time.
+                </p>
+              </div>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>
@@ -24,7 +42,7 @@ export default function Footer() {
                   HOME
                 </h2>
               </a>
-              <ul className="text-floc-gray/70 font-medium">
+              <ul className="text-floc-gray/90 font-medium">
                 <li className="mb-4">
                   <a
                     href="/#MeetTheChickens"
@@ -52,7 +70,7 @@ export default function Footer() {
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                 Follow us
               </h2>
-              <ul className="text-floc-gray/70 dark:text-gray-400 font-medium">
+              <ul className="text-floc-gray/90 dark:text-gray-400 font-medium">
                 <li className="mb-2">
                   <a
                     className="hover:text-floc-gray/40"
@@ -66,7 +84,7 @@ export default function Footer() {
                 </li>
                 <li className="mb-2">
                   <a
-                  className="hover:text-floc-gray/40"
+                    className="hover:text-floc-gray/40"
                     style={{ display: "table-cell" }}
                     href="https://www.instagram.com/karaschickens/"
                     target="_blank"
@@ -77,7 +95,7 @@ export default function Footer() {
                 </li>
                 <li className="mb-2">
                   <a
-                  className="hover:text-floc-gray/40"
+                    className="hover:text-floc-gray/40"
                     style={{ display: "table-cell" }}
                     href="https://www.tiktok.com/@karas.chicken.coop"
                     target="_blank"
@@ -103,7 +121,7 @@ export default function Footer() {
               <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                 FAQs
               </h2>
-              <ul className="text-floc-gray/70 dark:text-gray-400 font-medium">
+              <ul className="text-floc-gray/90 dark:text-gray-400 font-medium">
                 <li className="mb-4">
                   <a href="/shop/#FAQ" className="hover:text-floc-gray/40">
                     Shop FAQ

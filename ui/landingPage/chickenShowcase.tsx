@@ -61,7 +61,7 @@ export default function ChickenSection() {
     <SectionWrapper>
       <div className="bg-gray-50"> 
     <section id="MeetTheChickens" className="max-w-[1500px] lg:px-4 lg:py-8 mx-auto">
-      <h2 className="text-4xl mt-20 md:text-5xl lg:text-7xl uppercase text-center mb-5 lg:mb-20">
+      <h2 className="text-4xl mt-20 md:text-5xl lg:text-8xl uppercase text-center mb-5 lg:mb-20">
         Meet The Chickens
       </h2>
       <div className="flex flex-col lg:flex-row lg:gap-4">
@@ -84,12 +84,12 @@ export default function ChickenSection() {
         <div className="flex flex-col lg:w-1/2 justify-around">
           <div className="items-center my-12 mx-4 lg:my-0 lg:mx-0">
             <SectionWrapper>
-            <h3 id="ChickenName" className="text-3xl lg:text-4xl mb-2">
+            <h3 id="ChickenName" className="text-3xl lg:text-5xl mb-2">
               {chickenName}
             </h3>
             <p
               id="ChickenDescription"
-              className="max-w-[300px] text-xl lg:text-xl lg:max-w-[450px] text-floc-gray/80"
+              className="max-w-[300px] text-xl lg:text-xl lg:max-w-[450px] text-floc-gray/90"
             >
               {chickenDescription}
             </p>

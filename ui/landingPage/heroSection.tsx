@@ -22,21 +22,21 @@ export default function HeroSection() {
   return (
     <SectionWrapper>
       <section id="HeroSection">
-      <div className="grid max-w-screen-xl h-screen md:px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-10 lg:grid-cols-12 place-content-center">
+      <div className="grid max-w-screen-2xl h-screen md:px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-10 lg:grid-cols-12 place-content-center">
         <div className="mr-auto lg:place-self-center lg:col-span-6 sm:text-left text-center place-items-center">
-          <h1 className="max-w-2xl  text-5xl lg:text-7xl xl:text-8xl font-extrabold leading-none uppercase tracking-widest">
+          <h1 className=" text-5xl lg:text-7xl xl:text-9xl font-extrabold leading-none uppercase tracking-wider">
           Welcome to the Coop!
           </h1>
-           <h2 className="max-w-2xl font-light text-gray-500 lg:mb-2 md:text-xl lg:text-2xl dark:text-gray-400 tracking-widest">
+           <h2 className="max-w-2xl font-light text-floc-gray lg:mb-2 md:text-xl lg:text-2xl dark:text-gray-400 tracking-wider uppercase">
               Kara's Chicken Coop
             </h2>
-          <h3 className="max-w-2xl mb-4 font=light text-gray-400 lg:mb-6">
-            Where every chicken is special.
-          </h3>
+            <div className="flex mt-8 gap-3">
           <HeroCTA />
+          <button className="inline-flex items-center justify-center px-5 py-2 text-xl text-center text-white tracking-wide bg-floc-gray hover:bg-floc-gray/90 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-md uppercase"> SHOP STYLES </button>
+          </div>
         </div>
-        <div className="mt-0 lg:col-span-6 lg:order-last flex w-auto order-first max-w-[600px] just">
-            <div className="mt-0 lg:col-span-6 lg:order-last flex w-auto order-first max-w-[600px]">
+        <div className="mt-0 lg:col-span-6 lg:order-last flex w-auto order-first max-w-[800px] just">
+            <div className="mt-0 lg:col-span-6 lg:order-last flex w-auto order-first max-w-[800px]">
           <Image
             src={barnhouseraster}
             alt="Barnhouse Hero Section"

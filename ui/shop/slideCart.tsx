@@ -15,6 +15,7 @@ interface SlideCartProps {
 export default function SlideCart({ open, setOpen }: SlideCartProps) {
   const cart = useCart();
   const dispatch = useCartDispatch();
+  
   const products = cart.items.map((item) => {
     return {
       id: item.id,
@@ -88,8 +89,8 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
                 >
                   <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
                     <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
-                      <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
-                        <div className="flex items-start justify-between">
+                      <div className="flex-1 overflow-y-auto no-scrollbar px-4 sm:px-6">
+                        <div className="flex items-start justify-between sticky top-0 bg-white/70 backdrop-blur-sm h-fill pt-3 pb-2">
                           <Dialog.Title className="text-lg font-medium text-gray-900 uppercase">
                             Shopping Cart
                           </Dialog.Title>
@@ -101,7 +102,18 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
                             >
                               <span className="absolute -inset-0.5" />
                               <span className="sr-only">Close panel</span>
-                              <p>X</p>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="stroke-current h-4 w-4"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M2 4.236a1 1 0 011.414-1.414L10 8.586l6.293-6.293a1 1 0 111.414 1.414L11.414 10l6.293 6.293a1 1 0 01-1.414 1.414L10 11.414l-6.293 6.293a1 1 0 01-1.414-1.414L8.586 10 2.293 3.707A1 1 0 012 4.236z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
                             </button>
                           </div>
                         </div>
