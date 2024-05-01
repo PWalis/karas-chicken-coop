@@ -22,7 +22,7 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({ produc
   };
 
   const addToCartHandler = () => {
-    dispatch({ type: "ADD", payload: { ...product, size, quantity } });
+    dispatch({ type: "ADD", payload: { ...product, size: size, quantity: quantity } });
     setQuantity(1);
     console.log(product, size, quantity);
   };

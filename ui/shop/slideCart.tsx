@@ -5,6 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { CartButton } from "./buttons";
 import { useCart } from "@/app/context/cartContext";
 import { formatCurrency } from "@/app/lib/utils";
+import { useCartDispatch } from "@/app/context/cartContext";
 
 interface SlideCartProps {
   open: boolean;
@@ -13,7 +14,7 @@ interface SlideCartProps {
 
 export default function SlideCart({ open, setOpen }: SlideCartProps) {
   const cart = useCart();
-  console.log(cart.items)
+  const dispatch = useCartDispatch();
   const products = cart.items.map((item) => {
     return {
       id: item.id,
@@ -24,17 +25,38 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
       quantity: item.quantity,
       imageSrc: item.primaryImage,
       imageAlt: item.description,
+      itemId: item.itemId,
+      size: item.size,
     };
   });
 
   const subtotal = products.reduce(
-    (acc, product) => acc + (product.price * product.quantity),
+    (acc, product) => acc + product.price * product.quantity,
     0
   );
 
   const formattedSubtotal = formatCurrency(subtotal);
 
-  console.log(products);
+  const handleRemove = (itemId: string) => {
+    dispatch({ type: "REMOVE", payload: itemId });
+  };
+
+  const size = (productSize: string) => {
+    switch (productSize) {
+      case "XS":
+        return "Extra Small";
+      case "S":
+        return "Small";
+      case "M":
+        return "Medium";
+      case "L":
+        return "Large";
+      case "XL":
+        return "Extra Large";
+      case "XXL":
+        return "2XL";
+    }
+  }
 
   return (
     <>
@@ -90,8 +112,8 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
                               role="list"
                               className="-my-6 divide-y divide-gray-200"
                             >
-                              {products.map((product) => (
-                                <li key={product.id} className="flex py-6">
+                              {products.map((product, index) => (
+                                <li key={index} className="flex py-6">
                                   <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                     <img
                                       src={product.imageSrc}
@@ -108,10 +130,12 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
                                             {product.name}
                                           </a>
                                         </h3>
-                                        <p className="ml-4">{formatCurrency(product.price)}</p>
+                                        <p className="ml-4">
+                                          {formatCurrency(product.price)}
+                                        </p>
                                       </div>
                                       <p className="mt-1 text-sm text-gray-500">
-                                        {product.color}
+                                        {size(product.size)} 
                                       </p>
                                     </div>
                                     <div className="flex flex-1 items-end justify-between text-sm">
@@ -121,6 +145,9 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
 
                                       <div className="flex">
                                         <button
+                                          onClick={() =>
+                                            handleRemove(product.itemId)
+                                          }
                                           type="button"
                                           className="font-medium text-indigo-600 hover:text-indigo-500"
                                         >

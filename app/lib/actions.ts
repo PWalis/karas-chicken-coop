@@ -77,31 +77,34 @@ const CartSchema = z.object({
   email: z.string(),
 });
 
-export const fetchProductPrices = async (productId: number[]) => {
+export const fetchProductPrices = async (productId: number) => {
   try {
-    const prices = await prisma.products.findMany({
+    const price = await prisma.products.findUnique({
       where: {
-        id: {
-          in: productId,
-        },
+        id: productId,
       },
       select: {
-        id: true,
         priceInCents: true,
       },
     });
-    return prices;
+    return price;
   } catch (error) {
     console.log("error getting product prices ", error);
   }
 };
 
-export const fetchProductsTotal = async (productId: number[]) => {
+interface productAndQuantity {
+  productId: number;
+  quantity: number;
+}
+
+export const fetchProductsTotal = async (products: productAndQuantity[]) => {
   try {
-    const prices = await fetchProductPrices(productId);
-    const total = prices!.reduce((acc, item) => {
-      return acc + Number(item.priceInCents);
-    }, 0);
+    let total = 0;
+    for (let product of products) {
+      const price = (await fetchProductPrices(product.productId) as any);
+      total = total + (price.priceInCents * product.quantity);
+    }
     return total;
   } catch (error) {
     console.log("error getting products total ", error);
