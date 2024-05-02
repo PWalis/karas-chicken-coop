@@ -24,6 +24,7 @@ export default function App() {
 
   React.useEffect(() => {
     // Create PaymentIntent as soon as the page loads
+    if (products.length === 0) return;
     fetch("/api/paymentIntent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -50,10 +51,14 @@ export default function App() {
 
   return (
     <div className="App">
-      {clientSecret && (
-        <Elements options={options as any} stripe={stripePromise}>
-          <CheckoutForm />
-        </Elements>
+      {products.length > 0 ? (
+        clientSecret && (
+          <Elements options={options as any} stripe={stripePromise}>
+            <CheckoutForm />
+          </Elements>
+        )
+      ) : (
+        <div>No items in cart</div>
       )}
     </div>
   );

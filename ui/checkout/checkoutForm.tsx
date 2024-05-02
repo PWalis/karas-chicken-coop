@@ -78,7 +78,7 @@ export default function CheckoutForm() {
   };
 
   const paymentElementOptions = {
-    layout: { type: "tabs", defaultCollapsed: false },
+    layout: { type: "tabs" }
   };
 
   return (
