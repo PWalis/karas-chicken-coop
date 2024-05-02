@@ -18,7 +18,9 @@ export default function App() {
   const [clientSecret, setClientSecret] = React.useState("");
   const cart = useCart();
   const dispatch = useCartDispatch();
-  const products = cart.items.map((item) => {return {productId: item.id, quantity: item.quantity}});
+  const products = cart.items.map((item) => {
+    return { productId: item.id, quantity: item.quantity };
+  });
 
   React.useEffect(() => {
     // Create PaymentIntent as soon as the page loads
@@ -42,11 +44,13 @@ export default function App() {
   };
   const options = {
     clientSecret,
-    appearance,
+    layout: {
+      type: "tabs",
+    },
   };
 
   return (
-    <div className="App">
+    <div className="App w-fill">
       {clientSecret && (
         <Elements options={options as any} stripe={stripePromise}>
           <CheckoutForm />

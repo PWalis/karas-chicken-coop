@@ -11,25 +11,23 @@ export default function Checkout() {
   // allow to modify quantity of items
 
   return (
-    <main>
-      <div className={londrina.className}>
-        <NavBar></NavBar>
-        <div className="grid grid-cols-1 sm:grid-cols-2 mt-24 gap-5 p-10">
-          <div className="flex flex-col justify-between h-[750px] w-full ">
-            <div className="">
-              <h2 className="text-2xl">Shopping Cart</h2>
-              <CartList />
-            </div>
-            {/* <div className=""> */}
-            {/* </div> */}
-          </div>
-          <div className=" ">
-            <h2 className="text-2xl">Payment Details</h2>
-            <StripeCheckout />
-          </div>
+<main>
+  <div className={londrina.className}>
+    <NavBar></NavBar>
+    <div className="bg-gray-50 min-h-screen h-fit">
+      <div className="grid grid-cols-2 gap-5 p-10">
+        <div className="mt-48">
+          <h2 className="text-2xl">Shopping Cart</h2>
+          <CartList />
         </div>
-        <Footer></Footer>
+        <div className="mt-48">
+          <h2 className="text-2xl">Payment Details</h2>
+          <StripeCheckout />
+        </div>
       </div>
-    </main>
+    </div>
+  </div>
+  <Footer></Footer>
+</main>
   );
 }

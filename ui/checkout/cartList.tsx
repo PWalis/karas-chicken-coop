@@ -24,7 +24,7 @@ export const CartList: React.FC = () => {
   }, 1300)
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col max-w-[600px]">
       {cart.items.map((item) => (
         <ShoppingCartItem
           size={item.size}
