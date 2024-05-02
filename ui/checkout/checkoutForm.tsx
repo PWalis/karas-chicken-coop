@@ -1,14 +1,14 @@
 import React from "react";
 import {
+  AddressElement,
   PaymentElement,
   useStripe,
-  useElements
+  useElements,
 } from "@stripe/react-stripe-js";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
-
 
   const [message, setMessage] = React.useState(null || "");
   const [isLoading, setIsLoading] = React.useState(false);
@@ -78,12 +78,16 @@ export default function CheckoutForm() {
   };
 
   const paymentElementOptions = {
-    layout: "accordion",
+    layout: { type: "tabs" }
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit as any} className=" justify-center place-items-center w-fill">
-      <PaymentElement id="payment-element" options={paymentElementOptions as any} className="flex-grow max-w-[500px]" />
+    <form id="payment-form" onSubmit={handleSubmit as any}>
+      <PaymentElement
+        id="payment-element"
+        options={paymentElementOptions as any}
+      />
+      <AddressElement id="address-element" options={{ mode: "shipping" }} />
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : <div className="bg-floc-yellow inline-flex px-4 py-2 rounded-sm">Pay now</div>}
