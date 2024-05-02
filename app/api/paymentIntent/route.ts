@@ -19,7 +19,7 @@ export async function POST(req: Request, res: Response) {
     // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
     automatic_payment_methods: {
       enabled: true,
-    },
+    }
   });
 
   return NextResponse.json({

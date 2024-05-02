@@ -18,10 +18,13 @@ export default function App() {
   const [clientSecret, setClientSecret] = React.useState("");
   const cart = useCart();
   const dispatch = useCartDispatch();
-  const products = cart.items.map((item) => {return {productId: item.id, quantity: item.quantity}});
+  const products = cart.items.map((item) => {
+    return { productId: item.id, quantity: item.quantity };
+  });
 
   React.useEffect(() => {
     // Create PaymentIntent as soon as the page loads
+    if (products.length === 0) return;
     fetch("/api/paymentIntent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,14 +46,19 @@ export default function App() {
   const options = {
     clientSecret,
     appearance,
+    loader: "always",
   };
 
   return (
     <div className="App">
-      {clientSecret && (
-        <Elements options={options as any} stripe={stripePromise}>
-          <CheckoutForm />
-        </Elements>
+      {products.length > 0 ? (
+        clientSecret && (
+          <Elements options={options as any} stripe={stripePromise}>
+            <CheckoutForm />
+          </Elements>
+        )
+      ) : (
+        <div>No items in cart</div>
       )}
     </div>
   );
