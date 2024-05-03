@@ -30,6 +30,7 @@ export const CartList: React.FC = () => {
           size={item.size}
           name={item.name}
           itemId={item.itemId}
+          key={item.itemId}
           quantity={item.quantity}
           priceInCents={item.priceInCents}
           id={item.id}

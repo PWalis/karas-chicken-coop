@@ -98,26 +98,3 @@ export const createCheckoutSession = async (line_items: any[]) => {
     console.log("\nERROR creating stripe checkout session\n", error);
   }
 };
-
-// fetches products from DB and sums prices to calculate order amount
-const calculateOrderAmount = async (productIds: number[]) => {
-  const prices = await fetchProductPrices(productIds);
-  // return prices!.reduce((acc, item) => {
-  //   return acc + Number(item.priceInCents);
-  // }, 0);
-  return prices
-};
-
-// ingests an array of product ids and returns a client secret for the payment intent
-// export const stripeCreatePaymentIntent = async (productIds: number[]) => {
-//   try {
-//     const price = await calculateOrderAmount(productIds);
-//     const paymentIntent = await stripe.paymentIntents.create({
-//       amount: price!,
-//       currency: "usd",
-//     });
-//     return paymentIntent.client_secret;
-//   } catch (error) {
-//     console.log("error creating stripe payment intent", error);
-//   }
-// };

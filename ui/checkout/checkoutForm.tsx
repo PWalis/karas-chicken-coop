@@ -5,10 +5,12 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import { useCart } from "@/app/context/cartContext";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
+  const cart = useCart();
 
   const [message, setMessage] = React.useState(null || "");
   const [isLoading, setIsLoading] = React.useState(false);
@@ -78,7 +80,29 @@ export default function CheckoutForm() {
   };
 
   const paymentElementOptions = {
-    layout: { type: "tabs" }
+    layout: { type: "tabs" },
+  };
+
+  const handleAddressChange = (event: any) => {
+    // create a new order with the address
+    // update payment intent metadata with the orderId
+    if (event.complete) {
+      fetch("/api/createOrder", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          address: event.value,
+          cart: cart,
+          paymentIntentId: cart.paymentIntentId
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
+    }
   };
 
   return (
@@ -87,7 +111,13 @@ export default function CheckoutForm() {
         id="payment-element"
         options={paymentElementOptions as any}
       />
-      <AddressElement id="address-element" options={{ mode: "shipping" }} />
+      <AddressElement
+        id="address-element"
+        options={{ mode: "shipping" }}
+        onChange={(event) => {
+          handleAddressChange(event);
+        }}
+      />
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
