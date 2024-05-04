@@ -55,7 +55,7 @@ const FormSchema = z.object({
   newCategory: z.string().nullable(),
   xs: z.coerce.number().nullable(),
   small: z.coerce.number().nullable(),
-  medium: z.coerce.number().nullable(), 
+  medium: z.coerce.number().nullable(),
   large: z.coerce.number().nullable(),
   xl: z.coerce.number().nullable(),
   xxl: z.coerce.number().nullable(),
@@ -102,14 +102,14 @@ export const fetchProductsTotal = async (products: productAndQuantity[]) => {
   try {
     let total = 0;
     for (let product of products) {
-      const price = (await fetchProductPrices(product.productId) as any);
-      total = total + (price.priceInCents * product.quantity);
+      const price = (await fetchProductPrices(product.productId)) as any;
+      total = total + price.priceInCents * product.quantity;
     }
     return total;
   } catch (error) {
     console.log("error getting products total ", error);
   }
-}
+};
 
 export const fetchAllProducts = async () => {
   try {
@@ -194,7 +194,10 @@ export const fetchProductById = async (id: number) => {
   }
 };
 
-export async function createProduct({size}: createProductBindData, formData: FormData ) {
+export async function createProduct(
+  { size }: createProductBindData,
+  formData: FormData
+) {
   const validatedData = FormSchema.refine(
     (data) => data.newCategory || data.category,
     {
@@ -250,7 +253,9 @@ export async function createProduct({size}: createProductBindData, formData: For
 
   //upload images and get urls
   const imageUrls = await uploadProductImagesAndReturnUrls(data.image);
-  const primaryImageUrl = await uploadProductImagesAndReturnUrls(data.primaryImage);
+  const primaryImageUrl = await uploadProductImagesAndReturnUrls(
+    data.primaryImage
+  );
 
   const priceInCents = data.price * 100;
 
@@ -370,7 +375,10 @@ export async function updateProduct(
   { productId, images, primaryImage }: updateBindData,
   formData: FormData
 ) {
-  const FormSchemaNoImageRequired = FormSchema.omit({ image: true, primaryImage: true});
+  const FormSchemaNoImageRequired = FormSchema.omit({
+    image: true,
+    primaryImage: true,
+  });
 
   const validatedData = FormSchemaNoImageRequired.refine(
     (data) => data.newCategory || data.category,
@@ -489,33 +497,110 @@ export async function fetchCategories() {
   }
 }
 
-export async function createOrder(formData: FormData) {
+export async function createOrder(
+  address: any,
+  cart: any,
+  paymentIntentId: string
+) {
   //create order
-  const validatedData = CartSchema.safeParse({
-    itemOrder: formData.get("itemOrder"),
-    name: formData.get("name"),
-    address: formData.get("address"),
-    state: formData.get("state"),
-    zip: formData.get("zip"),
-    email: formData.get("email"),
-  });
-
-  if (!validatedData.success) {
-    console.log(validatedData.error.flatten().fieldErrors);
-    return {
-      error: validatedData.error.flatten().fieldErrors,
-      message: "Validation failed",
-    };
+  try {
+    const order = await prisma.order.create({
+      data: {
+        name: address.name,
+        address: address.address.line1 + " " + address.address.line2,
+        city: address.address.city,
+        state: address.address.state,
+        zip: address.address.postal_code,
+        paymentIntentId: paymentIntentId,
+        orderItems: {
+          create: cart.items.map((item: any) => {
+            if (item.size != undefined || item.size != null) {
+              return {
+                quantity: item.quantity,
+                size: item.size,
+                hasSizes: true,
+                product: {
+                  connect: {
+                    id: item.id,
+                  },
+                },
+              };
+            } else {
+              return {
+                quantity: item.quantity,
+                hasSizes: false,
+                size: "none",
+                product: {
+                  connect: {
+                    id: item.id,
+                  },
+                },
+              };
+            }
+          })
+        },
+      },
+    });
+    return order;
+  } catch (error) {
+    console.log("Error creating order", error);
   }
+}
 
-  const data = {
-    itemOrder: validatedData.data.itemOrder,
-    name: validatedData.data.name,
-    address: validatedData.data.address,
-    state: validatedData.data.state,
-    zip: validatedData.data.zip,
-    email: validatedData.data.email,
-  };
+type OrderStatus = "PENDING" | "PAID" | "FULFILLED" | "CANCELED" | "DELIVERED"
 
-  //create order
+export async function setOrderStatus(orderId: string, status: OrderStatus) {
+  try {
+    const order = await prisma.order.update({
+      where: {
+        id: orderId,
+      },
+      data: {
+        status: status,
+      },
+    });
+    return order.status;
+  } catch (error) {
+    console.log("Error setting order status", error);
+  }
+}
+
+export async function fetchOrderById(id: string) {
+  try {
+    const order = await prisma.order.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        orderItems: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+    return order;
+  } catch (error) {
+    console.log("Error fetching order", error);
+  }
+}
+
+export async function fetchAllPaidOrders() {
+  try {
+    const orders = await prisma.order.findMany({
+      where: {
+        status: "PAID",
+      },
+      include: {
+        orderItems: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+    return orders;
+  } catch (error) {
+    console.log("Error fetching orders", error);
+  }
 }
