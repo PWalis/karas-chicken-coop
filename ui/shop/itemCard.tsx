@@ -45,7 +45,6 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           stripePriceKey,
         },
       });
-      console.log(cart);
     }
   };
 

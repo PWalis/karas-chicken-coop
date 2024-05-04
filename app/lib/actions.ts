@@ -20,6 +20,7 @@ import {
   stripeCreateProduct,
   stripeUpdateProduct,
 } from "./stripe";
+import { order } from "@prisma/client";
 
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 30; //30MB
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
@@ -431,8 +432,6 @@ export async function updateProduct(
     xxl: validatedData.data.xxl,
   };
 
-  // console.log("\nimages", data.image[0].size)
-
   if (data.image[0].size != 0) {
     const imageUrls = await uploadProductImagesAndReturnUrls(data.image);
     images = images.concat(imageUrls);
@@ -479,7 +478,7 @@ export async function updateProduct(
       },
     });
     await stripeUpdateProduct(product.stripeProductKey, product.name);
-    console.log(product);
+  
   } catch (error) {
     return { message: error };
   }
@@ -537,7 +536,7 @@ export async function createOrder(
                 },
               };
             }
-          })
+          }),
         },
       },
     });
@@ -547,7 +546,13 @@ export async function createOrder(
   }
 }
 
-type OrderStatus = "PENDING" | "PAID" | "FULFILLED" | "CANCELED" | "DELIVERED"
+type OrderStatus =
+  | "PENDING"
+  | "PAID"
+  | "PROCESSED"
+  | "FULFILLED"
+  | "CANCELED"
+  | "DELIVERED";
 
 export async function setOrderStatus(orderId: string, status: OrderStatus) {
   try {
@@ -602,5 +607,159 @@ export async function fetchAllPaidOrders() {
     return orders;
   } catch (error) {
     console.log("Error fetching orders", error);
+  }
+}
+
+async function setSizeInventory(
+  productId: number,
+  size: string,
+  quantity: number
+) {
+  try {
+    await prisma.inventory.update({
+      where: {
+        productId: productId,
+      },
+      data: {
+        [size]: quantity,
+      },
+    });
+  } catch (error) {
+    console.log("Error setting inventory", error);
+  }
+}
+
+async function setInventory(productId: number, quantity: number) {
+  try {
+    await prisma.inventory.update({
+      where: {
+        productId: productId,
+      },
+      data: {
+        quantity: quantity,
+      },
+    });
+  } catch (error) {
+    console.log("Error setting inventory", error);
+  }
+}
+
+export async function processOrder(orderId: string) {
+  return prisma.$transaction(async (prisma) => {
+    const fetchedOrder = await fetchOrderById(orderId);
+    if (fetchedOrder!.status != "PAID") {
+      return { message: "Order not paid" };
+    }
+
+    try {
+      for (let item of fetchedOrder!.orderItems) {
+        if (item.hasSizes) {
+          const inventory = await prisma.inventory.findUnique({
+            where: {
+              productId: item.productId,
+            },
+          });
+          if (item.size == "XS") {
+            const newInventory = inventory!.xs_quantity - item.quantity;
+            if (newInventory < 0) {
+              throw new Error("Inventory cannot be less than 0");
+            }
+            await setSizeInventory(item.productId, "xs_quantity", newInventory);
+          } else if (item.size == "S") {
+            const newInventory = inventory!.s_quantity - item.quantity;
+            if (newInventory < 0) {
+              throw new Error("Inventory cannot be less than 0");
+            }
+            await setSizeInventory(item.productId, "s_quantity", newInventory);
+          } else if (item.size == "M") {
+            const newInventory = inventory!.m_quantity - item.quantity;
+            if (newInventory < 0) {
+              throw new Error("Inventory cannot be less than 0");
+            }
+            await setSizeInventory(item.productId, "m_quantity", newInventory);
+          } else if (item.size == "L") {
+            const newInventory = inventory!.l_quantity - item.quantity;
+            if (newInventory < 0) {
+              throw new Error("Inventory cannot be less than 0");
+            }
+            await setSizeInventory(item.productId, "l_quantity", newInventory);
+          } else if (item.size == "XL") {
+            const newInventory = inventory!.xl_quantity - item.quantity;
+            if (newInventory < 0) {
+              throw new Error("Inventory cannot be less than 0");
+            }
+            await setSizeInventory(item.productId, "xl_quantity", newInventory);
+          } else if (item.size == "XXL") {
+            const newInventory = inventory!.xxl_quantity - item.quantity;
+            if (newInventory < 0) {
+              throw new Error("Inventory cannot be less than 0");
+            }
+            await setSizeInventory(
+              item.productId,
+              "xxl_quantity",
+              newInventory
+            );
+          }
+        } else {
+          const inventory = await prisma.inventory.findUnique({
+            where: {
+              productId: item.productId,
+            },
+          });
+          const newInventory = inventory!.quantity - item.quantity;
+          await setInventory(item.productId, newInventory);
+        }
+      }
+      await setOrderStatus(orderId, "PROCESSED");
+      return fetchedOrder;
+    } catch (error) {
+      console.log("Error processing order", error);
+    }
+  });
+}
+
+export async function checkInventory(cart: any) {
+  try {
+    for (let item of cart.items) {
+      const inventory = await prisma.inventory.findUnique({
+        where: {
+          productId: item.id,
+        },
+      });
+      if (item.size != undefined || item.size != null) {
+        if (item.size.toLowerCase() == "xs") {
+          if (inventory!.xs_quantity < item.quantity) {
+            return { message: "Not enough inventory" };
+          } else if (item.size.toLowerCase() == "s") {
+            if (inventory!.s_quantity < item.quantity) {
+              return { message: "Not enough inventory" };
+            }
+          } else if (item.size.toLowerCase() == "m") {
+            if (inventory!.m_quantity < item.quantity) {
+              return { message: "Not enough inventory" };
+            }
+          } else if (item.size.toLowerCase() == "l") {
+            if (inventory!.l_quantity < item.quantity) {
+              return { message: "Not enough inventory" };
+            }
+          } else if (item.size.toLowerCase() == "xl") {
+            if (inventory!.xl_quantity < item.quantity) {
+              return { message: "Not enough inventory" };
+            }
+          } else if (item.size.toLowerCase() == "xxl") {
+            if (inventory!.xxl_quantity < item.quantity) {
+              return { message: "Not enough inventory" };
+            }
+          }
+        } else {
+          if (inventory!.quantity < item.quantity) {
+            return { message: "Not enough inventory" };
+          }
+        }
+      }
+      return { message: "Enough inventory" };
+    }
+  } catch (error) {
+    console.log("Error checking inventory", error);
   }
 }

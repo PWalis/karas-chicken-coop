@@ -1,12 +1,39 @@
+import { useEffect } from "react";
+import { set } from "zod";
+
 interface QuantityCounterProps {
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
+  quantityLimit: {
+    XS?: number;
+    S?: number;
+    M?: number;
+    L?: number;
+    XL?: number;
+    XXL?: number;
+    limit?: number;
+  };
+  hasSizes: boolean;
+  size: string;
 }
 
-export const QuantityCounter: React.FC<QuantityCounterProps> = ({ quantity, setQuantity }) => {
-
+export const QuantityCounter: React.FC<QuantityCounterProps> = ({
+  quantity,
+  setQuantity,
+  quantityLimit,
+  hasSizes,
+  size,
+}) => {
   const addHandler = () => {
-    setQuantity(quantity + 1);
+    if (hasSizes) {
+      if (quantityLimit[size as keyof typeof quantityLimit] && quantity >= quantityLimit[size as keyof typeof quantityLimit]!) {
+        console.log("You have reached the limit for this size");
+      } else {
+        if (quantity < quantityLimit[size as keyof typeof quantityLimit]!) {
+          setQuantity(quantity + 1);
+        }
+      }
+    }
   };
 
   const subtractHandler = () => {
@@ -21,6 +48,10 @@ export const QuantityCounter: React.FC<QuantityCounterProps> = ({ quantity, setQ
       setQuantity(value);
     }
   };
+
+  useEffect(() => {
+    setQuantity(0);
+  }, [size]);
 
   return (
     <div className="flex gap-2 mb-2">
