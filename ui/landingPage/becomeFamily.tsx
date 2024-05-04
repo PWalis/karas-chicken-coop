@@ -32,7 +32,7 @@ export default function BecomeFamilySection() {
         id={"ChickenGallery"}
         className="justify-center px-4 py-8 mx-auto max-w-[1400px]"
       >
-        <h2 className="text-4xl mt-20 md:text-5xl lg:text-7xl uppercase justify-center text-center mb-20">
+        <h2 className="text-4xl mt-20 md:text-5xl lg:text-8xl uppercase justify-center text-center mb-20">
           Become Part Of Our Family
         </h2>
         <div className="justify-between mx-auto">

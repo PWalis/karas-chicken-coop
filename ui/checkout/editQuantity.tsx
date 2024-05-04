@@ -52,12 +52,12 @@ export const EditQuantity: React.FC<QuantityCounterProps> = ({
 
   return (
     <div className="flex gap-2 mb-2">
-      <form className="flex gap-2 flex-col max-w-xs place-items-center">
+      <form className="flex gap-2 flex-col max-w-xs ">
         <label
           htmlFor="quantity-input"
           className="block text-md font-medium text-gray-900 dark:text-white"
         >
-          Choose Quantity:
+          Quantity:
         </label>
         <div className="relative flex items-center max-w-[8rem]">
           <button

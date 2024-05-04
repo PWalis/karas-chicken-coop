@@ -1,23 +1,29 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import {
-  ShopButton,
-  HamburgerMenu,
-  Logo,
-  JoinTheFlockButton,
-} from "../header/buttons";
+import { HamburgerMenu } from "../header/buttons";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Kcc3 from "../assets/svgs/Kcc3";
 import { CartButton } from "./buttons";
 import SlideCart from "./slideCart";
+import { useCart } from "@/app/context/cartContext";
+
 
 export default function ShopNavBar() {
   const [navMenu, setNavMenu] = useState(false);
 
   const [open, setOpen] = useState(false);
+
+  const [hasItems, setHasItems] = useState(false);
+
+  const cart = useCart()
+
+  useEffect(() => {
+    // Update hasItems whenever products array changes
+    setHasItems(cart.items.length > 0);
+    console.log("items:", hasItems)
+  }, [cart]);
 
   const handleCartButtonClick = () => {
     setOpen(!open); // Toggle the state of open
@@ -31,7 +37,7 @@ export default function ShopNavBar() {
   return (
     <>
       <nav className="bg-white/90 backdrop-blur-md border-gray-200 dark:bg-gray-900 font-bold text-sm uppercase fixed w-full top-0 z-50">
-        <div className="max-w-screen-xl flex flex-wrap gap-1 items-center justify-between mx-auto">
+        <div className="max-w-screen-2xl flex flex-wrap gap-1 items-center justify-between mx-auto">
           <div className="flex justify-end items-center">
             <Link className="flex items-center" href="/">
               <Kcc3 className="h-20 lg:h-[90px] p-2 flex justify-end items-center w-auto" />
@@ -40,10 +46,13 @@ export default function ShopNavBar() {
           </div>
           <div className="flex md:order-2 space-x-3 lg:gap-3 md:space-x-0 rtl:space-x-reverse items-center">
             <div className="hidden sm:block "></div>
-            <div className="indicator">
-              <span className="indicator-item badge badge-secondary bg-floc-yellow border-floc-yellow"></span>
+            <div className="flex">
               <CartButton onClick={handleCartButtonClick}>Shop</CartButton>
+              <div className={`indicator ${hasItems ? "visible" : "hidden"}`}>
+                <span className="indicator-item badge indicator-start  badge-secondary bg-floc-yellow border-floc-yellow"></span>
+                </div>
             </div>
+            
             <div className="hidden lg:block">
               <Link href="/checkout">
                 <button className=" pr-5 pl-5 pt-3 pb-3 border-solid border-[.25em] border-floc-gray text-floc-gray uppercase">
@@ -109,7 +118,10 @@ export default function ShopNavBar() {
           </div>
         </div>
       </nav>
-      {<SlideCart open={open} setOpen={setOpen}></SlideCart>}
+      <SlideCart
+        open={open}
+        setOpen={setOpen}
+      ></SlideCart>
     </>
   );
 }

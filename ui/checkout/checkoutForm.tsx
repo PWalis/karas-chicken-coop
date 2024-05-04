@@ -28,7 +28,7 @@ export default function CheckoutForm() {
       return;
     }
 
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => { 
       switch (paymentIntent!.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
@@ -122,6 +122,7 @@ export default function CheckoutForm() {
   };
 
   return (
+    <div className="max-w-[600px] bg-white shadow-sm p-4">
     <form id="payment-form" onSubmit={handleSubmit as any}>
       <PaymentElement
         id="payment-element"
@@ -141,5 +142,6 @@ export default function CheckoutForm() {
       </button>
       {message && <div id="payment-message">{message}</div>}
     </form>
+  </div>
   );
 }

@@ -4,6 +4,8 @@ import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useCart, useCartDispatch } from "@/app/context/cartContext";
+import { NoItemsCheckout } from "./noItemsCheckout";
+import { CartList } from "./cartList";
 
 import CheckoutForm from "@/ui/checkout/checkoutForm";
 
@@ -50,15 +52,36 @@ export default function App() {
   };
 
   return (
-    <div className="App">
+    <div className="bg-gray-50 h-fit min-h-[70vh] sm:min-h-screen flex flex-col justify-center items-center md:items-start  lg:flex-row  gap-5">
       {products.length > 0 ? (
         clientSecret && (
-          <Elements options={options as any} stripe={stripePromise}>
-            <CheckoutForm />
-          </Elements>
+          <>
+            <div className="flex flex-col w-full max-w-[600px] p-4">
+              <h2 className="text-2xl font-bold tracking-wider uppercase bg-white w-full px-4 py-3 mb-4">
+                Shopping Cart
+              </h2>
+              <div className="flex flex-col lg:mt-0 w-full max-h-[500px] overflow-y-scroll">
+                <CartList />
+              </div>
+            </div>
+            <div className="flex flex-col w-full max-w-[600px] p-5">
+              <h2 className=" bg-white text-2xl  font-bold tracking-wider uppercase w-full px-4 py-3 mb-5">
+                Payment Details
+              </h2>
+              <div className="flex flex-col  w-full">
+                <div className="App">
+                  <Elements options={options as any} stripe={stripePromise}>
+                    <CheckoutForm />
+                  </Elements>
+                </div>
+              </div>
+            </div>
+          </>
         )
       ) : (
-        <div>No items in cart</div>
+        <div className="justify-center">
+          <NoItemsCheckout></NoItemsCheckout>
+        </div>
       )}
     </div>
   );
