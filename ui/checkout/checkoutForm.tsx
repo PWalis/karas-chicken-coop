@@ -82,19 +82,23 @@ export default function CheckoutForm() {
   };
 
   return (
+    <div className="max-w-[600px] bg-white shadow-sm p-4">
     <form id="payment-form" onSubmit={handleSubmit as any}>
       <PaymentElement
         id="payment-element"
         options={paymentElementOptions as any}
       />
       <AddressElement id="address-element" options={{ mode: "shipping" }} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : <div className="bg-floc-yellow inline-flex px-4 py-2 rounded-sm">Pay now</div>}
-        </span>
-      </button>
+      <div className="flex justify-center"> {/* Add this div and flex properties */}
+        <button disabled={isLoading || !stripe || !elements} id="submit">
+          <span id="button-text">
+            {isLoading ? <div className="spinner" id="spinner"></div> : <div className="bg-floc-yellow cursor-pointer hover:bg-light-yellow inline-flex px-4 py-2 rounded-sm mt-3 uppercase tracking-wide">Submit Payment</div>}
+          </span>
+        </button>
+      </div>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>
+  </div>
   );
 }

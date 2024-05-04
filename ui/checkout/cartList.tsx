@@ -26,6 +26,7 @@ export const CartList: React.FC = () => {
   return (
     <div className="flex flex-col max-w-[600px]">
       {cart.items.map((item) => (
+        <div className=" bg-white shadow-sm px-4 mb-4">
         <ShoppingCartItem
           size={item.size}
           name={item.name}
@@ -36,6 +37,7 @@ export const CartList: React.FC = () => {
           primaryImage={item.primaryImage}
           updatePaymentIntent={debounceHandler}
         />
+        </div>
       ))}
     </div>
   );

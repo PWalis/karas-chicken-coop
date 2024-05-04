@@ -17,6 +17,7 @@ export const AddToCardButton: React.FC<{ onClick: () => void }> = ({
   );
 };
 
+
 export const FilterButton: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {

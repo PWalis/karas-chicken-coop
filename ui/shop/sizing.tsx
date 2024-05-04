@@ -16,7 +16,7 @@ export const Sizing: React.FC<SizingProps> = ({ size, setSize }) => {
 
 
   return (
-    <div className="flex gap-2 mb-3">
+    <div className="flex gap-4 mb-3 w-full justify-center">
       <SizingButton size="XS" selected={size === "XS"} onClick={() => handleSelectSize("XS")} />
       <SizingButton size="S" selected={size === "S"} onClick={() => handleSelectSize("S")} />
       <SizingButton size="M" selected={size === "M"} onClick={() => handleSelectSize("M")} />

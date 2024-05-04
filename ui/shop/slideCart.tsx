@@ -1,11 +1,11 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { CartButton } from "./buttons";
 import { useCart } from "@/app/context/cartContext";
 import { formatCurrency } from "@/app/lib/utils";
 import { useCartDispatch } from "@/app/context/cartContext";
+import { NoItemsCheckout } from "../checkout/noItemsCheckout";
 
 interface SlideCartProps {
   open: boolean;
@@ -15,6 +15,7 @@ interface SlideCartProps {
 export default function SlideCart({ open, setOpen }: SlideCartProps) {
   const cart = useCart();
   const dispatch = useCartDispatch();
+  
   
   const products = cart.items.map((item) => {
     return {
@@ -30,6 +31,7 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
       size: item.size,
     };
   });
+
 
   const subtotal = products.reduce(
     (acc, product) => acc + product.price * product.quantity,
@@ -119,59 +121,63 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
                         </div>
 
                         <div className="mt-8">
-                          <div className="flow-root">
-                            <ul
-                              role="list"
-                              className="-my-6 divide-y divide-gray-200"
-                            >
-                              {products.map((product, index) => (
-                                <li key={index} className="flex py-6">
-                                  <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                    <img
-                                      src={product.imageSrc}
-                                      alt={product.imageAlt}
-                                      className="h-full w-full object-cover object-center"
-                                    />
-                                  </div>
+                          {products.length === 0 ? (
+                            <NoItemsCheckout />
+                          ) : (
+                            <div className="flow-root">
+                              <ul
+                                role="list"
+                                className="-my-6 divide-y divide-gray-200"
+                              >
+                                {products.map((product, index) => (
+                                  <li key={index} className="flex py-6">
+                                    <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                      <img
+                                        src={product.imageSrc}
+                                        alt={product.imageAlt}
+                                        className="h-full w-full object-cover object-center"
+                                      />
+                                    </div>
 
-                                  <div className="ml-4 flex flex-1 flex-col">
-                                    <div>
-                                      <div className="flex justify-between text-base font-medium text-gray-900">
-                                        <h3>
-                                          <a href={product.href}>
-                                            {product.name}
-                                          </a>
-                                        </h3>
-                                        <p className="ml-4">
-                                          {formatCurrency(product.price)}
+                                    <div className="ml-4 flex flex-1 flex-col">
+                                      <div>
+                                        <div className="flex justify-between text-base font-medium text-gray-900">
+                                          <h3>
+                                            <a href={product.href}>
+                                              {product.name}
+                                            </a>
+                                          </h3>
+                                          <p className="ml-4">
+                                            {formatCurrency(product.price)}
+                                          </p>
+                                        </div>
+                                        <p className="mt-1 text-sm text-gray-500">
+                                          {size(product.size)} 
                                         </p>
                                       </div>
-                                      <p className="mt-1 text-sm text-gray-500">
-                                        {size(product.size)} 
-                                      </p>
-                                    </div>
-                                    <div className="flex flex-1 items-end justify-between text-sm">
-                                      <p className="text-gray-500">
-                                        Qty {product.quantity}
-                                      </p>
+                                      <div className="flex flex-1 items-end justify-between text-sm">
+                                        <p className="text-gray-500">
+                                          Qty {product.quantity}
+                                        </p>
 
-                                      <div className="flex">
-                                        <button
-                                          onClick={() =>
-                                            handleRemove(product.itemId)
-                                          }
-                                          type="button"
-                                          className="font-medium text-indigo-600 hover:text-indigo-500"
-                                        >
-                                          Remove
-                                        </button>
+                                        <div className="flex">
+                                          <button
+                                            onClick={() =>
+                                              handleRemove(product.itemId)
+                                            }
+                                            type="button"
+                                            className="font-medium text-indigo-600 hover:text-indigo-500"
+                                          >
+                                            Remove
+                                          </button>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
                         </div>
                       </div>
 

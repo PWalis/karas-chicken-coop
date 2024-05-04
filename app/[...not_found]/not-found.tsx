@@ -12,7 +12,7 @@ export default function NotFound() {
           <img src={silkie_doodle_3.src} alt="" />
         </div>
         <div>
-          <Link className="text-3xl hover:text-light-yellow text-floc-gray uppercase" href="/"> Return to Home </Link>
+          <Link className="text-3xl hover:text-light-yellow text-floc-gray uppercase transition-all ease-in-out duration-200" href="/"> Return to Home </Link>
         </div>
       </div>
     </div>
