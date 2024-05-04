@@ -4,6 +4,8 @@ import NavBar from "@/ui/header/navbar";
 import Footer from "@/ui/footer/footer";
 import StripeCheckout from "@/ui/checkout/stripeCheckout";
 import { CartList } from "@/ui/checkout/cartList";
+import Stripe from "stripe";
+import ShopNavBar from "@/ui/shop/shopNavBar";
 
 export default function Checkout() {
   // show list of items in cart
@@ -11,25 +13,15 @@ export default function Checkout() {
   // allow to modify quantity of items
 
   return (
-    <main>
+    <main className="min-h-screen">
       <div className={londrina.className}>
-        <NavBar></NavBar>
-        <div className="grid grid-cols-1 sm:grid-cols-2 mt-24 gap-5 p-10">
-          <div className="flex flex-col justify-between h-[750px] w-full ">
-            <div className="">
-              <h2 className="text-2xl">Shopping Cart</h2>
-              <CartList />
-            </div>
-            {/* <div className=""> */}
-            {/* </div> */}
-          </div>
-          <div className=" ">
-            <h2 className="text-2xl">Payment Details</h2>
-            <StripeCheckout />
-          </div>
-        </div>
-        <Footer></Footer>
+        <ShopNavBar></ShopNavBar>
+        <h2 className="text-4xl sm:text-6xl text-center pt-24 pb-4 flex justify-center uppercase">
+          Checkout
+        </h2>
+        <StripeCheckout></StripeCheckout>
       </div>
+      <Footer></Footer>
     </main>
   );
 }
