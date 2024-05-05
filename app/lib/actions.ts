@@ -14,12 +14,7 @@ import {
   expiryStringToInt,
   getSignedURLImageName,
 } from "./utils";
-import {
-  stripeArchiveProduct,
-  stripeCreatePrice,
-  stripeCreateProduct,
-  stripeUpdateProduct,
-} from "./stripe";
+import { order } from "@prisma/client";
 
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 30; //30MB
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
@@ -53,6 +48,7 @@ const FormSchema = z.object({
   image: z.array(ImageSchema).nonempty({ message: "Image is required" }),
   category: z.string().nullable(),
   newCategory: z.string().nullable(),
+  quantity: z.coerce.number().nullable(),
   xs: z.coerce.number().nullable(),
   small: z.coerce.number().nullable(),
   medium: z.coerce.number().nullable(),
@@ -212,6 +208,7 @@ export async function createProduct(
     image: formData.getAll("image"),
     category: formData.get("category"),
     newCategory: formData.get("newCategory"),
+    quantity: formData.get("quantity"),
     xs: formData.get("xs"),
     small: formData.get("small"),
     medium: formData.get("medium"),
@@ -241,6 +238,7 @@ export async function createProduct(
       : validatedData.data.category,
     primaryImage: validatedData.data.primaryImage,
     image: validatedData.data.image,
+    quantity: validatedData.data.quantity,
     xs: validatedData.data.xs,
     small: validatedData.data.small,
     medium: validatedData.data.medium,
@@ -260,17 +258,9 @@ export async function createProduct(
   const priceInCents = data.price * 100;
 
   try {
-    const stripeProduct = await stripeCreateProduct(data.name);
-    const stripePrice = await stripeCreatePrice(
-      priceInCents,
-      stripeProduct!.id
-    );
-
     const product = await prisma.products.create({
       data: {
         name: data.name,
-        stripeProductKey: stripeProduct!.id,
-        stripePriceKey: stripePrice!.id,
         priceInCents: priceInCents,
         description: data.description,
         category: {
@@ -284,7 +274,7 @@ export async function createProduct(
         inventory: {
           create: {
             hasSizes: size,
-            quantity: 0,
+            quantity: data.quantity!,
             xs_quantity: data.xs != null ? data.xs : 0,
             s_quantity: data.small != null ? data.small : 0,
             m_quantity: data.medium != null ? data.medium : 0,
@@ -299,8 +289,6 @@ export async function createProduct(
         inventory: true,
       },
     });
-    // console.log(stripeProduct);
-    // console.log(product);
   } catch (error) {
     console.log("Error Creating product", error);
   }
@@ -364,7 +352,6 @@ export async function deleteProduct(productId: number) {
       },
     });
 
-    await stripeArchiveProduct(product?.stripeProductKey!);
   } catch (error) {
     console.log("Error deleting product", error);
   }
@@ -392,6 +379,7 @@ export async function updateProduct(
     description: formData.get("description"),
     category: formData.get("category"),
     newCategory: formData.get("newCategory"),
+    quantity: formData.get("quantity"),
     xs: formData.get("xs"),
     small: formData.get("small"),
     medium: formData.get("medium"),
@@ -423,6 +411,7 @@ export async function updateProduct(
       : validatedData.data.category,
     primaryImage: formData.get("primaryImage") as any,
     image: formData.getAll("image") as any,
+    quantity: validatedData.data.quantity,
     xs: validatedData.data.xs,
     small: validatedData.data.small,
     medium: validatedData.data.medium,
@@ -430,8 +419,6 @@ export async function updateProduct(
     xl: validatedData.data.xl,
     xxl: validatedData.data.xxl,
   };
-
-  // console.log("\nimages", data.image[0].size)
 
   if (data.image[0].size != 0) {
     const imageUrls = await uploadProductImagesAndReturnUrls(data.image);
@@ -464,12 +451,15 @@ export async function updateProduct(
         images: images,
         inventory: {
           update: {
-            xs_quantity: data.xs!,
-            s_quantity: data.small!,
-            m_quantity: data.medium!,
-            l_quantity: data.large!,
-            xl_quantity: data.xl!,
-            xxl_quantity: data.xxl!,
+            data: {
+              quantity: data.quantity!,
+              xs_quantity: data.xs != null ? data.xs : 0,
+              s_quantity: data.small != null ? data.small : 0,
+              m_quantity: data.medium != null ? data.medium : 0,
+              l_quantity: data.large != null ? data.large : 0,
+              xl_quantity: data.xl != null ? data.xl : 0,
+              xxl_quantity: data.xxl != null ? data.xxl : 0,
+            },
           },
         },
       },
@@ -478,10 +468,8 @@ export async function updateProduct(
         inventory: true,
       },
     });
-    await stripeUpdateProduct(product.stripeProductKey, product.name);
-    console.log(product);
   } catch (error) {
-    return { message: error };
+    console.log("error updating product", error);
   }
 
   revalidatePath("/");
@@ -537,7 +525,7 @@ export async function createOrder(
                 },
               };
             }
-          })
+          }),
         },
       },
     });
@@ -547,7 +535,13 @@ export async function createOrder(
   }
 }
 
-type OrderStatus = "PENDING" | "PAID" | "FULFILLED" | "CANCELED" | "DELIVERED"
+type OrderStatus =
+  | "PENDING"
+  | "PAID"
+  | "PROCESSED"
+  | "FULFILLED"
+  | "CANCELED"
+  | "DELIVERED";
 
 export async function setOrderStatus(orderId: string, status: OrderStatus) {
   try {
@@ -572,11 +566,7 @@ export async function fetchOrderById(id: string) {
         id: id,
       },
       include: {
-        orderItems: {
-          include: {
-            product: true,
-          },
-        },
+        orderItems: {},
       },
     });
     return order;
@@ -592,15 +582,165 @@ export async function fetchAllPaidOrders() {
         status: "PAID",
       },
       include: {
-        orderItems: {
-          include: {
-            product: true,
-          },
-        },
+        orderItems: {},
       },
     });
     return orders;
   } catch (error) {
     console.log("Error fetching orders", error);
+  }
+}
+
+async function setSizeInventory(
+  productId: number,
+  size: string,
+  quantity: number
+) {
+  try {
+    await prisma.inventory.update({
+      where: {
+        productId: productId,
+      },
+      data: {
+        [size]: quantity,
+      },
+    });
+  } catch (error) {
+    console.log("Error setting inventory", error);
+  }
+}
+
+async function setInventory(productId: number, quantity: number) {
+  try {
+    await prisma.inventory.update({
+      where: {
+        productId: productId,
+      },
+      data: {
+        quantity: quantity,
+      },
+    });
+  } catch (error) {
+    console.log("Error setting inventory", error);
+  }
+}
+
+export async function processOrder(orderId: string) {
+  return prisma.$transaction(async (prisma) => {
+    const fetchedOrder = await fetchOrderById(orderId);
+    if (fetchedOrder!.status != "PAID") {
+      return { message: "Order not paid" };
+    }
+
+    try {
+      for (let item of fetchedOrder!.orderItems) {
+        if (item.hasSizes) {
+          const inventory = await prisma.inventory.findUnique({
+            where: {
+              productId: item.productId,
+            },
+          });
+          if (item.size == "XS") {
+            const newInventory = inventory!.xs_quantity - item.quantity;
+            if (newInventory < 0) {
+              throw new Error("Inventory cannot be less than 0");
+            }
+            await setSizeInventory(item.productId, "xs_quantity", newInventory);
+          } else if (item.size == "S") {
+            const newInventory = inventory!.s_quantity - item.quantity;
+            if (newInventory < 0) {
+              throw new Error("Inventory cannot be less than 0");
+            }
+            await setSizeInventory(item.productId, "s_quantity", newInventory);
+          } else if (item.size == "M") {
+            const newInventory = inventory!.m_quantity - item.quantity;
+            if (newInventory < 0) {
+              throw new Error("Inventory cannot be less than 0");
+            }
+            await setSizeInventory(item.productId, "m_quantity", newInventory);
+          } else if (item.size == "L") {
+            const newInventory = inventory!.l_quantity - item.quantity;
+            if (newInventory < 0) {
+              throw new Error("Inventory cannot be less than 0");
+            }
+            await setSizeInventory(item.productId, "l_quantity", newInventory);
+          } else if (item.size == "XL") {
+            const newInventory = inventory!.xl_quantity - item.quantity;
+            if (newInventory < 0) {
+              throw new Error("Inventory cannot be less than 0");
+            }
+            await setSizeInventory(item.productId, "xl_quantity", newInventory);
+          } else if (item.size == "XXL") {
+            const newInventory = inventory!.xxl_quantity - item.quantity;
+            if (newInventory < 0) {
+              throw new Error("Inventory cannot be less than 0");
+            }
+            await setSizeInventory(
+              item.productId,
+              "xxl_quantity",
+              newInventory
+            );
+          }
+        } else {
+          const inventory = await prisma.inventory.findUnique({
+            where: {
+              productId: item.productId,
+            },
+          });
+          const newInventory = inventory!.quantity - item.quantity;
+          await setInventory(item.productId, newInventory);
+        }
+      }
+      await setOrderStatus(orderId, "PROCESSED");
+      return fetchedOrder;
+    } catch (error) {
+      console.log("Error processing order", error);
+    }
+  });
+}
+
+export async function checkInventory(cart: any) {
+  try {
+    for (let item of cart.items) {
+      const inventory = await prisma.inventory.findUnique({
+        where: {
+          productId: item.id,
+        },
+      });
+      if (item.size != undefined || item.size != null) {
+        if (item.size.toLowerCase() == "xs") {
+          if (inventory!.xs_quantity < item.quantity) {
+            return { message: "Not enough inventory" };
+          } else if (item.size.toLowerCase() == "s") {
+            if (inventory!.s_quantity < item.quantity) {
+              return { message: "Not enough inventory" };
+            }
+          } else if (item.size.toLowerCase() == "m") {
+            if (inventory!.m_quantity < item.quantity) {
+              return { message: "Not enough inventory" };
+            }
+          } else if (item.size.toLowerCase() == "l") {
+            if (inventory!.l_quantity < item.quantity) {
+              return { message: "Not enough inventory" };
+            }
+          } else if (item.size.toLowerCase() == "xl") {
+            if (inventory!.xl_quantity < item.quantity) {
+              return { message: "Not enough inventory" };
+            }
+          } else if (item.size.toLowerCase() == "xxl") {
+            if (inventory!.xxl_quantity < item.quantity) {
+              return { message: "Not enough inventory" };
+            }
+          }
+        } else {
+          if (inventory!.quantity < item.quantity) {
+            return { message: "Not enough inventory" };
+          }
+        }
+      }
+      return { message: "Enough inventory" };
+    }
+  } catch (error) {
+    console.log("Error checking inventory", error);
   }
 }

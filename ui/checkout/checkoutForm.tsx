@@ -57,6 +57,20 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
+    const hasInventory = await fetch("/api/inventory", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({data: cart}),
+    });
+
+    if (hasInventory) {
+      setIsLoading(false);
+      setMessage("Item is out of stock");
+      return;
+    }
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
@@ -87,6 +101,7 @@ export default function CheckoutForm() {
     // create a new order with the address
     // update payment intent metadata with the orderId
     if (event.complete) {
+      setIsLoading(true);
       fetch("/api/createOrder", {
         method: "POST",
         headers: {
@@ -95,12 +110,13 @@ export default function CheckoutForm() {
         body: JSON.stringify({
           address: event.value,
           cart: cart,
-          paymentIntentId: cart.paymentIntentId
+          paymentIntentId: cart.paymentIntentId,
         }),
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          setIsLoading(false);
+          // console.log(data);
         });
     }
   };
@@ -124,8 +140,6 @@ export default function CheckoutForm() {
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>
       </button>
-
-      {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </form>
   </div>

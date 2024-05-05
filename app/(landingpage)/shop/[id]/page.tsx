@@ -21,6 +21,15 @@ export default async function ProductPage({ params }: { params: { id: string } }
   // buy now will add data to context then redirect to checkout page
 
   const product = await fetchProductById(Number(params.id))
+  const sizes = {
+    XS: product?.inventory?.xs_quantity,
+    S: product?.inventory?.s_quantity,
+    M: product?.inventory?.m_quantity,
+    L: product?.inventory?.l_quantity,
+    XL: product?.inventory?.xl_quantity,
+    XXL: product?.inventory?.xxl_quantity,
+    limit: product?.inventory?.quantity,
+  }
 
   return (
     <main className="min-h-screen h-fit bg-white ">
@@ -34,8 +43,8 @@ export default async function ProductPage({ params }: { params: { id: string } }
           </div>
             <div className="flex flex-col text-center lg:text-left place-items-center lg:place-items-start">
               <ProductDescription description={product?.description!} name={product?.name!} />
-              <EditQuantityAndSize product={product}/>
-              <div className="max-w-[600px]  mt-4 mx-4">
+              <EditQuantityAndSize hasSizes={product?.inventory?.hasSizes!} product={product} quantityLimit={sizes}/>
+              <div className="max-w-[600px]">
                 <FAQ></FAQ>
               </div>
           </div>

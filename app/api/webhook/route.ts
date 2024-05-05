@@ -2,6 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { setOrderStatus } from "@/app/lib/actions";
+import { processOrder } from "@/app/lib/actions";
 
 import Stripe from "stripe";
 
@@ -40,7 +41,12 @@ export async function POST(req: Request, res: Response) {
         paymentIntentSucceeded.metadata.orderId,
         "PAID"
       );
-      console.log("Order Status Updated:", successStatus);
+      if ( paymentIntentSucceeded.metadata.orderId === undefined ) {
+        console.log("No Order ID Found in Payment Intent Metadata");
+        return NextResponse.json({ received: true }, { status: 200 });
+      }
+      const processedOrder = await processOrder(paymentIntentSucceeded.metadata.orderId);
+      console.log("Order Status Updated:", successStatus, "\nOrder", processedOrder);
       break;
     // ... handle other event types
     case "payment_intent.payment_failed":
