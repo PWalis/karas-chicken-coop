@@ -17,6 +17,8 @@ interface ProductProps {
   // images: string[];
   category: string;
   inventory: {
+    hasSizes: boolean;
+    quantity: number;
     xs_quantity: number;
     s_quantity: number;
     m_quantity: number;
@@ -55,16 +57,6 @@ export const Product: React.FC<ProductProps> = ({
       )}
     >
       <div className="flex flex-col justify-center place-items-center overflow-auto h-fit w-fit pr-2">
-        {/* {images.map((image, index) => {
-          return (
-            <img
-              src={image}
-              alt={index.toString()}
-              className="object-cover w-32 h-32 rounded-xl mt-1"
-              key={index}
-            />
-          );
-        })} */}
         <img
               src={primaryImage}
               alt={"1"}
@@ -97,6 +89,7 @@ export const Product: React.FC<ProductProps> = ({
             )}
           </button>
         </div>
+        {inventory.hasSizes ? (
         <div className="flex flex-wrap gap-2 mt-2 justify-end place-items-end w-fit">
             <div className="text-lg place-items-center flex flex-col">
               <p className="border-2 px-2">{inventory.xs_quantity}</p>
@@ -124,7 +117,10 @@ export const Product: React.FC<ProductProps> = ({
               <p className="">XXL</p>
             </div>
           </div>
-        </div>
+        </div>) : (<div className="text-lg place-items-center flex flex-col">
+              <p className="border-2 px-2">{inventory.quantity}</p>
+              <p className="">Qty</p>
+            </div>)}
       </div>
 
       {/* Confirmation Popup */}

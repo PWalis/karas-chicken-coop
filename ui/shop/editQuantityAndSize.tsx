@@ -4,16 +4,26 @@ import { QuantityCounter } from "@/ui/shop/quantityCounter";
 import React, { useState, useEffect } from "react";
 import { useCartDispatch } from "@/app/context/cartContext";
 import { redirect } from "next/navigation";
-import { set } from "zod";
-import { motion } from "framer-motion";
-import { AddToCartAlert } from "./addToCartAlert";
+import { AddToCartAlert } from "@/ui/shop/addToCartAlert";
 
 interface EditQuantityAndSizeProps {
   product: any;
+  hasSizes: boolean;
+  quantityLimit: {
+    XS?: number;
+    S?: number;
+    M?: number;
+    L?: number;
+    XL?: number;
+    XXL?: number;
+    limit?: number;
+  };
 }
 
 export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
   product,
+  hasSizes,
+  quantityLimit,
 }) => {
   const [size, setSize] = useState("M");
   const [quantity, setQuantity] = useState(1);
@@ -42,7 +52,10 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
   }, [showAlert]);
 
   const addToCartHandler = () => {
-    dispatch({ type: "ADD", payload: { ...product, size: size, quantity: quantity } });
+    dispatch({
+      type: "ADD",
+      payload: { ...product, size: size, quantity: quantity },
+    });
     setQuantity(1);
     // Show the alert when the item is added to the cart
     setShowAlert(true);
@@ -55,22 +68,28 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
 
   return (
     <>
-    <div className="border rounded-sm shadow-sm w-full bg-gray-100/10 p-4">
-      <div className="flex flex-col ">
-        <div className="flex lg:justify-normal justify-center">
-          <Sizing size={size!} setSize={setSize}></Sizing>
+      <div className="flex flex-col gap-2 mt-2">
+        <div className="flex gap-3 lg:justify-normal justify-center">
+          {hasSizes ? (
+            <Sizing size={size!} setSize={setSize} />
+          ) : (
+            <div className="h-20"></div>
+          )}
         </div>
-        <div className="flex justify-center lg:justify-normal">
+        <div className="flex justify-center lg:justify-normal mt-2">
           <QuantityCounter
+            size={size}
+            hasSizes={hasSizes}
+            quantityLimit={quantityLimit}
             quantity={quantity}
             setQuantity={setQuantity}
-          ></QuantityCounter>
+          />
         </div>
       </div>
-      <div className="flex gap-3 justify-center lg:justify-start">
+      <div className="flex mb-10 mt-4 gap-3 justify-center">
         <button
           onClick={buyNowHandler}
-          className="px-4 py-2 w-fill bg-floc-yellow uppercase font-bold tracking-wide"
+          className="px-4 py-2 w-fill bg-floc-yellow uppercase"
         >
           Buy Now
         </button>
@@ -82,9 +101,11 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
         </button>
       </div>
       {showAlert && (
-        <AddToCartAlert showAlert={showAlert} dismissAlert={dismissAlert}></AddToCartAlert>
+        <AddToCartAlert
+          showAlert={showAlert}
+          dismissAlert={dismissAlert}
+        ></AddToCartAlert>
       )}
-      </div>
     </>
   );
 };

@@ -5,10 +5,12 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import { useCart } from "@/app/context/cartContext";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
+  const cart = useCart();
 
   const [message, setMessage] = React.useState(null || "");
   const [isLoading, setIsLoading] = React.useState(false);
@@ -55,6 +57,20 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
+    const hasInventory = await fetch("/api/inventory", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({data: cart}),
+    });
+
+    if (hasInventory) {
+      setIsLoading(false);
+      setMessage("Item is out of stock");
+      return;
+    }
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
@@ -78,7 +94,31 @@ export default function CheckoutForm() {
   };
 
   const paymentElementOptions = {
-    layout: { type: "tabs" }
+    layout: { type: "tabs" },
+  };
+
+  const handleAddressChange = (event: any) => {
+    // create a new order with the address
+    // update payment intent metadata with the orderId
+    if (event.complete) {
+      setIsLoading(true);
+      fetch("/api/createOrder", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          address: event.value,
+          cart: cart,
+          paymentIntentId: cart.paymentIntentId,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setIsLoading(false);
+          // console.log(data);
+        });
+    }
   };
 
   return (
@@ -88,15 +128,18 @@ export default function CheckoutForm() {
         id="payment-element"
         options={paymentElementOptions as any}
       />
-      <AddressElement id="address-element" options={{ mode: "shipping" }} />
-      <div className="flex justify-center"> {/* Add this div and flex properties */}
-        <button disabled={isLoading || !stripe || !elements} id="submit">
-          <span id="button-text">
-            {isLoading ? <div className="spinner" id="spinner"></div> : <div className="bg-floc-yellow cursor-pointer hover:bg-light-yellow inline-flex px-4 py-2 rounded-sm mt-3 uppercase tracking-wide">Submit Payment</div>}
-          </span>
-        </button>
-      </div>
-      {/* Show any error or success messages */}
+      <AddressElement
+        id="address-element"
+        options={{ mode: "shipping" }}
+        onChange={(event) => {
+          handleAddressChange(event);
+        }}
+      />
+      <button disabled={isLoading || !stripe || !elements} id="submit">
+        <span id="button-text">
+          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+        </span>
+      </button>
       {message && <div id="payment-message">{message}</div>}
     </form>
   </div>

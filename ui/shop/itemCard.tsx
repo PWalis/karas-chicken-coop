@@ -11,7 +11,9 @@ import { set } from "zod";
 import { fetchProductById } from "@/app/lib/actions";
 
 interface ItemCardProps {
+
   product: any;
+
 }
 
 export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
