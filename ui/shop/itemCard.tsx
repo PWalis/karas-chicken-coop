@@ -18,7 +18,6 @@ interface ItemCardProps {
   inventory: number;
   productId: number;
   stripePriceKey: string;
-  product: any;
 }
 
 export const ItemCard: React.FC<ItemCardProps> = ({
@@ -40,13 +39,12 @@ export const ItemCard: React.FC<ItemCardProps> = ({
         type: "ADD",
         payload: {
           name,
-          price,
           description,
           images,
           category,
           inventory,
-          productId,
           stripePriceKey,
+          id: productId,
         },
       });
     }

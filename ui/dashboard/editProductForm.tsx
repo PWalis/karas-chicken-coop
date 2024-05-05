@@ -14,6 +14,8 @@ interface ProductProps {
   category: string;
   categories: any;
   inventory: {
+    hasSizes: boolean;
+    quantity: number;
     xs_quantity: number;
     s_quantity: number;
     m_quantity: number;
@@ -83,74 +85,87 @@ export const EditProductForm: React.FC<ProductProps> = ({
       </select>
       <label htmlFor="newCategory"> New Category</label>
       <input type="text" name="newCategory" id="newCategory" />
-      <ul className="flex flex-row gap-8">
-        <li className="flex flex-col">
-          <label htmlFor="xs">XS</label>
+      {inventory.hasSizes ? (
+        <ul className="flex flex-row gap-8">
+          <li className="flex flex-col">
+            <label htmlFor="xs">XS</label>
+            <input
+              className="max-w-10 h-10 p-1"
+              type="number"
+              id="xs"
+              name="xs"
+              required
+              defaultValue={inventory.xs_quantity}
+            />
+          </li>
+          <li className="flex flex-col">
+            <label htmlFor="small">Small</label>
+            <input
+              className="max-w-10 h-10 p-1"
+              type="number"
+              id="small"
+              name="small"
+              required
+              defaultValue={inventory.s_quantity}
+            />
+          </li>
+          <li className="flex flex-col">
+            <label htmlFor="medium">Medium</label>
+            <input
+              className="max-w-10 h-10 p-1"
+              type="number"
+              id="medium"
+              name="medium"
+              required
+              defaultValue={inventory.m_quantity}
+            />
+          </li>
+          <li className="flex flex-col">
+            <label htmlFor="large">Large</label>
+            <input
+              className="max-w-10 h-10 p-1"
+              type="number"
+              id="large"
+              name="large"
+              required
+              defaultValue={inventory.l_quantity}
+            />
+          </li>
+          <li className="flex flex-col">
+            <label htmlFor="xl">XL</label>
+            <input
+              className="max-w-10 h-10 p-1"
+              type="number"
+              id="xl"
+              name="xl"
+              required
+              defaultValue={inventory.xl_quantity}
+            />
+          </li>
+          <li className="flex flex-col">
+            <label htmlFor="xxl">XXL</label>
+            <input
+              className="max-w-10 h-10 p-1"
+              type="number"
+              id="xxl"
+              name="xxl"
+              required
+              defaultValue={inventory.xxl_quantity}
+            />
+          </li>
+        </ul>
+      ) : (
+        <div className="flex flex-col">
+          <label htmlFor="quantity">Quantity</label>
           <input
-            className="max-w-10 h-10 p-1"
             type="number"
-            id="xs"
-            name="xs"
+            id="quantity"
+            name="quantity"
             required
-            defaultValue={inventory.xs_quantity}
+            defaultValue={inventory.quantity}
           />
-        </li>
-        <li className="flex flex-col">
-          <label htmlFor="small">Small</label>
-          <input
-            className="max-w-10 h-10 p-1"
-            type="number"
-            id="small"
-            name="small"
-            required
-            defaultValue={inventory.s_quantity}
-          />
-        </li>
-        <li className="flex flex-col">
-          <label htmlFor="medium">Medium</label>
-          <input
-            className="max-w-10 h-10 p-1"
-            type="number"
-            id="medium"
-            name="medium"
-            required
-            defaultValue={inventory.m_quantity}
-          />
-        </li>
-        <li className="flex flex-col">
-          <label htmlFor="large">Large</label>
-          <input
-            className="max-w-10 h-10 p-1"
-            type="number"
-            id="large"
-            name="large"
-            required
-            defaultValue={inventory.l_quantity}
-          />
-        </li>
-        <li className="flex flex-col">
-          <label htmlFor="xl">XL</label>
-          <input
-            className="max-w-10 h-10 p-1"
-            type="number"
-            id="xl"
-            name="xl"
-            required
-            defaultValue={inventory.xl_quantity}
-          />
-        </li>
-        <li className="flex flex-col">
-          <label htmlFor="xxl">XXL</label>
-          <input
-            className="max-w-10 h-10 p-1"
-            type="number"
-            id="xxl"
-            name="xxl"
-            required
-            defaultValue={inventory.xxl_quantity}
-          />
-        </li>
-      </ul>
+        </div>
+      )}
       <div className="flex flex-row">
         <div>
           <label htmlFor="primaryImage">Primary Image</label>

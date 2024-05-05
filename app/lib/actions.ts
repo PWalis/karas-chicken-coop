@@ -54,6 +54,7 @@ const FormSchema = z.object({
   image: z.array(ImageSchema).nonempty({ message: "Image is required" }),
   category: z.string().nullable(),
   newCategory: z.string().nullable(),
+  quantity: z.coerce.number().nullable(),
   xs: z.coerce.number().nullable(),
   small: z.coerce.number().nullable(),
   medium: z.coerce.number().nullable(),
@@ -213,6 +214,7 @@ export async function createProduct(
     image: formData.getAll("image"),
     category: formData.get("category"),
     newCategory: formData.get("newCategory"),
+    quantity: formData.get("quantity"),
     xs: formData.get("xs"),
     small: formData.get("small"),
     medium: formData.get("medium"),
@@ -242,6 +244,7 @@ export async function createProduct(
       : validatedData.data.category,
     primaryImage: validatedData.data.primaryImage,
     image: validatedData.data.image,
+    quantity: validatedData.data.quantity,
     xs: validatedData.data.xs,
     small: validatedData.data.small,
     medium: validatedData.data.medium,
@@ -285,7 +288,7 @@ export async function createProduct(
         inventory: {
           create: {
             hasSizes: size,
-            quantity: 0,
+            quantity: data.quantity!,
             xs_quantity: data.xs != null ? data.xs : 0,
             s_quantity: data.small != null ? data.small : 0,
             m_quantity: data.medium != null ? data.medium : 0,
@@ -393,6 +396,7 @@ export async function updateProduct(
     description: formData.get("description"),
     category: formData.get("category"),
     newCategory: formData.get("newCategory"),
+    quantity: formData.get("quantity"),
     xs: formData.get("xs"),
     small: formData.get("small"),
     medium: formData.get("medium"),
@@ -424,6 +428,7 @@ export async function updateProduct(
       : validatedData.data.category,
     primaryImage: formData.get("primaryImage") as any,
     image: formData.getAll("image") as any,
+    quantity: validatedData.data.quantity,
     xs: validatedData.data.xs,
     small: validatedData.data.small,
     medium: validatedData.data.medium,
@@ -463,12 +468,15 @@ export async function updateProduct(
         images: images,
         inventory: {
           update: {
-            xs_quantity: data.xs!,
-            s_quantity: data.small!,
-            m_quantity: data.medium!,
-            l_quantity: data.large!,
-            xl_quantity: data.xl!,
-            xxl_quantity: data.xxl!,
+            data: {
+              quantity: data.quantity!,
+              xs_quantity: data.xs != null ? data.xs : 0,
+              s_quantity: data.small != null ? data.small : 0,
+              m_quantity: data.medium != null ? data.medium : 0,
+              l_quantity: data.large != null ? data.large : 0,
+              xl_quantity: data.xl != null ? data.xl : 0,
+              xxl_quantity: data.xxl != null ? data.xxl : 0,
+            },
           },
         },
       },
@@ -477,10 +485,9 @@ export async function updateProduct(
         inventory: true,
       },
     });
-    await stripeUpdateProduct(product.stripeProductKey, product.name);
-  
+    // await stripeUpdateProduct(product.stripeProductKey, product.name);
   } catch (error) {
-    return { message: error };
+    console.log("error updating product", error);
   }
 
   revalidatePath("/");
@@ -577,11 +584,7 @@ export async function fetchOrderById(id: string) {
         id: id,
       },
       include: {
-        orderItems: {
-          include: {
-            product: true,
-          },
-        },
+        orderItems: {},
       },
     });
     return order;
@@ -597,11 +600,7 @@ export async function fetchAllPaidOrders() {
         status: "PAID",
       },
       include: {
-        orderItems: {
-          include: {
-            product: true,
-          },
-        },
+        orderItems: {},
       },
     });
     return orders;

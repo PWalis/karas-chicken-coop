@@ -37,12 +37,7 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
         <label className="rounded-none" htmlFor="category">
           Category
         </label>
-        <select
-          className=""
-          id="category"
-          name="category"
-          defaultValue={""}
-        >
+        <select className="" id="category" name="category" defaultValue={""}>
           <option value={""} disabled hidden>
             Select a Category
           </option>
@@ -57,8 +52,8 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
               <CheckMark />
             </button>
           </div>
-          {showOptions && (
-            <ul className="flex  flex-wrap gap-4 justify-center">
+          {showOptions ? (
+            <ul className="flex flex-wrap gap-4 justify-center">
               <li className="flex flex-col">
                 <label htmlFor="xs">XS</label>
                 <input
@@ -128,6 +123,11 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
                 </li>
               </div>
             </ul>
+          ) : (
+            <div className="flex flex-col">
+              <label htmlFor="quantity">Quantity</label>
+              <input type="number" id="quantity" name="quantity" required defaultValue={0}/>
+            </div>
           )}
         </div>
         <label htmlFor="primaryImage">Primary Image</label>
