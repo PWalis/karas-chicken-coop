@@ -14,12 +14,6 @@ import {
   expiryStringToInt,
   getSignedURLImageName,
 } from "./utils";
-import {
-  stripeArchiveProduct,
-  stripeCreatePrice,
-  stripeCreateProduct,
-  stripeUpdateProduct,
-} from "./stripe";
 import { order } from "@prisma/client";
 
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 30; //30MB
@@ -264,17 +258,9 @@ export async function createProduct(
   const priceInCents = data.price * 100;
 
   try {
-    const stripeProduct = await stripeCreateProduct(data.name);
-    const stripePrice = await stripeCreatePrice(
-      priceInCents,
-      stripeProduct!.id
-    );
-
     const product = await prisma.products.create({
       data: {
         name: data.name,
-        stripeProductKey: stripeProduct!.id,
-        stripePriceKey: stripePrice!.id,
         priceInCents: priceInCents,
         description: data.description,
         category: {
@@ -303,8 +289,6 @@ export async function createProduct(
         inventory: true,
       },
     });
-    // console.log(stripeProduct);
-    // console.log(product);
   } catch (error) {
     console.log("Error Creating product", error);
   }
@@ -368,7 +352,6 @@ export async function deleteProduct(productId: number) {
       },
     });
 
-    await stripeArchiveProduct(product?.stripeProductKey!);
   } catch (error) {
     console.log("Error deleting product", error);
   }
@@ -485,7 +468,6 @@ export async function updateProduct(
         inventory: true,
       },
     });
-    // await stripeUpdateProduct(product.stripeProductKey, product.name);
   } catch (error) {
     console.log("error updating product", error);
   }
