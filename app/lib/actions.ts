@@ -692,6 +692,7 @@ export async function processOrder(orderId: string) {
         }
       }
       await setOrderStatus(orderId, "PROCESSED");
+      revalidatePath("/")
       return fetchedOrder;
     } catch (error) {
       console.log("Error processing order", error);

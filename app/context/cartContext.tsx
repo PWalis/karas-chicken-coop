@@ -9,7 +9,7 @@ interface CartItem {
   images: string[];
   primaryImage: string;
   category: string;
-  inventory: number;
+  inventory: any;
   id: number;
   stripePriceKey: string;
   quantity: number;
@@ -39,21 +39,43 @@ const cartReducer = (state: CartState, action: CartAction) => {
     case "ADD":
       const uuid = Math.random().toString(36).substring(7);
       // update the quantity of the item if it already exists in the cart
-      const existingItem = state.items.find(
-        (item) => item.id === action.payload.id && item.size === action.payload.size
-      );
-      if (existingItem) {
-        return {
-          ...state,
-          items: state.items.map((item) =>
-            item.id === action.payload.id
-              ? { ...item, quantity: item.quantity + action.payload.quantity }
-              : item
-          ),
-        };
+      if (action.payload.inventory.hasSizes) {
+        const existingItem = state.items.find(
+          (item) =>
+            item.id === action.payload.id &&
+            item.size === action.payload.size
+        );
+        if (existingItem) {
+          return {
+            ...state,
+            items: state.items.map((item) =>
+              item.itemId === existingItem.itemId
+                ? { ...item, quantity: item.quantity + action.payload.quantity }
+                : item
+            ),
+          }
+        } else {
+          action.payload.itemId = uuid;
+          return {...state, items: [...state.items, action.payload] };
+        }
+      } else {
+        const existingItem = state.items.find(
+          (item) => item.id === action.payload.id
+        );
+        if (existingItem) {
+          return {
+            ...state,
+            items: state.items.map((item) =>
+              item.itemId === existingItem.itemId
+                ? { ...item, quantity: item.quantity + action.payload.quantity }
+                : item
+            ),
+          }
+        } else {
+          action.payload.itemId = uuid;
+          return {...state, items: [...state.items, action.payload] };
+        }
       }
-      action.payload.itemId = uuid;
-      return {...state, items: [...state.items, action.payload] };
     case "REMOVE":
       return {
         ...state,

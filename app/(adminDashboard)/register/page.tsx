@@ -1,21 +1,19 @@
-import React from "react";
+import { register } from "@/app/lib/register";
 
-import { login } from "@/app/lib/sessionHandler";
-
-export default function Login() {
+export default function Page() {
   return (
     <div>
-      <h1>Login</h1>
-      <form action={login}>
+      <h1>Register</h1>
+      <form action={register}>
         <label htmlFor="email">
-          Username
+          Email
           <input name="email" type="email" />
         </label>
         <label htmlFor="password">
           Password
           <input name="password" type="password" />
         </label>
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
     </div>
   );
