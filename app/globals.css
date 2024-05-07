@@ -64,11 +64,12 @@ button {
 }
 
 .newsletter {
-  background-image: url(../ui/assets/barnhouse-footer.png);
+  background-image: url(../ui/assets/footer_png.png);
 }
 
 .loading-bg {
   background-image: url(../ui/assets/karaschickenpattern-01.jpg);
+  background-size: 105%; /* Scale the background image by 10% */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

@@ -23,14 +23,14 @@ export default function HeroSection() {
     <SectionWrapper>
       <section id="HeroSection">
       <div className="grid max-w-screen-2xl h-screen md:px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-10 lg:grid-cols-12 place-content-center">
-        <div className="mr-auto lg:place-self-center lg:col-span-6 sm:text-left text-center place-items-center">
-          <h1 className=" text-5xl lg:text-7xl xl:text-9xl font-extrabold leading-none uppercase tracking-wider">
+        <div className=" lg:place-self-center lg:col-span-6 lg:text-left text-center place-items-center">
+          <h1 className=" text-6xl lg:text-7xl xl:text-9xl font-extrabold leading-none uppercase tracking-wider">
           Welcome to the Coop!
           </h1>
-           <h2 className="max-w-2xl font-light text-floc-gray lg:mb-2 md:text-xl lg:text-2xl dark:text-gray-400 tracking-wider uppercase">
+           <h2 className=" font-light text-floc-gray lg:mb-2 text-xl lg:text-2xl dark:text-gray-400 tracking-wider uppercase">
               Kara's Chicken Coop
             </h2>
-            <div className="flex mt-8 gap-3">
+            <div className="flex mt-6 gap-3 justify-center lg:justify-start">
           <HeroCTA />
           <button className="inline-flex items-center justify-center px-5 py-2 text-xl text-center text-white tracking-wide bg-floc-gray hover:bg-floc-gray/90 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-md uppercase"> SHOP STYLES </button>
           </div>

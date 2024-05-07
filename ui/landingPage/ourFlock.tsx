@@ -10,7 +10,7 @@ import { SectionWrapper } from "../assets/animation/section-wrapper";
 export default function OurFlockSection() {
   return (
     <SectionWrapper>
-    <section id="OurFlock" className="justify-center md:px-4 py-8 mx-auto h-auto">
+    <section id="OurFlock" className="justify-center md:px-4 py-8 mx-auto h-auto px-2">
       <h2 className="text-4xl md:text-5xl lg:text-8xl uppercase justify-center text-center mb-5 mt-20 lg:mb-20">
         Our Flock
       </h2>
@@ -19,10 +19,10 @@ export default function OurFlockSection() {
           {" "}
           <FlockCard
             src={Kara}
-            alt={"Kara Pennartz"}
+            alt={"Kara Leino"}
             name={"Kara"}
             description={
-              "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum aut possimus, itaque fugit modi quas deserunt iure ipsam tempore rem id voluptate delectus, ab, suscipit quibusdam velit debitis magnam! Libero!"
+              "is the founder of Kara's Chicken Coops! She found her love for chickens when she first started her own farm in 2021. Ever since she has become a specialist in the polish chicken breed."
             }
           />
         </div>
@@ -31,9 +31,9 @@ export default function OurFlockSection() {
           <FlockCard
             src={Mike}
             alt={"Michael Leino"}
-            name={"Mike"}
+            name={"Michael"}
             description={
-              "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum aut possimus, itaque fugit modi quas deserunt iure ipsam tempore rem id voluptate delectus, ab, suscipit quibusdam velit debitis magnam! Libero!"
+              "is Kara's husband, and hand around the farm. He mostly tends to the cows as well as other farm animals, but he also enjoys helping out with the chickens and has a deep love for all animals!"
             }
           />
         </div>
@@ -41,10 +41,10 @@ export default function OurFlockSection() {
           {" "}
           <FlockCard
             src={Autumn}
-            alt={"Autumn Pennartz"}
+            alt={"Autumn Rose"}
             name={"Autumn"}
             description={
-              "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum aut possimus, itaque fugit modi quas deserunt iure ipsam tempore rem id voluptate delectus, ab, suscipit quibusdam velit debitis magnam! Libero!"
+              "is Kara's daughter, and has always had a deep love for animals. She has a passion for horses, while she owns two of them and is always looking for a new one to take home!"
             }
           />
         </div>
@@ -55,7 +55,7 @@ export default function OurFlockSection() {
             alt={"Joshua Pennartz"}
             name={"Joshua"}
             description={
-              "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum aut possimus, itaque fugit modi quas deserunt iure ipsam tempore rem id voluptate delectus, ab, suscipit quibusdam velit debitis magnam! Libero!"
+              "is Kara's son, who has just as much love for chickens as Kara. He builds professional chicken coops and is always looking for new ways to make a difference in the community."
             }
           />
         </div>
@@ -66,7 +66,7 @@ export default function OurFlockSection() {
             alt={"Cassidy Pennartz"}
             name={"Cassidy"}
             description={
-              "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum aut possimus, itaque fugit modi quas deserunt iure ipsam tempore rem id voluptate delectus, ab, suscipit quibusdam velit debitis magnam! Libero!"
+              "is Joshua's husband, and is the best friend of Kara and Joshua. She has a deep love for chickens as well as other farm animals, and is always looking for ways to help out."
             }
           />
         </div>
