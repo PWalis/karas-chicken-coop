@@ -1,9 +1,11 @@
-import { useState } from "react";
+"use client";
+import React, { useState, useEffect, useRef } from "react";
 import { HamburgerMenu } from "../header/buttons";
 import clsx from "clsx";
 
 export default function MobileNav() {
-    const [navMenu, setNavMenu] = useState(false);
+  const [navMenu, setNavMenu] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
   
 
 const handleHamburgerClick = () => {
@@ -11,8 +13,25 @@ const handleHamburgerClick = () => {
     console.log("nav clicked");
   };
 
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setNavMenu(false);
+      }
+    };
+
+    if (navMenu) {
+      document.body.addEventListener("click", handleOutsideClick);
+    }
+
+    return () => {
+      document.body.removeEventListener("click", handleOutsideClick);
+    };
+  }, [navMenu]);
+
+
   return (
-    <nav className="bg-floc-yellow/90 border-gray-200 dark:bg-gray-900 font-bold text-sm uppercase fixed w-full top-0 z-50">
+    <nav ref={navRef} className="bg-gray-200/90 backdrop-blur-sm border-gray-200 dark:bg-gray-900 font-bold text-sm uppercase fixed w-full top-0 z-50">
       <div className="max-w-screen-xl flex flex-wrap gap-1 items-center justify-between mx-auto">
         <div className="flex justify-end items-center px-6 py-6">
           <a className="flex items-center" href="/">

@@ -201,7 +201,8 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
                         </div>
                         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                           <p>
-                            or{" "}
+                            or
+                          <Link href="/shop">
                             <button
                               type="button"
                               className="font-medium text-floc-gray/80 hover:text-indigo-500"
@@ -210,6 +211,7 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
                               Continue Shopping
                               <span aria-hidden="true"> &rarr;</span>
                             </button>
+                            </Link>
                           </p>
                         </div>
                       </div>

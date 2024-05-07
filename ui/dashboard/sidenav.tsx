@@ -2,38 +2,14 @@
 import React from "react";
 import Link from "next/link";
 import { LogOut } from "./buttons";
-import { useEffect, useState } from "react";
-import MobileNav from "./mobilenav";
 import CreateIcon from "../assets/icons/CreateIcon";
 import ShirtIcon from "../assets/icons/ShirtIcon";
 import EditIcon from "../assets/icons/EditIcon";
 
 export const SideNav: React.FC = () => {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 1500); // Adjust the breakpoint according to your needs
-    };
-
-    // Initial check
-    handleResize();
-
-    // Event listener for window resize
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
-    <div className="relative">
-      {isMobile ? (
-        <MobileNav />
-      ) : (
-        <div className="bg-floc-gray/10 rounded-2xl bg-cover flex sm:flex-col h-[95%] mt-5 ml-5 w-[300px] mr-10 relative">
+    <div className="relative h-screen p-4">
+        <div className="bg-floc-gray/10 rounded-2xl bg-cover flex sm:flex-col h-[100%] w-[300px] mr-10 relative">
           <h1 className="m-6 ml-6 mt-20 text-4xl uppercase max-w-[300px]">
             <Link
               className="text-lg sm:text-4xl mb-3 uppercase"
@@ -71,7 +47,6 @@ export const SideNav: React.FC = () => {
             <LogOut />
           </div>
         </div>
-      )}
     </div>
   );
 };

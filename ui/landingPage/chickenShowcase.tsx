@@ -1,7 +1,7 @@
 "use client";
 import Image, { StaticImageData } from "next/image";
 import pengu from "../assets/pengu.jpg";
-import river from "../assets/FamilyGallery/river_2.jpg";
+import river from "../assets/FamilyGallery/river.jpg";
 import bonnie_3 from "../assets/FamilyGallery/bonnie_3.jpg";
 import skeet from "../assets/FamilyGallery/skeet_1.jpg";
 import corn from "../assets/FamilyGallery/corn_2.jpg";
@@ -42,12 +42,12 @@ export default function ChickenSection() {
   const chickens: Chicken[] = [
     { name: "Cornelius", description: "Cornelius was the first rooster to join the hall of fame and go viral on facebook! He loves flying in the snow and many akin him to a snowy barn owl. He stands proud as a barred candy corn polish rooster..", image: corn },
     { name: "Bonnie", description: "Bonnie has his name because Kara originally thought he was a hen! Bonnie quickly stole the hearts of everyone watching and became a star (and a house rooster!) we love our Bo! ", image: bonnie_3 },
-    { name: "Skeet", description: "Skeet became famous through his videos of running when he hears his name. He is a lovable, loud, goofy proud polish rooster.", image: skeet },
-    { name: "Pengu", description: "Pengu, one of the runner ups in the flock! Pengu is known for his sassy emo hair and long legs. He is a tolblunt polish rooster.", image: pengu },
-    { name: "Bean", description: "Description for Skeet.", image: fiona },
-    { name: "Fiona", description: "Fiona (another househen!) is an adorable barred polish hen. She is Bonnies girl.", image: fiona },
-    { name: "Crunch", description: "Crunch is related to Mr. Frizzle (one of the original chickens!), he is a candy corn frizzle", image: crunch },
-    { name: "River", description: "Description for River.", image: river },
+    { name: "Skeet", description: "Skeet became famous through his videos of running towards the camera when he is called. He has probably the loudest crow of all of the Kara's Chicken Coop Roosters! He is a lovable, loud, goofy, proud polish rooster.", image: skeet },
+    { name: "Pengu", description: "Pengu, one of the runner ups in the flock! Pengu is known for his sassy emo styled hair, long legs and lovable personality. He is beautiful and very large! He is a tolblunt polish rooster.", image: pengu },
+    { name: "Bean", description: "Bean is loved for her adorable face and beard, she has a beautiful crest of feathers. She loves to follow you around in hopes that you will hopefully drop her a piece of your delicious food!", image: bean },
+    { name: "Fiona", description: "Fiona (our househen!) is an adorable barred polish hen. She is Bonnies main girl, likes to cuddle in your chair and lay eggs where you least expect them!", image: fiona },
+    { name: "Crunch", description: "Crunch is related to Mr. Frizzle (one of the original chickens!), he is a candy corn frizzle. Crunch is the coopb guard dog, and will attack anyone and anything that makes their way through to his hens. ", image: crunch },
+    { name: "River", description: "River was a tiny bantam siverlace whom would follow you around the yard as if you were one of his hens. He was a rooster that we all held close to our hearts, unfortunatly passing away too soon. We will always remember you River!", image: river },
   ];
   const [mainImage, setMainImage] = useState<StaticImageData>(
     chickens[0].image
@@ -59,8 +59,8 @@ export default function ChickenSection() {
 
   return (
     <SectionWrapper>
-      <div className="bg-gray-50"> 
-    <section id="MeetTheChickens" className="max-w-[1500px] lg:px-4 lg:py-8 mx-auto">
+      <div className=""> 
+    <section id="MeetTheChickens" className="max-w-[1500px] lg:px-4 lg:py-8 mx-auto px-4">
       <h2 className="text-4xl mt-20 md:text-5xl lg:text-8xl uppercase text-center mb-5 lg:mb-20">
         Meet The Chickens
       </h2>
@@ -89,7 +89,7 @@ export default function ChickenSection() {
             </h3>
             <p
               id="ChickenDescription"
-              className="max-w-[300px] text-xl lg:text-xl lg:max-w-[450px] text-floc-gray/90"
+              className="max-w-[300px] text-xl lg:text-xl lg:max-w-[450px] h-[200px] text-floc-gray/90"
             >
               {chickenDescription}
             </p>

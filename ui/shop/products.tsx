@@ -19,7 +19,7 @@ const Products: React.FC = async() => {
     return (
       <div>
         {products.length > 0 ? (
-          <div className="flex justify-center 2xl:justify-between flex-wrap gap-10 max-w-5xl sm:pt-5">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-10 sm:pt-5">
             {productsList}
           </div>
         ) : (

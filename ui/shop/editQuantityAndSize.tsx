@@ -76,7 +76,7 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
             <div className="h-20"></div>
           )}
         </div>
-        <div className="flex justify-center lg:justify-normal mt-2">
+        <div className="flex justify-center lg:justify-normal">
           <QuantityCounter
             size={size}
             hasSizes={hasSizes}
@@ -89,13 +89,13 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
       <div className="flex mb-10 mt-4 gap-3 justify-center">
         <button
           onClick={buyNowHandler}
-          className="px-4 py-2 w-fill bg-floc-yellow uppercase"
+          className="inline-flex items-center justify-center px-5 py-3 text-xl text-center bg-floc-yellow uppercase hover:bg-light-yellow focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm"
         >
           Buy Now
         </button>
         <button
           onClick={addToCartHandler}
-          className="bg-floc-gray text-gray-100 tracking-wider px-4 py-2 uppercase"
+          className="inline-flex items-center justify-center px-5 py-2 text-xl text-center bg-floc-gray text-white tracking-wide uppercase hover:bg-floc-gray/90 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm"
         >
           Add to Cart
         </button>

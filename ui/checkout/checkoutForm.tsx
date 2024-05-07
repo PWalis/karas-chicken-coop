@@ -123,7 +123,7 @@ export default function CheckoutForm() {
 
   return (
     <div className="max-w-[600px] bg-white shadow-sm p-4">
-    <form id="payment-form" onSubmit={handleSubmit as any}>
+    <form className="flex flex-col justify-center" id="payment-form" onSubmit={handleSubmit as any}>
       <PaymentElement
         id="payment-element"
         options={paymentElementOptions as any}
@@ -136,11 +136,12 @@ export default function CheckoutForm() {
         }}
       />
       <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+        <span className="mx-auto h-12 flex justify-center items-center bg-floc-yellow mt-3 hover:bg-light-yellow" id="button-text">
+          {isLoading ? <span className="loading loading-spinner loading-md" id="spinner"></span> : <p className="uppercase tracking-wide">Submit Payment</p>}
         </span>
       </button>
-      {message && <div id="payment-message">{message}</div>}
+      <p className="text-sm text-gray-500 pt-1 mx-auto justify-center"> Secure payment with <a className="text-blue-400" href="stripe.com"> Stripe </a>  checkout. </p>
+      {message && <div className="text-red-600/80 mx-auto" id="payment-message">{message}</div>}
     </form>
   </div>
   );

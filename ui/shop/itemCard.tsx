@@ -2,7 +2,7 @@
 
 import React from "react";
 import { AddToCardButton } from "./buttons";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { useCart, useCartDispatch } from "@/app/context/cartContext";
 import Link from "next/link";
 import Sizing from "./sizing";
@@ -41,7 +41,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
 
   const [showSizes, setShowSizes] = useState(false);
   const [buttonHTML, setButtonHTML] = useState("Add to Cart");
-  const [addSizeButtonText, setAddSizeButtonText] = useState("Add Size");
+  const [addSizeButtonText, setAddSizeButtonText] = useState("Add Size to Cart");
   const [showAlert, setShowAlert] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
@@ -49,7 +49,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
     setShowSizes(!showSizes);
     setButtonHTML(
       showSizes
-        ? "Add to Cart"
+        ? "<p>Add to Cart</p>"
         : '<span class="loading loading-dots loading-md"></span>'
     ); // Change button HTML
     console.log(showSizes);
@@ -90,12 +90,32 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
   };
 
   const [size, setSize] = useState("M");
+  const sizesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sizesRef.current && !sizesRef.current.contains(event.target as Node)) {
+        setShowSizes(false);
+        setButtonHTML("Add to Cart");
+      }
+    };
+
+    if (showSizes) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showSizes]);
 
   return (
-    <div className="item-card relative">
+    <div className="item-card relative mx-4">
       <Link href={`/shop/${product.id}`} className="relative group">
         <img
-          className="w-[300px] group-hover:opacity-40 group-hover:blur-[1px] ease-in-out transition-all cursor-pointer group"
+          className="w-fit group-hover:opacity-40 group-hover:blur-[1px] ease-in-out transition-all cursor-pointer group"
           src={product.images[0]}
           alt="item"
         />
@@ -113,17 +133,19 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
         <div className="relative">
           <button
             onClick={handleAddToCart}
-            className={`inline-flex items-center justify-center h-12 w-28 text-md text-center border-[.20em] border-floc-gray bg-white text-black tracking-wide uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm transition-all ease-in-out`}
+            className={`inline-flex items-center justify-center h-12 w-28 text-md text-center border-[.20em] bg-floc-gray text-white tracking-wide uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm transition-all ease-in-out`}
             dangerouslySetInnerHTML={{ __html: buttonHTML }}
           ></button>
         </div>
       </div>
       {showSizes && (
-        <div className="absolute z-50 left-1/2 w-full transform -translate-x-1/2 bg-white border border-gray-300 p-2 shadow mt-2">
+        <div ref={sizesRef} className="absolute z-50 left-1/2 w-full transform -translate-x-1/2 bg-white border border-gray-300 p-2 shadow mt-2">
           {/* Dropdown content */}
           <div className="flex flex-col justify-center items-center">
             <p className="text-floc-gray">Please select your size: </p>
+            <div className="flex justify-center items-center">
             <Sizing size={size!} setSize={setSize} />
+            </div>
             <button
               onClick={handleAddSize}
               className="inline-flex items-center justify-center px-4 py-2 text-md text-center w-full bg-floc-yellow uppercase focus:bg-light-yellow hover:bg-light-yellow focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-md"

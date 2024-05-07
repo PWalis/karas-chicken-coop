@@ -16,11 +16,12 @@ export default function Checkout() {
     <main className="min-h-screen">
       <div className={londrina.className}>
         <ShopNavBar></ShopNavBar>
-        <h2 className="text-4xl sm:text-6xl text-center pt-24 pb-4 flex justify-center uppercase">
+        <h2 className="text-4xl sm:text-6xl text-center pt-24 pb-4 flex justify-center uppercase sticky top-0 bg-white w-full z-30">
           Checkout
         </h2>
         <StripeCheckout></StripeCheckout>
       </div>
+      <hr className="flex justify-center items-center border-gray-200 w-screen sm:mx-auto bg-gray-100" />
       <Footer></Footer>
     </main>
   );
