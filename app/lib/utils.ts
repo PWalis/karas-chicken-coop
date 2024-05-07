@@ -1,3 +1,23 @@
+import * as crypto from "crypto-js";
+
+// Function to salt and hash a password and returns the salt and hashed password
+export function saltHashPassword(password: string) {
+  const salt = crypto.lib.WordArray.random(128 / 8).toString();
+  const hash = crypto.PBKDF2(password, salt, {
+    keySize: 512 / 32,
+    iterations: 1000,
+  }).toString();
+  return { salt, hash };
+}
+
+//Function to hash a password with a given salt
+export function hashPassword(password: string, salt: string) {
+  return crypto.PBKDF2(password, salt, {
+    keySize: 512 / 32,
+    iterations: 1000,
+  }).toString();
+}
+
 export const formatCurrency = (amount: BigInt | number) => {
   return (Number(amount) / 100).toLocaleString('en-US', {
     style: 'currency',

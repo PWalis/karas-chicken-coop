@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { useCartDispatch } from "@/app/context/cartContext";
 import { redirect } from "next/navigation";
 import { AddToCartAlert } from "@/ui/shop/addToCartAlert";
+import { useCart } from "@/app/context/cartContext";
 
 interface EditQuantityAndSizeProps {
   product: any;
@@ -27,8 +28,12 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
 }) => {
   const [size, setSize] = useState("M");
   const [quantity, setQuantity] = useState(1);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const dispatch = useCartDispatch(); // how to use: dispatch({ type: "ADD", payload: product });
   const [showAlert, setShowAlert] = useState(false);
+  const cart = useCart();
 
   const buyNowHandler = () => {
     dispatch({ type: "ADD", payload: { ...product, size, quantity } });
@@ -51,15 +56,68 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
     };
   }, [showAlert]);
 
+  const getQtyFromCart = (productId: number, size: string) => {
+    if (!cart.items) return 0;
+    const item = cart.items.find(
+      (item) => item.id === productId && item.size === size
+    );
+    return item ? item.quantity : 0;
+  };
+
+  const sizeToString: any = {
+    XS: "xs_quantity",
+    S: "s_quantity",
+    M: "m_quantity",
+    L: "l_quantity",
+    XL: "xl_quantity",
+    XXL: "xxl_quantity",
+  };
+
   const addToCartHandler = () => {
+    setLoading(true);
+    // check if there is inventory
+    if (product.inventory.hasSizes) {
+      const hasInventory =
+        getQtyFromCart(product.id, size) + quantity <=
+        product.inventory[sizeToString[size]];
+      if (!hasInventory) {
+        setMessage(
+          `We're sorry but we only have ${
+            product.inventory[sizeToString[size]]
+          } items left in size ${size}. Pleas check your cart and verify the quantity of this item.`
+        );
+        setLoading(false);
+        setTimeout(() => {
+          setMessage("");
+        }, 5000);
+        return;
+      }
+    } else {
+      const hasInventory =
+        getQtyFromCart(product.id, size) + quantity <=
+        product.inventory.quantity;
+      if (!hasInventory) {
+        setMessage(
+          `We're sorry but we only have ${product.inventory.quantity} items left in stock. Pleas check your cart and verify the quantity of this item.`
+        );
+        setLoading(false);
+        setTimeout(() => {
+          setMessage("");
+        }, 5000);
+        return;
+      }
+    }
+
     dispatch({
       type: "ADD",
       payload: { ...product, size: size, quantity: quantity },
     });
+
     setQuantity(1);
     // Show the alert when the item is added to the cart
     setShowAlert(true);
-    console.log(product, size, quantity);
+    // console.log(product, size, quantity);
+    setLoading(false);
   };
 
   const dismissAlert = () => {
@@ -94,11 +152,21 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
           Buy Now
         </button>
         <button
+          disabled={loading}
           onClick={addToCartHandler}
           className="bg-floc-gray text-gray-100 tracking-wider px-4 py-2 uppercase"
         >
-          Add to Cart
+          <span id="button-text">
+            {loading ? "Adding To Cart" : "Add To Cart"}
+          </span>
         </button>
+      </div>
+      <div className="">
+        {message && (
+          <div id="add to cart message" className="max-w-96">
+            {message}
+          </div>
+        )}
       </div>
       {showAlert && (
         <AddToCartAlert

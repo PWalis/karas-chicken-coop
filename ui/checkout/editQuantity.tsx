@@ -9,9 +9,16 @@ interface QuantityCounterProps {
   updatePaymentIntent: () => void;
 }
 
+const sizeToString: any = {
+  XS: "xs_quantity",
+  S: "s_quantity",
+  M: "m_quantity",
+  L: "l_quantity",
+  XL: "xl_quantity",
+  XXL: "xxl_quantity",
+};
+
 export const EditQuantity: React.FC<QuantityCounterProps> = ({
-  // quantity,
-  // setQuantity,
   itemId,
   updatePaymentIntent,
 }) => {
@@ -19,7 +26,19 @@ export const EditQuantity: React.FC<QuantityCounterProps> = ({
   const cart = useCart();
 
   const addHandler = () => {
-    const newQuantity = cart.items.find((item) => item.itemId === itemId)!.quantity + 1;
+    const cartItem = cart.items.find((item) => item.itemId === itemId)!;
+    const newQuantity = cartItem.quantity + 1;
+    const hasSizes = cartItem.inventory.hasSizes;
+    if (hasSizes) {
+      if (cartItem.quantity + 1 > cartItem.inventory[sizeToString[cartItem.size]]) {
+        return;
+      }
+    } else {
+      if (cartItem.quantity + 1 > cartItem.inventory.quantity) {
+        return;
+      }
+    }
+      
     dispatch({
       type: "SET_QUANTITY",
       payload: { itemId: itemId, quantity: newQuantity },
@@ -28,8 +47,9 @@ export const EditQuantity: React.FC<QuantityCounterProps> = ({
   };
 
   const subtractHandler = () => {
-    if (cart.items.find((item) => item.itemId === itemId)!.quantity > 1) {
-      const newQuantity = cart.items.find((item) => item.itemId === itemId)!.quantity - 1;
+    const cartItem = cart.items.find((item) => item.itemId === itemId)!;
+    if (cartItem.quantity > 1) {
+      const newQuantity = cartItem.quantity - 1;
       dispatch({
         type: "SET_QUANTITY",
         payload: { itemId, quantity: newQuantity },
@@ -38,13 +58,24 @@ export const EditQuantity: React.FC<QuantityCounterProps> = ({
     }
   };
 
-  const editHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    if (value >= 1) {
-      dispatch({ type: "SET_QUANTITY", payload: { itemId: itemId, quantity: value } });
-      updatePaymentIntent();
-    }
-  };
+  // const editHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = parseInt(e.target.value);
+  //   const cartItem = cart.items.find((item) => item.itemId === itemId)!;
+  //   const hasSizes = cartItem.inventory.hasSizes;
+  //   if (hasSizes) {
+  //     if (value > cartItem.inventory[sizeToString[cartItem.size]]) {
+  //       return;
+  //     }
+  //   } else {
+  //     if (cartItem.quantity + 1 > cartItem.inventory.quantity) {
+  //       return;
+  //     }
+  //   }
+  //   if (value >= 1) {
+  //     dispatch({ type: "SET_QUANTITY", payload: { itemId: itemId, quantity: value } });
+  //     updatePaymentIntent();
+  //   }
+  // };
 
   const products = cart.items.map((item) => {
     return { productId: item.id, quantity: item.quantity };
@@ -87,13 +118,14 @@ export const EditQuantity: React.FC<QuantityCounterProps> = ({
             type="text"
             id="quantity-input"
             value={cart.items.find((item) => item.itemId === itemId)!.quantity}
-            onChange={editHandler}
+            // onChange={editHandler}
             data-input-counter
             aria-describedby="helper-text-explanation"
             className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="1"
             typeof="number"
             required
+            disabled
           />
           <button
             type="button"

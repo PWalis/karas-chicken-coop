@@ -25,7 +25,6 @@ export const ShoppingCartItem: React.FC<CartItemProps> = ({
   size,
   updatePaymentIntent,
 }) => {
-  // const [quantityState, setQuantity] = useState(quantity);
   const dispatch = useCartDispatch();
   const enumSize = (productSize: string) => {
     switch (productSize) {
@@ -43,14 +42,6 @@ export const ShoppingCartItem: React.FC<CartItemProps> = ({
         return "2XL";
     }
   };
-
-  // const handleRemove = (itemId: string) => {
-  //   dispatch({ type: "REMOVE", payload: itemId });
-  // };
-
-  // useEffect(() => {
-  //   setQuantity(quantity);
-  // }, [quantity]);
 
   return (
     <li key={itemId} className="flex py-6">

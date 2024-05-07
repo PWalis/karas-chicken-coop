@@ -42,16 +42,12 @@ export const QuantityCounter: React.FC<QuantityCounterProps> = ({
     }
   };
 
-  const editHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    if (value >= 1) {
-      setQuantity(value);
-    }
-  };
-
-  useEffect(() => {
-    setQuantity(0);
-  }, [size]);
+  // const editHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = parseInt(e.target.value);
+  //   if (value >= 1) {
+  //     setQuantity(value);
+  //   }
+  // };
 
   return (
     <div className="flex mb-2">
@@ -90,13 +86,14 @@ export const QuantityCounter: React.FC<QuantityCounterProps> = ({
             type="text"
             id="quantity-input"
             value={quantity}
-            onChange={editHandler}
+            // onChange={editHandler}
             data-input-counter
             aria-describedby="helper-text-explanation"
             className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="1"
             typeof="number"
             required
+            disabled
           />
           <button
             type="button"
