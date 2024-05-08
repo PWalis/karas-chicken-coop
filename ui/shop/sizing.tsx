@@ -22,7 +22,7 @@ export const Sizing: React.FC<SizingProps> = ({ size, setSize, inventory }) => {
 
 
   return (
-    <div className="flex gap-4 mb-3 w-full">
+    <div className="flex gap-3 mb-3 w-full">
       <SizingButton quantity={inventory.xs_quantity} size="xs" selected={size === "XS"} onClick={() => handleSelectSize("XS")} />
       <SizingButton quantity={inventory.s_quantity} size="s" selected={size === "S"} onClick={() => handleSelectSize("S")} />
       <SizingButton quantity={inventory.m_quantity} size="m" selected={size === "M"} onClick={() => handleSelectSize("M")} />

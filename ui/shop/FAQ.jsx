@@ -36,8 +36,8 @@ export function FAQ() {
   return (
     <>
     <section id="FAQ" className={londrina.className}>
-      <Accordion open={alwaysOpen} icon={<Icon id={1} open={open} />}>
-        <AccordionHeader className="font-londrina-solid" onClick={handleAlwaysOpen}>What is your return and refund policy?</AccordionHeader>
+      <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
+        <AccordionHeader className="font-londrina-solid" onClick={() => handleOpen(2)}>What is your return and refund policy?</AccordionHeader>
         <AccordionBody className="font-londrina-solid text-lg text-floc-gray/70">
           Currently at this time we are not offering returns or refunds. Please make sure that you have your correct sizing and your correct address to avoid any mistakes, and if there is any issue please reach out to us as soon as possible!
         </AccordionBody>

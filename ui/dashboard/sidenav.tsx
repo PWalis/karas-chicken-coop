@@ -22,19 +22,19 @@ export const SideNav: React.FC = () => {
             <div className="sm:flex hidden sm:flex-col px-2  mt-2 text-md uppercase">
               <div className="flex flex-col items-start gap-2">
                 <Link className="w-full" href="/dashboard/orders">
-                  <div className="flex place-items-center gap-2 w-full hover:bg-gray-400/10 backdrop-blur-md px-4 py-2 text-floc-gray/90">
+                  <div className="flex place-items-center gap-2 w-full hover:bg-gray-400/10  px-4 py-2 text-floc-gray/90">
                     <EditIcon className="h-6 w-6" />
                     <p>View Orders</p>
                   </div>
                 </Link>
                 <Link className="w-full" href="/dashboard/products">
-                  <div className="flex place-items-center gap-2 w-full hover:bg-gray-400/10 backdrop-blur-md px-4 py-2 text-floc-gray/90">
+                  <div className="flex place-items-center gap-2 w-full hover:bg-gray-400/10 px-4 py-2 text-floc-gray/90">
                   <ShirtIcon className="h-6 w-6" />
                     <p>Manage Products</p>
                   </div>
                 </Link>
                 <Link className="w-full" href="/dashboard/createNewProduct">
-                <div className="flex place-items-center gap-2 w-full hover:bg-gray-400/10 backdrop-blur-md px-4 py-2 text-floc-gray/90">
+                <div className="flex place-items-center gap-2 w-full hover:bg-gray-400/10 px-4 py-2 text-floc-gray/90">
                   <CreateIcon className="h-6 w-6" />
                       <p>Create Product</p>
                       </div>

@@ -51,42 +51,71 @@ export const EditProductForm: React.FC<ProductProps> = ({
   });
 
   return (
+    <div className="flex justify-center w-full h-fit">
     <form
       action={updateProductWithProductId}
-      className="flex flex-col gap-3 w-[40%] pt-24"
+      className="flex flex-col gap-2 min-w-[346px] w-fit justify-center drop-shadow-md bg-white h-fill border rounded-md p-3 mb-4"
     >
-      <label htmlFor="name">Name</label>
-      <input type="text" id="name" name="name" required defaultValue={name} />
-      <label htmlFor="price">Price</label>
-      <input
-        type="number"
-        id="price"
-        name="price"
-        required
-        defaultValue={Number(price) / 100}
-      />
+      <div className="flex flex-col sm:flex-row gap-3 w-fill">
+        <div className="flex w-fill flex-col">
+          <label htmlFor="name">Name</label>
+          <input
+            className="w-fill"
+            type="text"
+            id="name"
+            name="name"
+            required
+            defaultValue={name}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="price">Price</label>
+          <input
+            className="flex w-fill"
+            type="number"
+            id="price"
+            name="price"
+            required
+            defaultValue={Number(price) / 100}
+          />
+        </div>
+      </div>
       <label htmlFor="description">Description</label>
       <textarea
+        className="w-fill"
         id="description"
         name="description"
         required
         defaultValue={description}
       />
-      <label htmlFor="category">Category</label>
-      <select
-        id="category"
-        name="category"
-        defaultValue={category ? category : ""}
-      >
-        <option value={category ? category : ""} hidden>
-          {category ? category : "Select an option"}
-        </option>
-        {options}
-      </select>
-      <label htmlFor="newCategory"> New Category</label>
-      <input type="text" name="newCategory" id="newCategory" />
+      <div className="flex flex-col sm:flex-row gap-3 w-fill">
+        <div className="flex flex-col">
+          <label htmlFor="category">Category</label>
+          <select
+            className="w-fill h-[42px]"
+            id="category"
+            name="category"
+            defaultValue={category ? category : ""}
+          >
+            <option value={category ? category : ""} hidden>
+              {category ? category : "Select an option"}
+            </option>
+            {options}
+          </select>
+        </div>
+        <div className="flex flex-col">
+        <label htmlFor="newCategory"> New Category</label>
+        <input
+          className="w-fill"
+          type="text"
+          name="newCategory"
+          id="newCategory"
+        />
+      </div>
+      </div>
       {inventory.hasSizes ? (
-        <ul className="flex flex-row gap-8">
+        <ul className="flex flex-col sm:flex-row gap-1 justify-center">
+          <div className="flex flex-wrap gap-2">
           <li className="flex flex-col">
             <label htmlFor="xs">XS</label>
             <input
@@ -120,6 +149,8 @@ export const EditProductForm: React.FC<ProductProps> = ({
               defaultValue={inventory.m_quantity}
             />
           </li>
+          </div>
+          <div className="flex gap-2">
           <li className="flex flex-col">
             <label htmlFor="large">Large</label>
             <input
@@ -153,6 +184,7 @@ export const EditProductForm: React.FC<ProductProps> = ({
               defaultValue={inventory.xxl_quantity}
             />
           </li>
+          </div>
         </ul>
       ) : (
         <div className="flex flex-col">
@@ -166,18 +198,20 @@ export const EditProductForm: React.FC<ProductProps> = ({
           />
         </div>
       )}
-      <div className="flex flex-row">
-        <div>
+      <div className="flex flex-row flex-wrap">
+        <div className="flex flex-col">
           <label htmlFor="primaryImage">Primary Image</label>
           <input type="file" id="primaryImage" name="primaryImage" />
         </div>
         <div>
+          <div className="flex flex-col">
           <label htmlFor="image">Add Image</label>
           <input type="file" id="image" name="image" multiple />
         </div>
+        </div>
       </div>
-      <div className="flex flex-row gap-10">
-        <div className="w-36">
+      <div className="flex flex-wrap gap-10">
+        <div className="w-fit">
           <label>Primary Image</label>
           <Image
             src={primaryImage}
@@ -200,5 +234,6 @@ export const EditProductForm: React.FC<ProductProps> = ({
       </div>
       <button type="submit">Submit</button>
     </form>
+    </div>
   );
 };
