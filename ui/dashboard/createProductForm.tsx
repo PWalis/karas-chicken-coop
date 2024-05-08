@@ -1,6 +1,6 @@
 "use client";
 import { createProduct } from "@/app/lib/actions";
-import { CheckMark } from "./checkmark";
+import { CheckMark } from "./sizingButton";
 import React, { useState } from "react";
 
 interface CreateProps {

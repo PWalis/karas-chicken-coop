@@ -11,7 +11,8 @@ interface OrderCardProps {
   city: string;
   state: string;
   items: any[];
-  orderId: string
+  orderId: string;
+  isFulfilled: boolean;
 }
 
 export const OrderCard: React.FC<OrderCardProps> = async ({
@@ -22,7 +23,8 @@ export const OrderCard: React.FC<OrderCardProps> = async ({
   city,
   state,
   items,
-  orderId
+  orderId,
+  isFulfilled,
 }) => {
   if (!items) return null;
   const itemsArray = await fetchProductsIdArray(
@@ -30,15 +32,15 @@ export const OrderCard: React.FC<OrderCardProps> = async ({
   );
 
   const fulfillOrderHandler = async () => {
-    "use server"
-    await setOrderStatus(orderId, "FULFILLED")
-    redirect("/orders")
+    "use server";
+    await setOrderStatus(orderId, "FULFILLED");
+    redirect("/orders");
   };
 
   return (
     <div className="drop-shadow-sm hover:drop-shadow-md bg-white h-fill lg:min-w-[500px] border rounded-md px-10 py-4 mb-4 w-fit m-2">
       <div className="flex flex-wrap justify-between gap-3">
-        <h2 className="text-lg uppercase">{name}'s Order!</h2>{" "}
+        <h2 className="text-lg uppercase">{name}'s Order!</h2>
         <p>purchased: {date}</p>
       </div>
       <p>
@@ -47,17 +49,20 @@ export const OrderCard: React.FC<OrderCardProps> = async ({
       <div className="flex flex-wrap justify-between">
         {items.map((item, index) => (
           <div className="flex flex-col" key={index}>
-          <p>
-            {itemsArray?.map((aItem) => {
-              if (aItem.id === item.productId) {
-                return aItem.name;
-              }
-            })}
-          </p>
-          <p>Size {item.size}</p>
-          <p>Qty {item.quantity}</p></div>
+            <p>
+              {itemsArray?.map((aItem) => {
+                if (aItem.id === item.productId) {
+                  return aItem.name;
+                }
+              })}
+            </p>
+            <p>Size {item.size}</p>
+            <p>Qty {item.quantity}</p>
+          </div>
         ))}
-        <CheckMark fulfillOrder={fulfillOrderHandler}></CheckMark>
+        {!isFulfilled && (
+          <CheckMark fulfillOrder={fulfillOrderHandler}></CheckMark>
+        )}
       </div>
     </div>
   );
