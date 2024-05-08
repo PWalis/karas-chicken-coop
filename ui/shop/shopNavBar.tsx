@@ -68,14 +68,14 @@ export default function ShopNavBar() {
           </div>
           <div
             className={clsx(
-              "items-center justify-between md:flex md:w-auto md:order-1 text-floc-gray",
+              "items-center justify-between md:flex md:w-auto md:order-1 text-lg sm:text-md text-floc-gray",
               navMenu ? "flex relative pr-2.5 w-full" : "hidden"
             )}
             id="navbar-cta"
           >
             <ul
               className={clsx(
-                "flex p-4 md:p-0 mt-4 border w-full border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent",
+                "flex p-4 md:p-0 mt-4  w-full rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent",
                 navMenu ? "flex-col min-w-full" : ""
               )}
             >

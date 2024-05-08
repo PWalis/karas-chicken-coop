@@ -6,7 +6,7 @@ import { useCart } from "@/app/context/cartContext";
 import { formatCurrency } from "@/app/lib/utils";
 import { useCartDispatch } from "@/app/context/cartContext";
 import { NoItemsCheckout } from "../checkout/noItemsCheckout";
-
+import Link from "next/link";
 interface SlideCartProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,8 +15,7 @@ interface SlideCartProps {
 export default function SlideCart({ open, setOpen }: SlideCartProps) {
   const cart = useCart();
   const dispatch = useCartDispatch();
-  
-  
+
   const products = cart.items.map((item) => {
     return {
       id: item.id,
@@ -31,7 +30,6 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
       size: item.size,
     };
   });
-
 
   const subtotal = products.reduce(
     (acc, product) => acc + product.price * product.quantity,
@@ -59,7 +57,7 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
       case "XXL":
         return "2XL";
     }
-  }
+  };
 
   return (
     <>
@@ -152,7 +150,7 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
                                           </p>
                                         </div>
                                         <p className="mt-1 text-sm text-gray-500">
-                                          {size(product.size)} 
+                                          {size(product.size)}
                                         </p>
                                       </div>
                                       <div className="flex flex-1 items-end justify-between text-sm">
@@ -190,16 +188,21 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
                           Shipping and taxes calculated at checkout.
                         </p>
                         <div className="mt-6">
-                          <a
-                            href="#"
-                            className="flex items-center justify-center rounded-md border border-transparent bg-floc-yellow px-6 py-3 text-base font-medium text-floc-gray uppercase shadow-sm hover:bg-floc-yellow/70"
-                          >
-                            Checkout
-                          </a>
+                          {products.map(
+                            (product, index) =>
+                              product.quantity > 0 && (
+                                <Link href="/checkout" key={index}>
+                                  <button className="w-full flex items-center justify-center rounded-md border border-transparent bg-floc-yellow px-6 py-3 text-base font-medium text-floc-gray uppercase shadow-sm hover:bg-floc-yellow/70">
+                                    Checkout
+                                  </button>
+                                </Link>
+                              )
+                          )}
                         </div>
                         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                           <p>
-                            or{" "}
+                            or
+                          <Link href="/shop">
                             <button
                               type="button"
                               className="font-medium text-floc-gray/80 hover:text-indigo-500"
@@ -208,6 +211,7 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
                               Continue Shopping
                               <span aria-hidden="true"> &rarr;</span>
                             </button>
+                            </Link>
                           </p>
                         </div>
                       </div>

@@ -1,6 +1,6 @@
 // "use client";
 import React from "react";
-import { Products } from "@/ui/shop/products";
+import Products from "@/ui/shop/products";
 import { ProductFilter } from "@/ui/shop/filter";
 import mike_shirt1 from "@/ui/assets/mike_shirt1.jpg";
 import mike_shirt2 from "@/ui/assets/mike_shirt2.jpg";
@@ -13,9 +13,13 @@ import Footer from "@/ui/footer/footer";
 import silkie_doodle_2 from "@/ui/assets/silkie_doodle_2.png";
 import { NoProducts } from "@/ui/shop/noProducts";
 import { FAQ } from "@/ui/shop/FAQ";
+import { fetchProductById } from "@/app/lib/actions";
+import { Product } from "@/ui/dashboard/product";
+
+interface Props { product: any }
 
 
-export default function Shop() {
+export default function Shop(props: Props) {
   return (
       <main>
       <ShopNavBar></ShopNavBar>
@@ -39,18 +43,16 @@ export default function Shop() {
         <h2 className="text-4xl sm:text-5xl text-center justify-center mt-10 uppercase">
           Our Products
         </h2>
-        <hr className=" flex justify-center items-center mt-6 border-gray-200 w-screen md:max-w-[400px] sm:mx-auto dark:border-gray-700" />
-         <NoProducts></NoProducts>
-        <ProductFilter></ProductFilter>
-        <div className="block justify-center sm:grid sm:grid-cols-6">
-          <div className="flex justify-center pt-5 sm:pt-2 sm:col-start-2 sm:col-span-4"> 
+        <hr className="flex justify-center items-center mt-6 border-gray-200 w-screen md:max-w-[400px] sm:mx-auto dark:border-gray-700" />
+        <div className="flex justify-center min-h-[500px] place-items-center">
+          <div className="flex justify-center pt-5 w-fit max-w-[400px] md:min-w-[300px]"> 
             <Products />
           </div>
         </div>
         <hr className=" flex justify-center items-center mt-6 border-gray-200 w-screen md:max-w-[400px] sm:mx-auto dark:border-gray-700" />
         <h2 className="text-5xl text-center mb-10 uppercase mt-10 "> COMMON SHOP FAQ </h2>
         <div className="flex justify-center">
-          <div className="max-w-screen-md mb-20 mx-2">
+          <div className="max-w-screen-md mb-20 mx-4 h-72 sm:h-64">
             <FAQ></FAQ>
           </div>
         </div>

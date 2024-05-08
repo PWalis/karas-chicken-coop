@@ -92,7 +92,7 @@ export default function App() {
               <h2 className=" bg-white text-2xl  font-bold tracking-wider uppercase w-full px-4 py-3 mb-5">
                 Payment Details
               </h2>
-              <div className="flex flex-col  w-full">
+              <div className="flex flex-col  w-full justify-center mb-10 ">
                 <div className="App">
                   <Elements options={options as any} stripe={stripePromise}>
                     <CheckoutForm />

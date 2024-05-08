@@ -6,6 +6,7 @@ import { SectionWrapper } from "../assets/animation/section-wrapper";
 import { createEmail } from "@/app/lib/email";
 import { create } from "domain";
 export default function JoinTheFlock() {
+
   const ref = useRef<HTMLFormElement>(null);
 
   return (

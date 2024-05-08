@@ -18,11 +18,11 @@ export function FlockCard({ src, alt, name, description }: Props) {
           <Image
             src={src}
             alt={alt}
-            className="object-cover w-full h-80 rounded-lg"
+            className="object-cover w-full h-80 rounded-[200px] drop-shadow-sm pb-2"
           />
         </div>
       </a>
-      <div className="drop-shadow-lg bg-white rounded-lg group-hover:drop-shadow-2xl ease-in-out transition-all duration-300">
+      <div className="drop-shadow-lg bg-white h-[200px] rounded-lg group-hover:drop-shadow-2xl ease-in-out transition-all duration-300">
       <div className="p-5 ease-in transition-opacity duration-300">
         <SectionWrapper>
           <h4 className="mb-2 text-2xl font-bold tracking-tight text-floc-gray">
