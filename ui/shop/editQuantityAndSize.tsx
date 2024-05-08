@@ -149,15 +149,15 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
       <div className="flex mb-10 mt-4 gap-3 justify-center">
         <button
           onClick={buyNowHandler}
-          className={clsx("inline-flex items-center justify-center px-5 py-3 text-xl text-center bg-floc-yellow uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm", size==="" ? "opacity-20 hover:bg-floc-yellow" : "hover:bg-light-yellow")}
-          disabled={size===""}
+          className={clsx("inline-flex items-center justify-center px-5 py-3 text-xl text-center bg-floc-yellow uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm", hasSizes && size==="" ? "opacity-20 hover:bg-floc-yellow" : "hover:bg-light-yellow")}
+          disabled={hasSizes && size===""}
         >
           Buy Now
         </button>
         <button
-          disabled={loading || size===""}
+          disabled={loading || (hasSizes && size==="")}
           onClick={addToCartHandler}
-          className={clsx("inline-flex items-center justify-center px-5 py-2 text-xl text-center bg-floc-gray text-white tracking-wide uppercase focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm", size==="" ? "opacity-20 hover:bg-floc-gray" : "hover:bg-floc-gray/90")}
+          className={clsx("inline-flex items-center justify-center px-5 py-2 text-xl text-center bg-floc-gray text-white tracking-wide uppercase focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm", hasSizes && size==="" ? "opacity-20 hover:bg-floc-gray" : "hover:bg-floc-gray/90")}
         >
           <span id="button-text">
             {loading ? "Adding To Cart" : "Add To Cart"}
