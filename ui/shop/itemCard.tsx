@@ -74,7 +74,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
     setShowAlert(false);
   };
 
-  const [size, setSize] = useState("M");
+  const [size, setSize] = useState("");
   const sizesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

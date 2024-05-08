@@ -6,6 +6,7 @@ import { useCartDispatch } from "@/app/context/cartContext";
 import { useRouter } from "next/navigation";
 import { AddToCartAlert } from "@/ui/shop/addToCartAlert";
 import { useCart } from "@/app/context/cartContext";
+import clsx from "clsx";
 
 interface EditQuantityAndSizeProps {
   product: any;
@@ -26,7 +27,7 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
   hasSizes,
   quantityLimit,
 }) => {
-  const [size, setSize] = useState("M");
+  const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -148,14 +149,15 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
       <div className="flex mb-10 mt-4 gap-3 justify-center">
         <button
           onClick={buyNowHandler}
-          className="inline-flex items-center justify-center px-5 py-3 text-xl text-center bg-floc-yellow uppercase hover:bg-light-yellow focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm"
+          className={clsx("inline-flex items-center justify-center px-5 py-3 text-xl text-center bg-floc-yellow uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm", size==="" ? "opacity-20 hover:bg-floc-yellow" : "hover:bg-light-yellow")}
+          disabled={size===""}
         >
           Buy Now
         </button>
         <button
-          disabled={loading}
+          disabled={loading || size===""}
           onClick={addToCartHandler}
-          className="inline-flex items-center justify-center px-5 py-2 text-xl text-center bg-floc-gray text-white tracking-wide uppercase hover:bg-floc-gray/90 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm"
+          className={clsx("inline-flex items-center justify-center px-5 py-2 text-xl text-center bg-floc-gray text-white tracking-wide uppercase focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm", size==="" ? "opacity-20 hover:bg-floc-gray" : "hover:bg-floc-gray/90")}
         >
           <span id="button-text">
             {loading ? "Adding To Cart" : "Add To Cart"}
