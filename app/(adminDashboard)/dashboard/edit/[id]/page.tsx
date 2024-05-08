@@ -12,7 +12,11 @@ export default async function EditProductPage({
   const categories = (await fetchCategories()) as any;
 
   return (
-    <div className="flex justify-center w-full overflow-auto">
+    <div className="flex flex-col w-screen h-fit min-h-screen">
+      <h2 className="flex text-4xl  mb-10 mt-28 text-center uppercase justify-center">
+        Edit Product:
+      </h2>
+      <div className="flex justify-center items-center">
       <EditProductForm
         productId={product.id}
         name={product.name}
@@ -24,6 +28,7 @@ export default async function EditProductPage({
         images={product.images}
         categories={categories}
       />
+    </div>
     </div>
   );
 }
