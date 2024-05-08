@@ -6,6 +6,7 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { useCart } from "@/app/context/cartContext";
+import { useDebouncedCallback } from "use-debounce";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -65,9 +66,12 @@ export default function CheckoutForm() {
       body: JSON.stringify({data: cart}),
     });
 
-    if (hasInventory) {
+    const response = await hasInventory.json();
+
+    if (response.message.message != "There is enough inventory") {
+      console.log("hasInventory", response.message.message);
       setIsLoading(false);
-      setMessage("Item is out of stock");
+      setMessage("Item is out of stock"); //this needs to be investigated further
       return;
     }
 
@@ -97,11 +101,17 @@ export default function CheckoutForm() {
     layout: { type: "tabs" },
   };
 
-  const handleAddressChange = (event: any) => {
+  const handleAddressChange = useDebouncedCallback((event: any) => {
     // create a new order with the address
     // update payment intent metadata with the orderId
     if (event.complete) {
       setIsLoading(true);
+      setMessage("");
+      console.log("event", event.value.address.country);
+      if (event.value.address.country !== "US") {
+        setMessage("We only ship to the US");
+        return;
+      }
       fetch("/api/createOrder", {
         method: "POST",
         headers: {
@@ -116,10 +126,9 @@ export default function CheckoutForm() {
         .then((res) => res.json())
         .then((data) => {
           setIsLoading(false);
-          // console.log(data);
         });
     }
-  };
+  }, 1300);
 
   return (
     <div className="max-w-[600px] bg-white shadow-sm p-4">
