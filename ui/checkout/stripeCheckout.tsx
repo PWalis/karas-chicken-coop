@@ -8,6 +8,7 @@ import { NoItemsCheckout } from "./noItemsCheckout";
 import { CartList } from "./cartList";
 
 import CheckoutForm from "@/ui/checkout/checkoutForm";
+import { formatCurrency } from "@/app/lib/utils";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -30,7 +31,7 @@ export default function App() {
     fetch("/api/paymentIntent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ products: products }),
+      body: JSON.stringify({ products: products, shipping: shipping }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -51,6 +52,23 @@ export default function App() {
     loader: "always",
   };
 
+  const subtotal = cart.items.reduce((acc, item) => {
+    return acc + item.priceInCents * item.quantity;
+  }, 0);
+
+  const calculateShipping = () => {
+    const flatRate = 695;
+    const itemQuantity = cart.items.reduce((acc, item) => {
+      return acc + item.quantity;
+    }, 0);
+    console.log("itemQuantity", itemQuantity)
+    const shippingCost = (itemQuantity - 1) * 80;
+    return flatRate + shippingCost;
+  };
+  const shipping = calculateShipping();
+
+  const total = subtotal + shipping;
+
   return (
     <div className="bg-gray-50 h-fit min-h-[70vh] sm:min-h-screen flex flex-col justify-center items-center md:items-start  lg:flex-row  gap-5">
       {products.length > 0 ? (
@@ -62,6 +80,12 @@ export default function App() {
               </h2>
               <div className="flex flex-col lg:mt-0 w-full max-h-[500px] overflow-y-scroll">
                 <CartList />
+              </div>
+              <div className="flex justify-between items-center bg-white shadow-sm px-4 py-2">
+                <span>Shipping</span>
+                <span>{formatCurrency(shipping)}</span>
+                <span>Subtotal</span>
+                <span>{formatCurrency(total)}</span>
               </div>
             </div>
             <div className="flex flex-col w-full max-w-[600px] p-5">

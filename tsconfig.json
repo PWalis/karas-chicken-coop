@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["svgr.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "ui/landingPage/components/shopCarousel.jsx", "ui/shop/FAQ.jsx"],
+  "include": ["svgr.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "ui/landingPage/components/shopCarousel.jsx", "ui/shop/FAQ.jsx", "ui/dashboard/checkmark.jsx"],
   "exclude": ["node_modules"]
 }
