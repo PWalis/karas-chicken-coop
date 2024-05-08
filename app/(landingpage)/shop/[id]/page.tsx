@@ -1,13 +1,9 @@
 // page to display one product and all the product pictures and details of the product
 
-import NavBar from "@/ui/header/navbar";
-import Image from "next/image";
 import Footer from "@/ui/footer/footer";
-import autumn_shirt1 from "@/ui/assets/autumn_shirt1.jpg";
 import { ProductGallery } from "@/ui/shop/productGallery";
 import { FAQ } from "@/ui/shop/FAQ";
 import ShopNavBar from "@/ui/shop/shopNavBar";
-import { useState } from "react";
 import { EditQuantityAndSize } from "@/ui/shop/editQuantityAndSize";
 import { fetchProductById } from "@/app/lib/actions";
 import { ProductDescription } from "@/ui/shop/productDescription";

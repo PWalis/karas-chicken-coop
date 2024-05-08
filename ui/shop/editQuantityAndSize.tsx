@@ -110,7 +110,7 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
 
     dispatch({
       type: "ADD",
-      payload: { ...product, size: size, quantity: quantity },
+      payload: { ...product, size: hasSizes ? size : null, quantity: quantity },
     });
 
     setQuantity(1);
