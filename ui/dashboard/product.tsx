@@ -66,16 +66,16 @@ export const Product: React.FC<ProductProps> = ({
       </div>
       <div className="flex flex-col w-full pt-2">
         <div className="flex flex-col w-full justify-evenly sm:justify-start items-center sm:items-start">
-          <h3 className="text-2xl font-bold">{name}</h3>
+          <h3 className="text-2xl font-bold mb-3">{name}</h3>
           <div className="flex gap-2 place-items-end justify-end">
             <Link href={`/dashboard/edit/${productId}`}>
-              <button className="bg-cyan-600 hover:bg-cyan-500 text-white p-2 rounded-xl max-h-10 m-auto">
+              <button className="bg-cyan-300 bg-left-top hover:bg-cyan-200 text-white p-2 rounded-xl max-h-10 m-auto">
                 <EditIcon className="w-6 h-6"> </EditIcon>
               </button>
             </Link>
             <button
               onClick={() => setShowConfirmation(true)}
-              className="max-h-10 p-2 rounded-xl bg-[#f43f5e]/90 hover:bg-[#f43f5e]/80"
+              className="max-h-10 p-2 rounded-xl bg-right-top bg-orange-300 hover:bg-orange-200"
             >
               {deleting ? (
                 "In Progress..."

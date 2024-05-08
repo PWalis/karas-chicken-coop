@@ -67,6 +67,14 @@ button {
   background-image: url(../ui/assets/footer_png.png);
 }
 
+.dashboard-bg {
+  background-image: url(../ui/assets/dashboard_bg.png);
+}
+
+.gradient-bg {
+  background-image: url(../ui/assets//gradientbg.png);
+}
+
 .loading-bg {
   background-image: url(../ui/assets/karaschickenpattern-01.jpg);
   background-size: 105%; /* Scale the background image by 10% */

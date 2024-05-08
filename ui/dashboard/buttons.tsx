@@ -5,7 +5,7 @@ export const ListNewProduct: React.FC = () => {
 };
 
 export const LogOut: React.FC = () => {
-  return <button className="text-left px-4 py-3 bg-floc-gray text-white">Log Out</button>;
+  return <button className="text-left px-4 py-3 bg-floc-gray text-white hover:bg-floc-gray/70">Log Out</button>;
 };
 
 export const LogIn: React.FC = () => {

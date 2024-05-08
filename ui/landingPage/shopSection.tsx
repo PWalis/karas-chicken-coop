@@ -24,7 +24,7 @@ export default function ShopSection() {
         <SectionWrapper>
             <a href="/shop">
           <button
-            className="uppercase text-4xl bg-floc-gray text-white px-6 py-4 mt-4"
+            className="uppercase text-4xl bg-floc-gray hover:bg-floc-gray/90 text-white px-6 py-4 mt-4"
             role="button"
           >
             <span className="text">Visit The Shop</span>
