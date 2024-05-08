@@ -1,3 +1,6 @@
+"use client";
+import { createEmail } from "@/app/lib/email";
+import { useRef } from "react";
 import Kcc3 from "../assets/svgs/Kcc3";
 import FacebookIcon from "@/ui/assets/icons/Facebook-icon";
 import InstagramIcon from "@/ui/assets/icons/Instagram-icon";
@@ -5,6 +8,7 @@ import YoutubeIcon from "@/ui/assets/icons/Youtube-icon";
 import TiktokIcon from "@/ui/assets/icons/tiktok-icon";
 
 export default function Footer() {
+  const ref = useRef<HTMLFormElement>(null);
   return (
     <footer className="bg-gray-50  dark:bg-gray-900">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
@@ -17,16 +21,37 @@ export default function Footer() {
               </span>
             </a>
             <div className="flex-col flex lg:flex-row justify-center place-items-center lg:place-items-baseline lg:gap-2 text-center mt-4 m-2">
-              <p className="text-xl text-center sm:text-left"> Join the Flock! </p>
+              <p className="text-xl text-center sm:text-left">
+                {" "}
+                Join the Flock!{" "}
+              </p>
               <div className="max-w-[300px]">
-                <label className="input input-bordered flex items-center gap-2 bg-white text-floc-gray">
-                  Email
-                  <input
-                    type="text"
-                    className="grow border-white text-gray-500 focus:outline-none focus:border-gray-100 focus:border-0  focus:ring-transparent "
-                    placeholder="youremail@site.com"
-                  />
-                </label>
+                <form
+                  className="flex flex-col lg:flex-row"
+                  ref={ref}
+                  action={async (formData) => {
+                    await createEmail(formData);
+                    ref.current?.reset();
+                  }}
+                >
+                  <label className="input input-bordered flex items-center gap-2 bg-white text-floc-gray">
+                    Email
+                    <input
+                      type="text"
+                      className="grow border-white text-gray-500 focus:outline-none focus:border-gray-100 focus:border-0  focus:ring-transparent "
+                      placeholder="youremail@site.com"
+                      name="email"
+                    />
+                  </label>
+                  <div>
+                    <button
+                      type="submit"
+                      className="py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300  bg-floc-gray"
+                    >
+                      SUBMIT
+                    </button>
+                  </div>
+                </form>
                 <p className="text-xs text-floc-gray/70 pt-2">
                   by submitting your email, you agree to sign up for our
                   newsletter and receive promotional emails. You may unsubscribe
