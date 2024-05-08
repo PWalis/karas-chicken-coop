@@ -1,14 +1,11 @@
 "use client";
 
 import React from "react";
-import { AddToCardButton } from "./buttons";
-import { useContext, useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCart, useCartDispatch } from "@/app/context/cartContext";
 import Link from "next/link";
 import Sizing from "./sizing";
 import { AddToCartAlert } from "./addToCartAlert";
-import { set } from "zod";
-import { fetchProductById } from "@/app/lib/actions";
 
 interface ItemCardProps {
 
@@ -19,25 +16,6 @@ interface ItemCardProps {
 export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
   const dispatch = useCartDispatch();
   const cart = useCart();
-
-  // const clickHandler = () => {
-  //   if (dispatch) {
-  //     dispatch({
-  //       type: "ADD",
-  //       payload: {
-  //         name,
-  //         price,
-  //         description,
-  //         images,
-  //         category,
-  //         inventory,
-  //         productId,
-  //         stripePriceKey,
-  //       },
-  //     });
-  //     console.log(cart);
-  //   }
-  // };
 
   const [showSizes, setShowSizes] = useState(false);
   const [buttonHTML, setButtonHTML] = useState("Add to Cart");
@@ -116,7 +94,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
       <Link href={`/shop/${product.id}`} className="relative group">
         <img
           className="w-fit group-hover:opacity-40 group-hover:blur-[1px] ease-in-out transition-all cursor-pointer group"
-          src={product.images[0]}
+          src={product.primaryImage}
           alt="item"
         />
         <button

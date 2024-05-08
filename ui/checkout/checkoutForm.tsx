@@ -6,6 +6,8 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { useCart } from "@/app/context/cartContext";
+import { useDebouncedCallback } from "use-debounce";
+import zod from "zod";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -28,7 +30,7 @@ export default function CheckoutForm() {
       return;
     }
 
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => { 
+    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent!.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
@@ -62,12 +64,15 @@ export default function CheckoutForm() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({data: cart}),
+      body: JSON.stringify({ data: cart }),
     });
 
-    if (hasInventory) {
+    const response = await hasInventory.json();
+
+    if (response.message.message != "There is enough inventory") {
+      console.log("hasInventory", response.message.message);
       setIsLoading(false);
-      setMessage("Item is out of stock");
+      setMessage("Item is out of stock"); //this needs to be investigated further
       return;
     }
 
@@ -97,11 +102,16 @@ export default function CheckoutForm() {
     layout: { type: "tabs" },
   };
 
-  const handleAddressChange = (event: any) => {
+  const handleAddressChange = useDebouncedCallback((event: any) => {
     // create a new order with the address
     // update payment intent metadata with the orderId
     if (event.complete) {
       setIsLoading(true);
+      setMessage("");
+      if (event.value.address.country !== "US") {
+        setMessage("We only ship to the US");
+        return;
+      }
       fetch("/api/createOrder", {
         method: "POST",
         headers: {
@@ -116,41 +126,110 @@ export default function CheckoutForm() {
         .then((res) => res.json())
         .then((data) => {
           setIsLoading(false);
-          // console.log(data);
         });
     }
-  };
+  }, 1300);
+
+  const handleEmailChange = useDebouncedCallback(async (event: any) => {
+    setIsLoading(true);
+    const emailSchema = zod.object({
+      email: zod.string().email(),
+    });
+    const validatedData = emailSchema.safeParse({
+      email: event.target.value,
+    });
+
+    if (!validatedData.success) {
+      setMessage("Please enter a valid email");
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+      return {
+        error: validatedData.error.flatten().fieldErrors,
+        message: "Validation failed",
+      };
+    }
+
+    const data = {
+      email: validatedData.data.email,
+    };
+
+    const updateEmailMessage = await fetch("api/updateEmail", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        paymentIntentId: cart.paymentIntentId,
+        email: data.email,
+      }),
+    });
+    setIsLoading(false);
+    console.log("UpdatedEmail", updateEmailMessage);
+  }, 1000);
 
   return (
     <div className="max-w-[600px] bg-white shadow-sm p-4">
-    <form className="flex flex-col justify-center" id="payment-form" onSubmit={handleSubmit as any}>
-      <PaymentElement
-        id="payment-element"
-        options={paymentElementOptions as any}
-      />
-      <AddressElement
-        id="address-element"
-        options={{ mode: "shipping" }}
-        onChange={(event) => {
-          handleAddressChange(event);
-        }}
-      />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span className="mx-auto h-12 flex justify-center items-center bg-floc-yellow mt-3 hover:bg-light-yellow" id="button-text">
-          {isLoading ? <span className="loading loading-spinner loading-md" id="spinner"></span> : <p className="uppercase tracking-wide">Submit Payment</p>}
-        </span>
-      </button>
-      <p className="text-sm text-gray-500 pt-1 mx-auto justify-center flex gap-1"> Secure payment with                   <a
-                    className="text-blue-400 hover:text-floc-gray/40"
-                    style={{ display: "table-cell" }}
-                    href="https://www.stripe.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Stripe
-                  </a>  checkout. </p>
-      {message && <div className="text-red-600/80 mx-auto" id="payment-message">{message}</div>}
-    </form>
-  </div>
+      <form
+        className="flex flex-col justify-center"
+        id="payment-form"
+        onSubmit={handleSubmit as any}
+      >
+        <PaymentElement
+          id="payment-element"
+          options={paymentElementOptions as any}
+        />
+        <div className="flex flex-col">
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Email"
+            onChange={(event) => handleEmailChange(event)}
+            required
+          />
+        </div>
+        <AddressElement
+          id="address-element"
+          options={{ mode: "shipping" }}
+          onChange={(event) => {
+            handleAddressChange(event);
+          }}
+        />
+        <button disabled={isLoading || !stripe || !elements} id="submit">
+          <span
+            className="mx-auto h-12 flex justify-center items-center bg-floc-yellow mt-3 hover:bg-light-yellow"
+            id="button-text"
+          >
+            {isLoading ? (
+              <span
+                className="loading loading-spinner loading-md"
+                id="spinner"
+              ></span>
+            ) : (
+              <p className="uppercase tracking-wide">Submit Payment</p>
+            )}
+          </span>
+        </button>
+        <p className="text-sm text-gray-500 pt-1 mx-auto justify-center flex gap-1">
+          {" "}
+          Secure payment with{" "}
+          <a
+            className="text-blue-400 hover:text-floc-gray/40"
+            style={{ display: "table-cell" }}
+            href="https://www.stripe.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Stripe
+          </a>{" "}
+          checkout.{" "}
+        </p>
+        {message && (
+          <div className="text-red-600/80 mx-auto" id="payment-message">
+            {message}
+          </div>
+        )}
+      </form>
+    </div>
   );
 }

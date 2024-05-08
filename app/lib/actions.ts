@@ -190,6 +190,21 @@ export const fetchProductById = async (id: number) => {
   }
 };
 
+export const fetchProductsIdArray = async (productIds: number[]) => {
+  try {
+    const products = await prisma.products.findMany({
+      where: {
+        id: {
+          in: productIds,
+        },
+      },
+    });
+    return products;
+  } catch (error) {
+    console.log("error getting products ", error);
+  }
+};
+
 export async function createProduct(
   { size }: createProductBindData,
   formData: FormData
@@ -274,7 +289,7 @@ export async function createProduct(
         inventory: {
           create: {
             hasSizes: size,
-            quantity: data.quantity!,
+            quantity: data.quantity ?? 0,
             xs_quantity: data.xs != null ? data.xs : 0,
             s_quantity: data.small != null ? data.small : 0,
             m_quantity: data.medium != null ? data.medium : 0,
@@ -351,7 +366,6 @@ export async function deleteProduct(productId: number) {
         id: productId,
       },
     });
-
   } catch (error) {
     console.log("Error deleting product", error);
   }
@@ -411,7 +425,7 @@ export async function updateProduct(
       : validatedData.data.category,
     primaryImage: formData.get("primaryImage") as any,
     image: formData.getAll("image") as any,
-    quantity: validatedData.data.quantity,
+    quantity: validatedData.data.quantity ?? 0,
     xs: validatedData.data.xs,
     small: validatedData.data.small,
     medium: validatedData.data.medium,
@@ -495,7 +509,7 @@ export async function createOrder(
     const order = await prisma.order.create({
       data: {
         name: address.name,
-        address: address.address.line1 + " " + address.address.line2,
+        address: address.address.line1 + ", " + (address.address.line2 ?? ""),
         city: address.address.city,
         state: address.address.state,
         zip: address.address.postal_code,
@@ -507,22 +521,14 @@ export async function createOrder(
                 quantity: item.quantity,
                 size: item.size,
                 hasSizes: true,
-                product: {
-                  connect: {
-                    id: item.id,
-                  },
-                },
+                productId: item.id,
               };
             } else {
               return {
                 quantity: item.quantity,
                 hasSizes: false,
                 size: "none",
-                product: {
-                  connect: {
-                    id: item.id,
-                  },
-                },
+                productId: item.id,
               };
             }
           }),
@@ -575,11 +581,27 @@ export async function fetchOrderById(id: string) {
   }
 }
 
-export async function fetchAllPaidOrders() {
+export async function fetchAllProcessedOrders() {
   try {
     const orders = await prisma.order.findMany({
       where: {
-        status: "PAID",
+        status: "PROCESSED",
+      },
+      include: {
+        orderItems: {},
+      },
+    });
+    return orders;
+  } catch (error) {
+    console.log("Error fetching orders", error);
+  }
+}
+
+export async function fetchAllFulfilledOrders() {
+  try {
+    const orders = await prisma.order.findMany({
+      where: {
+        status: "FULFILLED",
       },
       include: {
         orderItems: {},
@@ -692,7 +714,7 @@ export async function processOrder(orderId: string) {
         }
       }
       await setOrderStatus(orderId, "PROCESSED");
-      revalidatePath("/")
+      revalidatePath("/");
       return fetchedOrder;
     } catch (error) {
       console.log("Error processing order", error);
@@ -711,36 +733,36 @@ export async function checkInventory(cart: any) {
       if (item.size != undefined || item.size != null) {
         if (item.size.toLowerCase() == "xs") {
           if (inventory!.xs_quantity < item.quantity) {
-            return { message: "Not enough inventory" };
+            return { message: "Not enough xs inventory" };
           } else if (item.size.toLowerCase() == "s") {
             if (inventory!.s_quantity < item.quantity) {
-              return { message: "Not enough inventory" };
+              return { message: "Not enough s inventory" };
             }
           } else if (item.size.toLowerCase() == "m") {
             if (inventory!.m_quantity < item.quantity) {
-              return { message: "Not enough inventory" };
+              return { message: "Not enough m inventory" };
             }
           } else if (item.size.toLowerCase() == "l") {
             if (inventory!.l_quantity < item.quantity) {
-              return { message: "Not enough inventory" };
+              return { message: "Not enough l inventory" };
             }
           } else if (item.size.toLowerCase() == "xl") {
             if (inventory!.xl_quantity < item.quantity) {
-              return { message: "Not enough inventory" };
+              return { message: "Not enough xl inventory" };
             }
           } else if (item.size.toLowerCase() == "xxl") {
             if (inventory!.xxl_quantity < item.quantity) {
-              return { message: "Not enough inventory" };
+              return { message: "Not enough xxl inventory" };
             }
           }
-        } else {
-          if (inventory!.quantity < item.quantity) {
-            return { message: "Not enough inventory" };
-          }
+        }
+      } else {
+        if (inventory!.quantity < item.quantity) {
+          return { message: "There is Not enough inventory" };
         }
       }
-      return { message: "Enough inventory" };
     }
+    return { message: "There is enough inventory" };
   } catch (error) {
     console.log("Error checking inventory", error);
   }

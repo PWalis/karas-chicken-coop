@@ -104,7 +104,6 @@ export async function updateSession(request: NextRequest) {
     }
     throw error; // rethrow the error if it's not an expiration error
   }
-  console.log("parsed", parsed);
 
   if (parsed.user.role !== "ADMIN") {
     console.log("User is not an admin");
