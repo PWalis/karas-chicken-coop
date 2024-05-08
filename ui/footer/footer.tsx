@@ -6,7 +6,7 @@ import TiktokIcon from "@/ui/assets/icons/tiktok-icon";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-50 dark:bg-gray-900">
+    <footer className="bg-gray-50  dark:bg-gray-900">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
@@ -23,7 +23,7 @@ export default function Footer() {
                   Email
                   <input
                     type="text"
-                    className="grow border-white text-gray-500"
+                    className="grow border-white text-gray-500 focus:outline-none focus:border-gray-100 focus:border-0  focus:ring-transparent "
                     placeholder="youremail@site.com"
                   />
                 </label>

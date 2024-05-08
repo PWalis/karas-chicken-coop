@@ -125,15 +125,18 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
           View item
         </button>
       </Link>
-      <div className="flex justify-between place-items-center px-3 py-3 bg-gray-50 border shadow-sm">
+      <div className="flex flex-col gap-2 justify-between place-items-center px-3 py-2 bg-gray-50 border shadow-sm">
         <div>
           <h3 className="text-2xl uppercase">{product.name}</h3>
           <p className="text-md">{product.price}</p>
         </div>
-        <div className="relative">
+        <div className="flex gap-3">
+          <Link href={`/shop/${product.id}`}>
+          <button className="inline-flex items-center justify-center h-12 w-20 text-md text-center border-[.20em] bg-floc-gray text-white tracking-wide uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm transition-all ease-in-out"> View </button>
+          </Link>
           <button
             onClick={handleAddToCart}
-            className={`inline-flex items-center justify-center h-12 w-28 text-md text-center border-[.20em] bg-floc-gray text-white tracking-wide uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm transition-all ease-in-out`}
+            className={`inline-flex items-center justify-center h-12 w-28 text-md text-center border-[.20em]  text-floc-gray tracking-wide uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm transition-all ease-in-out`}
             dangerouslySetInnerHTML={{ __html: buttonHTML }}
           ></button>
         </div>

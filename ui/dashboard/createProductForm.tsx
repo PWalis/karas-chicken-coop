@@ -161,7 +161,7 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
         <input type="file" id="image" name="image" multiple required />
         <div className="flex justify-center">
           <button
-            className="bg-cyan-600 hover:bg-cyan-400 w-full px-10 py-3 justify-center uppercase"
+            className="bg-cover dashboard-bg hover:bg-cyan-400 w-full px-10 py-3 justify-center uppercase"
             type="submit"
           >
             Submit

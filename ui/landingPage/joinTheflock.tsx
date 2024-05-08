@@ -23,7 +23,7 @@ export default function JoinTheFlock() {
                       <input className="block p-3 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500" placeholder="Enter your email..." type="email" id="email"/>
                   </div>
                   <div>
-                      <button type="submit" className="py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300  bg-floc-gray">SUBMIT</button>
+                      <button type="submit" className="py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300  bg-floc-gray hover:bg-floc-gray/90">SUBMIT</button>
                   </div>
               </div>
               <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer bg-gray-100/70 p-2 backdrop-blur-sm">

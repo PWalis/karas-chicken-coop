@@ -53,7 +53,7 @@ export function ShopButton({
   return (
     <button
       onClick={handleClick}
-      className="w-full h-full sm:block pr-5 pl-5 pt-3 pb-3 bg-floc-yellow uppercase"
+      className="w-full h-full sm:block pr-5 pl-5 pt-3 pb-3 bg-floc-yellow hover:bg-light-yellow hover:opacity-90 bg-right-bottom uppercase"
     >
       <Link className="w-full h-full" key="shop" href="/shop">
         Shop
@@ -65,7 +65,7 @@ export function ShopButton({
 export function JoinTheFlockButton({}: Readonly<{}>) {
   return (
     <a href="/#JoinTheFlock">
-      <button className=" pr-5 pl-5 pt-3 pb-3 border-solid border-[.25em] border-floc-gray text-floc-gray uppercase">
+      <button className="pr-5 pl-5 pt-3 pb-3 border-solid border-[.25em] border-floc-gray text-floc-gray uppercase hover:bg-floc-gray hover:text-white transition-all ease-in-out">
         Join The Flock
       </button>
     </a>
@@ -97,7 +97,7 @@ export function HeroCTA({}: Readonly<{}>) {
   return (
     <a
       href="/#JoinTheFlock"
-      className="inline-flex items-center justify-center px-5 py-3 text-xl text-center bg-floc-yellow uppercase hover:bg-light-yellow focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-md"
+      className="inline-flex items-center justify-center px-5 py-3 text-xl text-center bg-floc-yellow hover:bg-light-yellow bg-left-center bg-cover uppercase focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-md"
     >
       Join The Flock
     </a>

@@ -5,7 +5,7 @@ export default function OrdersPage() {
   return (
     <div className="flex-col w-full h-fit min-h-screen">
       <h2 className="flex text-4xl  mb-10 mt-28 text-center uppercase justify-center">
-        View Your Orders:{" "}
+        Your Orders
       </h2>
       <div className="flex flex-wrap justify-center gap-14">
         <div>
