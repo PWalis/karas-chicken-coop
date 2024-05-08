@@ -33,6 +33,7 @@ export default async function OrdersPage() {
                   state={order.state}
                   items={order.orderItems}
                   key={order.id}
+                  isFulfilled={false}
                 />
               ))}
           </div>
@@ -55,6 +56,7 @@ export default async function OrdersPage() {
                   state={order.state}
                   items={order.orderItems}
                   key={index}
+                  isFulfilled={true}
                 />
               ))}
           </div>

@@ -425,7 +425,7 @@ export async function updateProduct(
       : validatedData.data.category,
     primaryImage: formData.get("primaryImage") as any,
     image: formData.getAll("image") as any,
-    quantity: validatedData.data.quantity,
+    quantity: validatedData.data.quantity ?? 0,
     xs: validatedData.data.xs,
     small: validatedData.data.small,
     medium: validatedData.data.medium,
