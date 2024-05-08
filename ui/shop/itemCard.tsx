@@ -8,9 +8,7 @@ import Sizing from "./sizing";
 import { AddToCartAlert } from "./addToCartAlert";
 
 interface ItemCardProps {
-
   product: any;
-
 }
 
 export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
@@ -19,17 +17,26 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
 
   const [showSizes, setShowSizes] = useState(false);
   const [buttonHTML, setButtonHTML] = useState("Add to Cart");
-  const [addSizeButtonText, setAddSizeButtonText] = useState("Add Size to Cart");
+  const [addSizeButtonText, setAddSizeButtonText] =
+    useState("Add Size to Cart");
   const [showAlert, setShowAlert] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = () => {
-    setShowSizes(!showSizes);
-    setButtonHTML(
-      showSizes
-        ? "<p>Add to Cart</p>"
-        : '<span class="loading loading-dots loading-md"></span>'
-    ); // Change button HTML
+    if (product.inventory.hasSizes === true) {
+      setShowSizes(!showSizes);
+      setButtonHTML(
+        showSizes
+          ? "<p>Add to Cart</p>"
+          : '<span class="loading loading-dots loading-md"></span>'
+      ); // Change button HTML
+    } else {
+      dispatch({
+        type: "ADD",
+        payload: { ...product, size: null, quantity: 1 },
+      });
+      setShowAlert(true);
+    }
     console.log(showSizes);
   };
 
@@ -72,7 +79,10 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (sizesRef.current && !sizesRef.current.contains(event.target as Node)) {
+      if (
+        sizesRef.current &&
+        !sizesRef.current.contains(event.target as Node)
+      ) {
         setShowSizes(false);
         setButtonHTML("Add to Cart");
       }
@@ -110,7 +120,10 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
         </div>
         <div className="flex gap-3">
           <Link href={`/shop/${product.id}`}>
-          <button className="inline-flex items-center justify-center h-12 w-20 text-md text-center border-[.20em] bg-floc-gray text-white tracking-wide uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm transition-all ease-in-out"> View </button>
+            <button className="inline-flex items-center justify-center h-12 w-20 text-md text-center border-[.20em] bg-floc-gray text-white tracking-wide uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm transition-all ease-in-out">
+              {" "}
+              View{" "}
+            </button>
           </Link>
           <button
             onClick={handleAddToCart}
@@ -120,18 +133,20 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
         </div>
       </div>
       {showSizes && (
-        <div ref={sizesRef} className="absolute z-50 left-1/2 w-full transform -translate-x-1/2 bg-white border border-gray-300 p-2 shadow mt-2">
+        <div
+          ref={sizesRef}
+          className="absolute z-50 left-1/2 w-full transform -translate-x-1/2 bg-white border border-gray-300 p-2 shadow mt-2"
+        >
           {/* Dropdown content */}
           <div className="flex flex-col justify-center items-center">
             <p className="text-floc-gray">Please select your size: </p>
             <div className="flex justify-center items-center">
-            <Sizing size={size!} setSize={setSize} />
+              <Sizing size={size!} setSize={setSize} />
             </div>
             <button
               onClick={handleAddSize}
               className="inline-flex items-center justify-center px-4 py-2 text-md text-center w-full bg-floc-yellow uppercase focus:bg-light-yellow hover:bg-light-yellow focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-md"
             >
-    
               {addSizeButtonText}
             </button>
           </div>
