@@ -45,7 +45,7 @@ export default function Shop(props: Props) {
         </h2>
         <hr className="flex justify-center items-center mt-6 border-gray-200 w-screen md:max-w-[400px] sm:mx-auto dark:border-gray-700" />
         <div className="flex justify-center min-h-[500px] place-items-center">
-          <div className="flex justify-center pt-5 w-fit max-w-[400px] md:min-w-[300px]"> 
+          <div className="flex justify-center pt-5 w-fit max-w-[800px] md:min-w-[300px]"> 
             <Products />
           </div>
         </div>

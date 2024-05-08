@@ -38,7 +38,7 @@ export default function MobileNav() {
     >
       <div className="max-w-screen-xl flex flex-wrap gap-1 items-center justify-between mx-auto">
         <div className="flex justify-end items-center px-6 py-6">
-          <a className="flex items-center" href="/">
+          <a className="flex items-center" href="/dashboard">
             <h2 className="text-2xl block">Kara's Dashboard</h2>
           </a>
         </div>
@@ -65,7 +65,7 @@ export default function MobileNav() {
             <li>
               <a
                 href="/dashboard/orders"
-                className="block py-2 px-3 md:p-0 rounded hover:bg-gray-400/10 backdrop-blur-md md:hover:bg-transparent md:hover:text-floc-gray/80 jose"
+                className="block py-2 px-3 md:p-0 rounded hover:bg-gray-400/10 md:hover:bg-transparent md:hover:text-floc-gray/80 jose"
               >
                 <div className="flex items-center gap-1">
                   <ShirtIcon className="w-6 h-6"></ShirtIcon>
@@ -76,7 +76,7 @@ export default function MobileNav() {
             <li>
               <a
                 href="/dashboard/products"
-                className="block py-2 px-3 md:p-0 rounded hover:bg-gray-400/10 backdrop-blur-md md:hover:bg-transparent md:hover:text-floc-gray/80"
+                className="block py-2 px-3 md:p-0 rounded hover:bg-gray-400/10  md:hover:bg-transparent md:hover:text-floc-gray/80"
               >
                 <div className="flex items-center gap-1">
                   <EditIcon className="w-6 h-6"></EditIcon>
@@ -87,7 +87,7 @@ export default function MobileNav() {
             <li>
               <a
                 href="/dashboard/createNewProduct"
-                className="block py-2 px-3 md:p-0  rounded hover:bg-gray-400/10 backdrop-blur-md md:hover:bg-transparent md:hover:text-floc-gray/80"
+                className="block py-2 px-3 md:p-0  rounded hover:bg-gray-400/10 md:hover:bg-transparent md:hover:text-floc-gray/80"
               >
                 <div className="flex items-center gap-1">
                   <CreateIcon className="w-6 h-6"></CreateIcon>
@@ -99,7 +99,7 @@ export default function MobileNav() {
               <a
                 href="#"
                 className={clsx(
-                  " py-2 px-3 md:p-0  rounded bg-floc-gray text-center text-white hover:bg-floc-gray/70 backdrop-blur-md mt-2 md:hover:bg-transparent",
+                  " py-2 px-3 md:p-0  rounded bg-floc-gray text-center text-white hover:bg-floc-gray/70  mt-2 md:hover:bg-transparent",
                   navMenu ? "block md:hidden" : "hidden"
                 )}
               >

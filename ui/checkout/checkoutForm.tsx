@@ -130,20 +130,20 @@ export default function CheckoutForm() {
     }
   }, 1300);
 
-  const handleEmailChange = useDebouncedCallback( async (event: any) => {
-    setIsLoading(true)
+  const handleEmailChange = useDebouncedCallback(async (event: any) => {
+    setIsLoading(true);
     const emailSchema = zod.object({
-      email: zod.string().email()
-    })
+      email: zod.string().email(),
+    });
     const validatedData = emailSchema.safeParse({
-      email: event.target.value
-    })
+      email: event.target.value,
+    });
 
     if (!validatedData.success) {
-      setMessage("Please enter a valid email")
+      setMessage("Please enter a valid email");
       setTimeout(() => {
-        setMessage("")
-      }, 2000)
+        setMessage("");
+      }, 2000);
       return {
         error: validatedData.error.flatten().fieldErrors,
         message: "Validation failed",
@@ -151,21 +151,28 @@ export default function CheckoutForm() {
     }
 
     const data = {
-      email: validatedData.data.email
-    }
+      email: validatedData.data.email,
+    };
 
     const updateEmailMessage = await fetch("api/updateEmail", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({paymentIntentId: cart.paymentIntentId, email: data.email})
-    })
-    setIsLoading(false)
-    console.log("UpdatedEmail", updateEmailMessage)
-  }, 1000)
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        paymentIntentId: cart.paymentIntentId,
+        email: data.email,
+      }),
+    });
+    setIsLoading(false);
+    console.log("UpdatedEmail", updateEmailMessage);
+  }, 1000);
 
   return (
     <div className="max-w-[600px] bg-white shadow-sm p-4">
-      <form id="payment-form" onSubmit={handleSubmit as any}>
+      <form
+        className="flex flex-col justify-center"
+        id="payment-form"
+        onSubmit={handleSubmit as any}
+      >
         <PaymentElement
           id="payment-element"
           options={paymentElementOptions as any}
@@ -189,15 +196,39 @@ export default function CheckoutForm() {
           }}
         />
         <button disabled={isLoading || !stripe || !elements} id="submit">
-          <span id="button-text">
+          <span
+            className="mx-auto h-12 flex justify-center items-center bg-floc-yellow mt-3 hover:bg-light-yellow"
+            id="button-text"
+          >
             {isLoading ? (
-              <div className="spinner" id="spinner"></div>
+              <span
+                className="loading loading-spinner loading-md"
+                id="spinner"
+              ></span>
             ) : (
-              "Pay now"
+              <p className="uppercase tracking-wide">Submit Payment</p>
             )}
           </span>
         </button>
-        {message && <div id="payment-message">{message}</div>}
+        <p className="text-sm text-gray-500 pt-1 mx-auto justify-center flex gap-1">
+          {" "}
+          Secure payment with{" "}
+          <a
+            className="text-blue-400 hover:text-floc-gray/40"
+            style={{ display: "table-cell" }}
+            href="https://www.stripe.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Stripe
+          </a>{" "}
+          checkout.{" "}
+        </p>
+        {message && (
+          <div className="text-red-600/80 mx-auto" id="payment-message">
+            {message}
+          </div>
+        )}
       </form>
     </div>
   );

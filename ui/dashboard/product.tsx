@@ -92,30 +92,30 @@ export const Product: React.FC<ProductProps> = ({
       </div>
       <div className="flex flex-col justify-between place-items-center">
         {inventory.hasSizes ? (
-          <div className="flex flex-wrap gap-2 mt-2 justify-end place-items-end w-fit">
+          <div className="flex flex-wrap gap-2 mt-2 justify-end w-fit">
             <div className="text-lg place-items-center flex flex-col">
-              <p className="border-2 px-2">{inventory.xs_quantity}</p>
+              <p className="border-2 h-8 w-8 place-items-center flex justify-center">{inventory.xs_quantity}</p>
               <p className="">XS</p>
             </div>
             <div className="text-lg place-items-center flex flex-col">
-              <p className="border-2 px-2">{inventory.s_quantity}</p>
+              <p className="border-2 h-8 w-8 place-items-center flex justify-center">{inventory.s_quantity}</p>
               <p className="">S</p>
             </div>
             <div className="text-lg place-items-center flex flex-col">
-              <p className="border-2 px-2">{inventory.m_quantity}</p>
+              <p className="border-2 h-8 w-8 place-items-center flex justify-center">{inventory.m_quantity}</p>
               <p className="">M</p>
             </div>
             <div className="flex gap-2">
               <div className="text-lg place-items-center flex flex-col">
-                <p className="border-2 px-2">{inventory.l_quantity}</p>
+                <p className="border-2 h-8 w-8 place-items-center flex justify-center">{inventory.l_quantity}</p>
                 <p className="">L</p>
               </div>
               <div className="text-lg place-items-center flex flex-col">
-                <p className="border-2 px-2">{inventory.xl_quantity}</p>
+                <p className="border-2 h-8 w-8 place-items-center flex justify-center">{inventory.xl_quantity}</p>
                 <p className="">XL</p>
               </div>
               <div className="text-lg place-items-center flex flex-col">
-                <p className="border-2 px-2">{inventory.xxl_quantity}</p>
+                <p className="border-2 h-8 w-8 place-items-center flex justify-center">{inventory.xxl_quantity}</p>
                 <p className="">XXL</p>
               </div>
             </div>

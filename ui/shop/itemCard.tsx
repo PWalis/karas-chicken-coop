@@ -100,7 +100,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
   }, [showSizes]);
 
   return (
-    <div className="item-card relative mx-4">
+    <div className="item-card relative mx-4 max-w-[400px]">
       <Link href={`/shop/${product.id}`} className="relative group">
         <img
           className="w-fit group-hover:opacity-40 group-hover:blur-[1px] ease-in-out transition-all cursor-pointer group"
@@ -141,7 +141,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
           <div className="flex flex-col justify-center items-center">
             <p className="text-floc-gray">Please select your size: </p>
             <div className="flex justify-center items-center">
-              <Sizing size={size!} setSize={setSize} />
+            <Sizing size={size!} setSize={setSize} inventory={product.inventory} />
             </div>
             <button
               onClick={handleAddSize}
