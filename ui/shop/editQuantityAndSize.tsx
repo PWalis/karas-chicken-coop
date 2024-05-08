@@ -129,7 +129,7 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
       <div className="flex flex-col gap-2 mt-2">
         <div className="flex gap-3 lg:justify-normal justify-center">
           {hasSizes ? (
-            <Sizing size={size!} setSize={setSize} />
+            <Sizing size={size!} setSize={setSize} inventory={product.inventory} />
           ) : (
             <div className="h-20"></div>
           )}

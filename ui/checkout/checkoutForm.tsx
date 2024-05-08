@@ -140,7 +140,15 @@ export default function CheckoutForm() {
           {isLoading ? <span className="loading loading-spinner loading-md" id="spinner"></span> : <p className="uppercase tracking-wide">Submit Payment</p>}
         </span>
       </button>
-      <p className="text-sm text-gray-500 pt-1 mx-auto justify-center"> Secure payment with <a className="text-blue-400" href="stripe.com"> Stripe </a>  checkout. </p>
+      <p className="text-sm text-gray-500 pt-1 mx-auto justify-center flex gap-1"> Secure payment with                   <a
+                    className="text-blue-400 hover:text-floc-gray/40"
+                    style={{ display: "table-cell" }}
+                    href="https://www.stripe.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Stripe
+                  </a>  checkout. </p>
       {message && <div className="text-red-600/80 mx-auto" id="payment-message">{message}</div>}
     </form>
   </div>

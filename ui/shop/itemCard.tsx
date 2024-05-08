@@ -147,7 +147,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
           <div className="flex flex-col justify-center items-center">
             <p className="text-floc-gray">Please select your size: </p>
             <div className="flex justify-center items-center">
-            <Sizing size={size!} setSize={setSize} />
+            <Sizing size={size!} setSize={setSize} inventory={product.inventory} />
             </div>
             <button
               onClick={handleAddSize}
