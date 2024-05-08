@@ -7,6 +7,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { useCart } from "@/app/context/cartContext";
 import { useDebouncedCallback } from "use-debounce";
+import zod from "zod";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -29,7 +30,7 @@ export default function CheckoutForm() {
       return;
     }
 
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => { 
+    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent!.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
@@ -63,7 +64,7 @@ export default function CheckoutForm() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({data: cart}),
+      body: JSON.stringify({ data: cart }),
     });
 
     const response = await hasInventory.json();
@@ -107,7 +108,6 @@ export default function CheckoutForm() {
     if (event.complete) {
       setIsLoading(true);
       setMessage("");
-      console.log("event", event.value.address.country);
       if (event.value.address.country !== "US") {
         setMessage("We only ship to the US");
         return;
@@ -130,28 +130,75 @@ export default function CheckoutForm() {
     }
   }, 1300);
 
+  const handleEmailChange = useDebouncedCallback( async (event: any) => {
+    setIsLoading(true)
+    const emailSchema = zod.object({
+      email: zod.string().email()
+    })
+    const validatedData = emailSchema.safeParse({
+      email: event.target.value
+    })
+
+    if (!validatedData.success) {
+      setMessage("Please enter a valid email")
+      setTimeout(() => {
+        setMessage("")
+      }, 2000)
+      return {
+        error: validatedData.error.flatten().fieldErrors,
+        message: "Validation failed",
+      };
+    }
+
+    const data = {
+      email: validatedData.data.email
+    }
+
+    const updateEmailMessage = await fetch("api/updateEmail", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({paymentIntentId: cart.paymentIntentId, email: data.email})
+    })
+    setIsLoading(false)
+    console.log("UpdatedEmail", updateEmailMessage)
+  }, 1000)
+
   return (
     <div className="max-w-[600px] bg-white shadow-sm p-4">
-    <form className="flex flex-col justify-center" id="payment-form" onSubmit={handleSubmit as any}>
-      <PaymentElement
-        id="payment-element"
-        options={paymentElementOptions as any}
-      />
-      <AddressElement
-        id="address-element"
-        options={{ mode: "shipping" }}
-        onChange={(event) => {
-          handleAddressChange(event);
-        }}
-      />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span className="mx-auto h-12 flex justify-center items-center bg-floc-yellow mt-3 hover:bg-light-yellow" id="button-text">
-          {isLoading ? <span className="loading loading-spinner loading-md" id="spinner"></span> : <p className="uppercase tracking-wide">Submit Payment</p>}
-        </span>
-      </button>
-      <p className="text-sm text-gray-500 pt-1 mx-auto justify-center"> Secure payment with <a className="text-blue-400" href="stripe.com"> Stripe </a>  checkout. </p>
-      {message && <div className="text-red-600/80 mx-auto" id="payment-message">{message}</div>}
-    </form>
-  </div>
+      <form id="payment-form" onSubmit={handleSubmit as any}>
+        <PaymentElement
+          id="payment-element"
+          options={paymentElementOptions as any}
+        />
+        <div className="flex flex-col">
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Email"
+            onChange={(event) => handleEmailChange(event)}
+            required
+          />
+        </div>
+        <AddressElement
+          id="address-element"
+          options={{ mode: "shipping" }}
+          onChange={(event) => {
+            handleAddressChange(event);
+          }}
+        />
+        <button disabled={isLoading || !stripe || !elements} id="submit">
+          <span id="button-text">
+            {isLoading ? (
+              <div className="spinner" id="spinner"></div>
+            ) : (
+              "Pay now"
+            )}
+          </span>
+        </button>
+        {message && <div id="payment-message">{message}</div>}
+      </form>
+    </div>
   );
 }

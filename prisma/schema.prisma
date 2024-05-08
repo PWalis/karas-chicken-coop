@@ -98,3 +98,9 @@ enum UserRole {
   USER
   ADMIN
 }
+
+model Email {
+  id  String @id @default(uuid())
+  email  String
+  createdAt DateTime @default(now())
+}
