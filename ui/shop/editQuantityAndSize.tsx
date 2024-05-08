@@ -3,7 +3,7 @@ import { Sizing } from "@/ui/shop/sizing";
 import { QuantityCounter } from "@/ui/shop/quantityCounter";
 import React, { useState, useEffect } from "react";
 import { useCartDispatch } from "@/app/context/cartContext";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { AddToCartAlert } from "@/ui/shop/addToCartAlert";
 import { useCart } from "@/app/context/cartContext";
 
@@ -34,11 +34,12 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
   const dispatch = useCartDispatch(); // how to use: dispatch({ type: "ADD", payload: product });
   const [showAlert, setShowAlert] = useState(false);
   const cart = useCart();
+  const router = useRouter()
 
   const buyNowHandler = () => {
     dispatch({ type: "ADD", payload: { ...product, size, quantity } });
     // redirect to checkout page
-    redirect("/checkout");
+    router.push('/checkout')
   };
 
   useEffect(() => {
