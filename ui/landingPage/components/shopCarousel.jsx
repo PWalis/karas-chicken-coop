@@ -5,7 +5,7 @@ import { Carousel } from "@material-tailwind/react";
 
 export function ShopCarousel({ image1, image2, image3, image4 }) {
   return (
-    <Carousel loop={true} autoplay={true} autoplayDelay={3000} transition={{ duration: .75 }} className="rounded-xl">
+    <Carousel loop={true} autoplay={true} autoplayDelay={3000} transition={{ duration: .75 }} className="rounded-xl z-0">
       <img
         src={image1.src}
         alt="image 1"

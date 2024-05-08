@@ -13,7 +13,7 @@ interface ProductProps {
   name: string;
   price: number;
   description: string;
-  primaryImage: string; 
+  primaryImage: string;
   // images: string[];
   category: string;
   inventory: {
@@ -52,45 +52,47 @@ export const Product: React.FC<ProductProps> = ({
   return (
     <div
       className={clsx(
-        "flex flex-row drop-shadow-sm border-blue-gray/60 border-[1.5px] hover:drop-shadow-md bg-white h-fill rounded-md m-4 px-4 py-4 mb-4 w-fit",
+        "flex flex-col sm:flex-row items-center drop-shadow-sm border-blue-gray/60 border-[1.5px] hover:drop-shadow-md sm:min-w-[500px] max-w-[500px] bg-white h-fill text-center sm:text-left m-4 mb-4 w-fit sm:justify-between pb-2 sm:pb-0 sm:pr-2 rounded-lg",
         visible ? "" : "hidden"
       )}
     >
-      <div className="flex flex-col justify-center place-items-center overflow-auto h-fit w-fit pr-2">
+      <div className="flex flex-col justify-center place-items-center overflow-auto h-fill w-fill sm:max-h-64 sm:max-w-48 sm:mr-4">
         <img
-              src={primaryImage}
-              alt={"1"}
-              className="object-cover w-32 h-32 rounded-xl mt-1"
-              key={"1"}
-            />
-        <h3 className="text-2xl font-bold">{name}</h3>
+          src={primaryImage}
+          alt={"1"}
+          className="object-fill rounded-lg "
+          key={"1"}
+        />
       </div>
-      <div className="flex flex-col  gap-2">
+      <div className="flex flex-col w-full pt-2">
+        <div className="flex flex-col w-full justify-evenly sm:justify-start items-center sm:items-start">
+          <h3 className="text-2xl font-bold mb-3">{name}</h3>
+          <div className="flex gap-2 place-items-end justify-end">
+            <Link href={`/dashboard/edit/${productId}`}>
+              <button className="bg-cyan-300 bg-left-top hover:bg-cyan-200 text-white p-2 rounded-xl max-h-10 m-auto">
+                <EditIcon className="w-6 h-6"> </EditIcon>
+              </button>
+            </Link>
+            <button
+              onClick={() => setShowConfirmation(true)}
+              className="max-h-10 p-2 rounded-xl bg-right-top bg-orange-300 hover:bg-orange-200"
+            >
+              {deleting ? (
+                "In Progress..."
+              ) : (
+                <DeleteIcon className="w-6 h-6"></DeleteIcon>
+              )}
+            </button>
+          </div>
+        </div>
         <p className="text-lg"> Price USD: {formatCurrency(price)}</p>
         <div className="text-lg">
           <p className=""> Category: {category}</p>
         </div>
       </div>
-      <div className="flex flex-col justify-between place-items-end">
-        <div className="flex gap-2">
-          <Link href={`/dashboard/edit/${productId}`}>
-            <button className="bg-cyan-600 hover:bg-cyan-500 text-white p-2 rounded-xl max-h-10 m-auto">
-              <EditIcon className="w-6 h-6"> </EditIcon>
-            </button>
-          </Link>
-          <button
-            onClick={() => setShowConfirmation(true)}
-            className="max-h-10 p-2 rounded-xl bg-[#f43f5e]/90 hover:bg-[#f43f5e]/80"
-          >
-            {deleting ? (
-              "In Progress..."
-            ) : (
-              <DeleteIcon className="w-6 h-6"></DeleteIcon>
-            )}
-          </button>
-        </div>
+      <div className="flex flex-col justify-between place-items-center">
         {inventory.hasSizes ? (
-        <div className="flex flex-wrap gap-2 mt-2 justify-end place-items-end w-fit">
+          <div className="flex flex-wrap gap-2 mt-2 justify-end place-items-end w-fit">
             <div className="text-lg place-items-center flex flex-col">
               <p className="border-2 px-2">{inventory.xs_quantity}</p>
               <p className="">XS</p>
@@ -104,23 +106,26 @@ export const Product: React.FC<ProductProps> = ({
               <p className="">M</p>
             </div>
             <div className="flex gap-2">
-            <div className="text-lg place-items-center flex flex-col">
-              <p className="border-2 px-2">{inventory.l_quantity}</p>
-              <p className="">L</p>
-            </div>
-            <div className="text-lg place-items-center flex flex-col">
-              <p className="border-2 px-2">{inventory.xl_quantity}</p>
-              <p className="">XL</p>
-            </div>
-            <div className="text-lg place-items-center flex flex-col">
-              <p className="border-2 px-2">{inventory.xxl_quantity}</p>
-              <p className="">XXL</p>
+              <div className="text-lg place-items-center flex flex-col">
+                <p className="border-2 px-2">{inventory.l_quantity}</p>
+                <p className="">L</p>
+              </div>
+              <div className="text-lg place-items-center flex flex-col">
+                <p className="border-2 px-2">{inventory.xl_quantity}</p>
+                <p className="">XL</p>
+              </div>
+              <div className="text-lg place-items-center flex flex-col">
+                <p className="border-2 px-2">{inventory.xxl_quantity}</p>
+                <p className="">XXL</p>
+              </div>
             </div>
           </div>
-        </div>) : (<div className="text-lg place-items-center flex flex-col">
-              <p className="border-2 px-2">{inventory.quantity}</p>
-              <p className="">Qty</p>
-            </div>)}
+        ) : (
+          <div className="text-lg  flex gap-1  sm:justify-end">
+             <p className="">Qty: </p>
+            <p className="border-2 px-2">{inventory.quantity}</p>
+          </div>
+        )}
       </div>
 
       {/* Confirmation Popup */}

@@ -1,7 +1,8 @@
 // NAVBAR BUTTONS
 import React from "react";
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import MobileMenuIcon from "../assets/icons/MobileMenuIcon";
 
 export function Logo({}: Readonly<{}>) {
   return (
@@ -44,14 +45,19 @@ export function ShopButton({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const router = useRouter()
+  const router = useRouter();
   const handleClick = () => {
-    router.push('/shop')
-  }
+    router.push("/shop");
+  };
 
   return (
-    <button onClick={handleClick} className="w-full h-full sm:block pr-5 pl-5 pt-3 pb-3 bg-floc-yellow uppercase">
-      <Link className="w-full h-full" key="shop" href="/shop">Shop</Link>
+    <button
+      onClick={handleClick}
+      className="w-full h-full sm:block pr-5 pl-5 pt-3 pb-3 bg-floc-yellow hover:bg-light-yellow hover:opacity-90 bg-right-bottom uppercase"
+    >
+      <Link className="w-full h-full" key="shop" href="/shop">
+        Shop
+      </Link>
     </button>
   );
 }
@@ -59,52 +65,39 @@ export function ShopButton({
 export function JoinTheFlockButton({}: Readonly<{}>) {
   return (
     <a href="/#JoinTheFlock">
-    <button className=" pr-5 pl-5 pt-3 pb-3 border-solid border-[.25em] border-floc-gray text-floc-gray uppercase">
-      Join The Flock
-    </button>
+      <button className="pr-5 pl-5 pt-3 pb-3 border-solid border-[.25em] border-floc-gray text-floc-gray uppercase hover:bg-floc-gray hover:text-white transition-all ease-in-out">
+        Join The Flock
+      </button>
     </a>
   );
 }
 
 interface hamburger {
-  handleHamburgerClick: () => void
+  handleHamburgerClick: () => void;
 }
 
-export const HamburgerMenu: React.FC<hamburger> = ({handleHamburgerClick}) => {
+export const HamburgerMenu: React.FC<hamburger> = ({
+  handleHamburgerClick,
+}) => {
   return (
     <button
       onClick={handleHamburgerClick}
       type="button"
-      className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-floc-gray rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+      className="inline-flex items-center w-10 h-10 justify-center text-sm text-floc-gray rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
       aria-controls="navbar-cta"
       aria-expanded="false"
     >
-      <span className="sr-only">Open main menu</span>
-      <svg
-        className="w-10 h-10"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 17 14"
-      >
-        <path
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M1 1h15M1 7h15M1 13h15"
-        />
-      </svg>
+      <MobileMenuIcon></MobileMenuIcon>
     </button>
   );
-}
+};
 
 // HERO SECTION BUTTON
 export function HeroCTA({}: Readonly<{}>) {
   return (
     <a
       href="/#JoinTheFlock"
-      className="inline-flex items-center justify-center px-5 py-3 text-xl text-center bg-floc-yellow uppercase hover:bg-light-yellow focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-md"
+      className="inline-flex items-center justify-center px-5 py-3 text-xl text-center bg-floc-yellow hover:bg-light-yellow bg-left-center bg-cover uppercase focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-md"
     >
       Join The Flock
     </a>

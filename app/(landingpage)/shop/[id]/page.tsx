@@ -41,6 +41,7 @@ export default async function ProductPage({
       <ShopNavBar />
       <div className=" bg-gray-50 flex justify-center ">
         <div className="lg:flex h-fit place-items-center gap-20 p-2">
+
           {product !== null && product !== undefined ? (
             <>
               <div className="flex-col ">
