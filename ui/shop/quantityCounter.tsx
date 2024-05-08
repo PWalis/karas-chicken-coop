@@ -33,6 +33,10 @@ export const QuantityCounter: React.FC<QuantityCounterProps> = ({
           setQuantity(quantity + 1);
         }
       }
+    } else {
+      if (quantity < quantityLimit.limit!) {
+        setQuantity(quantity + 1);
+      }
     }
   };
 
@@ -41,13 +45,6 @@ export const QuantityCounter: React.FC<QuantityCounterProps> = ({
       setQuantity(quantity - 1);
     }
   };
-
-  // const editHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const value = parseInt(e.target.value);
-  //   if (value >= 1) {
-  //     setQuantity(value);
-  //   }
-  // };
 
   return (
     <div className="flex mb-2">
