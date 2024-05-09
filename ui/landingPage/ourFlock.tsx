@@ -5,18 +5,15 @@ import Joshua from "../assets/joshua_headshot.jpg";
 import Autumn from "../assets/autumn-headshot.jpg";
 import Mike from "../assets/mike_headshot.jpg";
 import { FlockCard } from "./components/ourFlockCard";
-import { SectionWrapper } from "../assets/animation/section-wrapper";
 
 export default function OurFlockSection() {
   return (
-    <SectionWrapper>
     <section id="OurFlock" className="justify-center md:px-4 py-8 mx-auto h-auto px-1">
       <h2 className="text-4xl md:text-5xl lg:text-8xl uppercase justify-center text-center mb-5 mt-20 lg:mb-20">
         Our Flock
       </h2>
       <div className="flex overflow-x-auto 3xl:justify-center gap-4 lg:gap-10">
         <div className="">
-          {" "}
           <FlockCard
             src={Kara}
             alt={"Kara Leino"}
@@ -27,7 +24,6 @@ export default function OurFlockSection() {
           />
         </div>
         <div>
-          {" "}
           <FlockCard
             src={Mike}
             alt={"Michael Leino"}
@@ -38,7 +34,6 @@ export default function OurFlockSection() {
           />
         </div>
         <div>
-          {" "}
           <FlockCard
             src={Autumn}
             alt={"Autumn Rose"}
@@ -49,7 +44,6 @@ export default function OurFlockSection() {
           />
         </div>
         <div>
-          {" "}
           <FlockCard
             src={Joshua}
             alt={"Joshua Pennartz"}
@@ -60,7 +54,6 @@ export default function OurFlockSection() {
           />
         </div>
         <div>
-          {" "}
           <FlockCard
             src={Cassidy}
             alt={"Cassidy Pennartz"}
@@ -73,6 +66,5 @@ export default function OurFlockSection() {
 
       </div>
     </section>
-    </SectionWrapper>
   );
 }
