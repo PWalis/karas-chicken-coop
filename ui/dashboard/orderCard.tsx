@@ -34,7 +34,7 @@ export const OrderCard: React.FC<OrderCardProps> = async ({
   const fulfillOrderHandler = async () => {
     "use server";
     await setOrderStatus(orderId, "FULFILLED");
-    redirect("/orders");
+    redirect("/dashboard/orders");
   };
 
   return (

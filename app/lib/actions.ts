@@ -563,6 +563,7 @@ export async function setOrderStatus(orderId: string, status: OrderStatus) {
   } catch (error) {
     console.log("Error setting order status", error);
   }
+  revalidatePath("/dashboard/orders", "page");
 }
 
 export async function fetchOrderById(id: string) {
