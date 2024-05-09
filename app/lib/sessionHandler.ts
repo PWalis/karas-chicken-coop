@@ -80,7 +80,7 @@ export async function login(formData: FormData) {
   } catch (error) {
     console.log("error logging in", error);
   }
-  redirect("/dashboard");
+  redirect("/dashboard/orders");
 }
 
 export async function logout() {

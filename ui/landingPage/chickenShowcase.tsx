@@ -59,7 +59,7 @@ export default function ChickenSection() {
 
   return (
     <SectionWrapper>
-    <section id="MeetTheChickens" className="max-w-[1500px] lg:px-4 lg:py-8 mx-auto px-4">
+    <section id={"MeetTheChickens"} className="max-w-[1500px] lg:px-4 py-8 mx-auto px-4 justify-center h-auto">
       <h2 className="text-4xl md:text-5xl lg:text-8xl uppercase text-center mb-5 mt-20 lg:mb-20">
         Meet The Chickens
       </h2>
@@ -75,12 +75,12 @@ export default function ChickenSection() {
               alt=""
               style={{                  objectFit: "cover",
               opacity: isFading ? 0 : 1, // Fade out or in based on isFading state
-              transition: "opacity 0.5s ease-out" }}
+              transition: "opacity 2s ease-out" }}
             />
           </div>
         </div>
         {/* Container for the name, description, and thumbnails */}
-        <div className="flex flex-col-reverse md:flex-col lg:w-1/2 justify-around">
+        <div className="flex flex-col-reverse lg:flex-col lg:w-1/2 justify-around">
           <div className="items-center mx-4 pt-4 lg:pt-0 lg:mx-0">
             <SectionWrapper>
             <h3 id="ChickenName" className="text-3xl lg:text-5xl mb-2">
@@ -96,12 +96,12 @@ export default function ChickenSection() {
           </div>
           <div
             id="thumbnailContainer"
-            className="flex overflow-x-auto gap-2 mt-2 lg:mt-0 md:grid md:grid-cols-4 md:gap-4 cursor-pointer"
+            className="flex overflow-x-auto gap-2 mt-2 lg:mt-0 lg:grid lg:grid-cols-4 md:gap-4 cursor-pointer"
           >
             {chickens.map((chicken, index) => (
               <div key={index}>
                 <Image
-                  className="thumbnail h-[108px] w-full max-w-full min-w-[100px] rounded-lg object-top"
+                  className="thumbnail h-[108px] w-full max-w-full min-w-[100px] lg:min-w-[90px] rounded-lg object-top"
                   width={300}
                   height={400}
                   src={chicken.image}

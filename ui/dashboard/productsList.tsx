@@ -5,7 +5,7 @@ import { Product } from "./product";
 export const ProductsList: React.FC = async () => {
   const products = (await fetchAllProducts()) as any;
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 justify-center items-center">
       {products.map((product: any) => {
         return (
           <Product

@@ -27,7 +27,9 @@ const config: Config = withMT({
         'josefin-sans': ['"Josefin Sans"', 'sans-serif'],
         'lodrina-solid': ['"Lord Rina Solid"', 'cursive'],
       },
-      
+      screens: {
+        "3xl": "1668px",
+      }
       
     },
   },

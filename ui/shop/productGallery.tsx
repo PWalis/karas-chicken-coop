@@ -25,7 +25,7 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({
         <Image
           width={700}
           height={480}
-          className="min-h-[295px] w-full max-w-[700px] rounded-lg object-cover object-center md:h-[480px]"
+          className="min-h-[295px] w-full max-w-[700px] rounded-lg object-cover object-center md:h-[600px]"
           src={active}
           alt=""
         />

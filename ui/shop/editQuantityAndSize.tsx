@@ -131,7 +131,7 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
           {hasSizes ? (
             <Sizing size={size!} setSize={setSize} inventory={product.inventory} />
           ) : (
-            <div className="h-20"></div>
+            <div className=""></div>
           )}
         </div>
         <div className="flex justify-center lg:justify-normal">

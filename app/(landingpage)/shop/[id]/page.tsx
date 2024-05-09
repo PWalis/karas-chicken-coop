@@ -58,7 +58,7 @@ export default async function ProductPage({
                   product={product}
                   quantityLimit={sizes}
                 />
-                <div className="max-w-[600px]">
+                <div className="max-w-screen-sm mb-20  sm:h-[100px]">
                   <FAQ></FAQ>
                 </div>
               </div>

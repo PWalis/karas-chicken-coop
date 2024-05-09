@@ -12,17 +12,14 @@ export default async function OrdersPage() {
   return (
     <div className="flex-col w-full h-fit min-h-screen">
       <h2 className="flex text-4xl  mb-10 mt-28 text-center uppercase justify-center">
-
         View Your Orders:
       </h2>
       <div className="flex flex-wrap justify-center gap-14">
         <div>
-          <h3 className="uppercase text-center text-xl">
-            Your Current Orders
-          </h3>
-          <div className="w-fit h-[500px] overflow-y-scroll no-scrollbar">
-            {processedOrders &&
-              processedOrders!.map((order) => (
+          <h3 className="uppercase text-center text-xl">Your Current Orders</h3>
+          {processedOrders && processedOrders.length > 0 ? (
+            <div className="w-fit h-[500px] lg:w-[530px] overflow-y-scroll">
+              {processedOrders.map((order) => (
                 <OrderCard
                   orderId={order.id}
                   name={order.name}
@@ -36,16 +33,20 @@ export default async function OrdersPage() {
                   isFulfilled={false}
                 />
               ))}
-          </div>
+            </div>
+          ) : (
+            <div className="w-fit lg:w-[530px] overflow-hidden flex  mt-10 justify-center">
+              <p>You have no current orders.</p>
+            </div>
+          )}
         </div>
         <div>
           <h3 className="uppercase text-center text-xl">
-            {" "}
-            Your Fulfilled Orders{" "}
+            Your Fulfilled Orders
           </h3>
-          <div className="w-fit h-[500px] overflow-y-scroll no-scrollbar mb-4">
-            {fulfilledOrders &&
-              fulfilledOrders!.map((order, index) => (
+          {fulfilledOrders && fulfilledOrders.length > 0 ? (
+            <div className="w-fit h-[500px] lg:w-[530px] overflow-y-scroll mb-4">
+              {fulfilledOrders.map((order, index) => (
                 <OrderCard
                   orderId={order.id}
                   name={order.name}
@@ -59,7 +60,12 @@ export default async function OrdersPage() {
                   isFulfilled={true}
                 />
               ))}
-          </div>
+            </div>
+          ) : (
+            <div className="w-fit lg:w-[530px] overflow-hidden flex mt-10 justify-center">
+              <p>You have no fulfilled orders.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
