@@ -2,7 +2,7 @@ import React from "react";
 import { CheckMark } from "@/ui/dashboard/checkmark";
 import { fetchProductsIdArray, setOrderStatus } from "@/app/lib/actions";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { redirect, } from "next/navigation";
 interface OrderCardProps {
   name: string;
   date: string;
@@ -61,7 +61,7 @@ export const OrderCard: React.FC<OrderCardProps> = async ({
           </div>
         ))}
         {!isFulfilled && (
-          <CheckMark fulfillOrder={fulfillOrderHandler}></CheckMark>
+          <CheckMark key={orderId} fulfillOrder={fulfillOrderHandler}></CheckMark>
         )}
       </div>
     </div>
