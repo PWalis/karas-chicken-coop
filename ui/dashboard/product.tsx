@@ -87,7 +87,7 @@ export const Product: React.FC<ProductProps> = ({
         </div>
         <p className="text-lg"> Price USD: {formatCurrency(price)}</p>
         <div className="text-lg">
-          <p className=""> Category: {category}</p>
+          <p className="flex flex-wrap max-w-52"> Category: {category}</p>
         </div>
       </div>
       <div className="flex flex-col justify-between place-items-center">

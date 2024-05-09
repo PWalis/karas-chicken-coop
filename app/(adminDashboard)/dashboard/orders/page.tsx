@@ -46,7 +46,7 @@ export default async function OrdersPage() {
           </h3>
           {fulfilledOrders && fulfilledOrders.length > 0 ? (
             <div className="w-fit h-[500px] lg:w-[530px] overflow-y-scroll mb-4">
-              {fulfilledOrders.map((order, index) => (
+              {fulfilledOrders!.map((order) => (
                 <OrderCard
                   orderId={order.id}
                   name={order.name}
@@ -56,7 +56,7 @@ export default async function OrdersPage() {
                   city={order.city}
                   state={order.state}
                   items={order.orderItems}
-                  key={index}
+                  key={order.id}
                   isFulfilled={true}
                 />
               ))}
