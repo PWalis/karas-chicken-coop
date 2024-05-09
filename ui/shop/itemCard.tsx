@@ -6,6 +6,7 @@ import { useCart, useCartDispatch } from "@/app/context/cartContext";
 import Link from "next/link";
 import Sizing from "./sizing";
 import { AddToCartAlert } from "./addToCartAlert";
+import clsx from "clsx";
 
 interface ItemCardProps {
   product: any;
@@ -14,13 +15,13 @@ interface ItemCardProps {
 export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
   const dispatch = useCartDispatch();
   const cart = useCart();
-
+  const hasSizes = product.inventory.hasSizes
   const [showSizes, setShowSizes] = useState(false);
   const [buttonHTML, setButtonHTML] = useState("Add to Cart");
-  const [addSizeButtonText, setAddSizeButtonText] =
-    useState("Add Size to Cart");
+  const [addSizeButtonText, setAddSizeButtonText] = useState("Add Size to Cart");
   const [showAlert, setShowAlert] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [outOfStock, setOutOfStock] = useState(false)
 
   const handleAddToCart = () => {
     if (product.inventory.hasSizes === true) {
@@ -31,6 +32,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
           : '<span class="loading loading-dots loading-md"></span>'
       ); // Change button HTML
     } else {
+      if (outOfStock) {return}
       dispatch({
         type: "ADD",
         payload: { ...product, size: null, quantity: 1 },
@@ -63,6 +65,13 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
       timeoutId = setTimeout(() => {
         setShowAlert(false);
       }, 5000);
+    }
+
+    if (product.inventory.hasSizes === false) {
+      if (product.inventory.quantity === 0) {
+        setOutOfStock(true)
+        setButtonHTML("Out Of Stock")
+      }
     }
 
     return () => {
@@ -121,14 +130,14 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
         <div className="flex gap-3">
           <Link href={`/shop/${product.id}`}>
             <button className="inline-flex items-center justify-center h-12 w-20 text-md text-center border-[.20em] bg-floc-gray text-white tracking-wide uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm transition-all ease-in-out">
-              {" "}
-              View{" "}
+              View
             </button>
           </Link>
           <button
             onClick={handleAddToCart}
-            className={`inline-flex items-center justify-center h-12 w-28 text-md text-center border-[.20em]  text-floc-gray tracking-wide uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm transition-all ease-in-out`}
+            className={clsx(`inline-flex items-center justify-center h-12 w-28 text-md text-center border-[.20em]  text-floc-gray tracking-wide uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm transition-all ease-in-out`, outOfStock && !hasSizes ? "opacity-20" : "")}
             dangerouslySetInnerHTML={{ __html: buttonHTML }}
+            disabled={!hasSizes && outOfStock}
           ></button>
         </div>
       </div>
