@@ -35,10 +35,8 @@ const resizeImage = (
 };
 
 export const uploadFile = async (file: any, filename: string) => {
-  // console.log("uploading file", file, filename);
   const buffer = (await file.arrayBuffer()) as Buffer;
   const resizedImage = await resizeImage(buffer, 600, 600);
-  // console.log("resized image", resizedImage)
   const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
     Key: filename,
@@ -90,7 +88,6 @@ export const deleteFile = async (fileName: string) => {
 
 export const uploadImageAndReturnUrl = async (file: any) => {
   const filename = await hashFilename(file.name);
-  console.log("\nuploading image and returning url", file, filename);
   await uploadFile(file, filename);
   const url = await getPresignedUrl(filename);
   return url;
@@ -103,6 +100,5 @@ export const uploadProductImagesAndReturnUrls = async (files: any) => {
     urls.push(url);
   }
   return urls;
-  // console.log(files);
 };
 

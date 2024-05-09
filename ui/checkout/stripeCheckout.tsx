@@ -61,7 +61,6 @@ export default function App() {
     const itemQuantity = cart.items.reduce((acc, item) => {
       return acc + item.quantity;
     }, 0);
-    console.log("itemQuantity", itemQuantity)
     const shippingCost = (itemQuantity - 1) * 80;
     return flatRate + shippingCost;
   };

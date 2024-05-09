@@ -21,7 +21,6 @@ export async function POST(req: Request, res: Response) {
         orderId: order!.id,
       },
     });
-    console.log("metadata added to payment intent", paymentIntent.id)
   }
 
   return NextResponse.json({ message: "Order created and order Id added to payment intent" });

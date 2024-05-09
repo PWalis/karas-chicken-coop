@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { HamburgerMenu } from "../header/buttons";
+import { logout } from "@/app/lib/sessionHandler";
 import EditIcon from "../assets/icons/EditIcon";
 import CreateIcon from "../assets/icons/CreateIcon";
 import ShirtIcon from "../assets/icons/ShirtIcon";
@@ -9,11 +11,16 @@ import clsx from "clsx";
 export default function MobileNav() {
   const [navMenu, setNavMenu] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
+  const router = useRouter()
 
   const handleHamburgerClick = () => {
     setNavMenu(!navMenu);
-    console.log("nav clicked");
   };
+
+  const logOutHandler = async () => {
+    await logout()
+    router.push("/login")
+  }
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -96,15 +103,15 @@ export default function MobileNav() {
               </a>
             </li>
             <li className={clsx(navMenu ? "block sm:hidden" : "hidden")}>
-              <a
-                href="#"
+              <button
+              onClick={logOutHandler}
                 className={clsx(
                   " py-2 px-3 md:p-0  rounded bg-floc-gray text-center text-white hover:bg-floc-gray/70  mt-2 md:hover:bg-transparent",
                   navMenu ? "block md:hidden" : "hidden"
                 )}
               >
                 Log Out
-              </a>
+              </button>
             </li>
           </ul>
         </div>

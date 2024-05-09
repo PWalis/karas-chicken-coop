@@ -36,7 +36,6 @@ export async function POST(req: Request, res: Response) {
     case "payment_intent.succeeded":
       const paymentIntentSucceeded = event.data.object;
       // Then define and call a function to handle the event payment_intent.succeeded
-      console.log("Payment Intent Success:", paymentIntentSucceeded.id);
       const successStatus = await setOrderStatus(
         paymentIntentSucceeded.metadata.orderId,
         "PAID"
