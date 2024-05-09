@@ -109,7 +109,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
   }, [showSizes]);
 
   return (
-    <div className="item-card relative mx-4 w-[300px]">
+    <div className="item-card relative mx-4 sm:w-[300px]">
       <Link href={`/shop/${product.id}`} className="relative group">
         <img
           className="w-fit group-hover:opacity-40 group-hover:blur-[1px] ease-in-out transition-all cursor-pointer group"
