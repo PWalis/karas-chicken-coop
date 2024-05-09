@@ -177,9 +177,17 @@ export default function CheckoutForm() {
           id="payment-element"
           options={paymentElementOptions as any}
         />
-        <div className="flex flex-col">
-          <label htmlFor="email">Email</label>
+        <AddressElement
+          id="address-element"
+          options={{ mode: "shipping" }}
+          onChange={(event) => {
+            handleAddressChange(event);
+          }}
+        />
+        <div className="flex flex-col pt-2 emailinput pb-2 text-gray-600">
+          <label className="" htmlFor="email">Email</label>
           <input
+            className="rounded-md border-gray-300/60 shadow-sm focus:border-indigo-300 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
             id="email"
             name="email"
             type="email"
@@ -188,13 +196,6 @@ export default function CheckoutForm() {
             required
           />
         </div>
-        <AddressElement
-          id="address-element"
-          options={{ mode: "shipping" }}
-          onChange={(event) => {
-            handleAddressChange(event);
-          }}
-        />
         <button disabled={isLoading || !stripe || !elements} id="submit">
           <span
             className="mx-auto h-12 flex justify-center items-center bg-floc-yellow mt-3 hover:bg-light-yellow"
