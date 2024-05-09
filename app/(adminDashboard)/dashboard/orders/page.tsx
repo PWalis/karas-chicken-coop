@@ -44,7 +44,6 @@ export default async function OrdersPage() {
           <h3 className="uppercase text-center text-xl">
             Your Fulfilled Orders
           </h3>
-          <div className="w-fit h-[500px] overflow-y-scroll no-scrollbar mb-4">
           {fulfilledOrders && fulfilledOrders.length > 0 ? (
             <div className="w-fit h-[500px] lg:w-[530px] overflow-y-scroll mb-4">
               {fulfilledOrders!.map((order) => (
@@ -69,7 +68,6 @@ export default async function OrdersPage() {
           )}
         </div>
       </div>
-    </div>
     </div>
   );
 }
