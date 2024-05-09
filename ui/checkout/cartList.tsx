@@ -15,7 +15,6 @@ export const CartList: React.FC = () => {
     const itemQuantity = cart.items.reduce((acc, item) => {
       return acc + item.quantity;
     }, 0);
-    console.log("itemQuantity", itemQuantity)
     const shippingCost = (itemQuantity - 1) * 80;
     return flatRate + shippingCost;
   };
@@ -35,7 +34,7 @@ export const CartList: React.FC = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
       });
   }, 1300);
 

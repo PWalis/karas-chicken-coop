@@ -15,7 +15,6 @@ export default function NavBar() {
 
 const handleHamburgerClick = () => {
     setNavMenu(!navMenu);
-    console.log("nav clicked");
   };
 
   useEffect(() => {

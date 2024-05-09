@@ -38,7 +38,6 @@ export async function PATCH(req: Request, res: Response) {
   const updatedPaymentIntent = await stripe.paymentIntents.update(paymentIntentId, {
     amount: amountTotal as number,
   });
-  console.log("PaymentIntent updated", updatedPaymentIntent);
 
   return NextResponse.json({ message: "PaymentIntent updated" });
 }

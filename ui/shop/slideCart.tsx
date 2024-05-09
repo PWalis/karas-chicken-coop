@@ -188,29 +188,26 @@ export default function SlideCart({ open, setOpen }: SlideCartProps) {
                           Shipping and taxes calculated at checkout.
                         </p>
                         <div className="mt-6">
-                          {products.map(
-                            (product, index) =>
-                              product.quantity > 0 && (
-                                <Link href="/checkout" key={index}>
-                                  <button className="w-full flex items-center justify-center rounded-md border border-transparent bg-floc-yellow px-6 py-3 text-base font-medium text-floc-gray uppercase shadow-sm hover:bg-floc-yellow/70">
-                                    Checkout
-                                  </button>
-                                </Link>
-                              )
+                          {cart.items.length !== 0 && (
+                            <Link href="/checkout">
+                              <button className="w-full flex items-center justify-center rounded-md border border-transparent bg-floc-yellow px-6 py-3 text-base font-medium text-floc-gray uppercase shadow-sm hover:bg-floc-yellow/70">
+                                Checkout
+                              </button>
+                            </Link>
                           )}
                         </div>
                         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                           <p>
                             or
-                          <Link href="/shop">
-                            <button
-                              type="button"
-                              className="font-medium text-floc-gray/80 hover:text-indigo-500"
-                              onClick={() => setOpen(false)}
-                            >
-                              Continue Shopping
-                              <span aria-hidden="true"> &rarr;</span>
-                            </button>
+                            <Link href="/shop">
+                              <button
+                                type="button"
+                                className="font-medium text-floc-gray/80 hover:text-indigo-500"
+                                onClick={() => setOpen(false)}
+                              >
+                                Continue Shopping
+                                <span aria-hidden="true"> &rarr;</span>
+                              </button>
                             </Link>
                           </p>
                         </div>

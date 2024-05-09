@@ -22,7 +22,6 @@ export default function ShopNavBar() {
   useEffect(() => {
     // Update hasItems whenever products array changes
     setHasItems(cart.items.length > 0);
-    console.log("items:", hasItems)
   }, [cart]);
 
   const handleCartButtonClick = () => {
@@ -31,7 +30,6 @@ export default function ShopNavBar() {
 
   const handleHamburgerClick = () => {
     setNavMenu(!navMenu);
-    console.log("nav clicked");
   };
 
   return (
@@ -104,15 +102,15 @@ export default function ShopNavBar() {
                 </a>
               </li>
               <li className={clsx(navMenu ? "block md:hidden" : "hidden")}>
-                <a
-                  href="#"
+                <Link
+                  href="/checkout"
                   className={clsx(
                     " py-2 px-3 md:p-0 bg-floc-gray text-gray-100 tracking-wider text-center rounded hover:bg-floc-gray/90 md:hover:bg-transparent md:hover:text-floc-gray/40",
                     navMenu ? "block md:hidden" : "hidden"
                   )}
                 >
                   Checkout
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

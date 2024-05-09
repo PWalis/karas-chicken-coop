@@ -9,8 +9,6 @@ import { NoProducts } from "./noProducts";
 
 const Products: React.FC = async() => {
     const products = (await fetchAllProducts()) as any;
-    console.log(products);
-  
   if (products.length > 0) {
     var productsList = products.map((product: any) => (
       <ItemCard key={product.id} product={product} />

@@ -8,7 +8,6 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
 
   const hasInventory = await checkInventory(body.data);
-  console.log("Checking Inventory", hasInventory)
 
   return NextResponse.json({ message: hasInventory }, { status: 200 });
 }

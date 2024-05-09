@@ -163,7 +163,6 @@ export default function CheckoutForm() {
       }),
     });
     setIsLoading(false);
-    console.log("UpdatedEmail", updateEmailMessage);
   }, 1000);
 
   return (

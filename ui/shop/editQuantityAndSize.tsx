@@ -118,7 +118,6 @@ export const EditQuantityAndSize: React.FC<EditQuantityAndSizeProps> = ({
     setQuantity(1);
     // Show the alert when the item is added to the cart
     setShowAlert(true);
-    // console.log(product, size, quantity);
     setLoading(false);
   };
 

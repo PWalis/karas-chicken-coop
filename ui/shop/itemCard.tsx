@@ -15,13 +15,14 @@ interface ItemCardProps {
 export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
   const dispatch = useCartDispatch();
   const cart = useCart();
-  const hasSizes = product.inventory.hasSizes
+  const hasSizes = product.inventory.hasSizes;
   const [showSizes, setShowSizes] = useState(false);
   const [buttonHTML, setButtonHTML] = useState("Add to Cart");
-  const [addSizeButtonText, setAddSizeButtonText] = useState("Add Size to Cart");
+  const [addSizeButtonText, setAddSizeButtonText] =
+    useState("Add Size to Cart");
   const [showAlert, setShowAlert] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [outOfStock, setOutOfStock] = useState(false)
+  const [outOfStock, setOutOfStock] = useState(false);
 
   const handleAddToCart = () => {
     if (product.inventory.hasSizes === true) {
@@ -32,29 +33,32 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
           : '<span class="loading loading-dots loading-md"></span>'
       ); // Change button HTML
     } else {
-      if (outOfStock) {return}
+      if (outOfStock) {
+        return;
+      }
       dispatch({
         type: "ADD",
         payload: { ...product, size: null, quantity: 1 },
       });
       setShowAlert(true);
     }
-    console.log(showSizes);
   };
 
   const handleAddSize = () => {
-    dispatch({
-      type: "ADD",
-      payload: { ...product, size: size, quantity: quantity },
-    });
-    setQuantity(1);
-    setTimeout(() => {
-      setAddSizeButtonText("Add Size");
-    }, 5000);
-    setShowAlert(true);
-    // clickHandler();
-    setShowSizes(false); // Dismiss the showSizes component
-    setButtonHTML("Add to Cart");
+    if (size !== "") {
+      dispatch({
+        type: "ADD",
+        payload: { ...product, size: size, quantity: quantity },
+      });
+      setQuantity(1);
+      setTimeout(() => {
+        setAddSizeButtonText("Add Size");
+      }, 5000);
+      setShowAlert(true);
+      // clickHandler();
+      setShowSizes(false); // Dismiss the showSizes component
+      setButtonHTML("Add to Cart");
+    }
   };
 
   useEffect(() => {
@@ -69,8 +73,8 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
 
     if (product.inventory.hasSizes === false) {
       if (product.inventory.quantity === 0) {
-        setOutOfStock(true)
-        setButtonHTML("Out Of Stock")
+        setOutOfStock(true);
+        setButtonHTML("Out Of Stock");
       }
     }
 
@@ -135,7 +139,10 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
           </Link>
           <button
             onClick={handleAddToCart}
-            className={clsx(`inline-flex items-center justify-center h-12 w-28 text-md text-center border-[.20em]  text-floc-gray tracking-wide uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm transition-all ease-in-out`, outOfStock && !hasSizes ? "opacity-20" : "")}
+            className={clsx(
+              `inline-flex items-center justify-center h-12 w-28 text-md text-center border-[.20em]  text-floc-gray tracking-wide uppercase  focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-sm transition-all ease-in-out`,
+              outOfStock && !hasSizes ? "opacity-20" : ""
+            )}
             dangerouslySetInnerHTML={{ __html: buttonHTML }}
             disabled={!hasSizes && outOfStock}
           ></button>
@@ -150,11 +157,16 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
           <div className="flex flex-col justify-center items-center">
             <p className="text-floc-gray">Please select your size: </p>
             <div className="flex justify-center items-center">
-            <Sizing size={size!} setSize={setSize} inventory={product.inventory} />
+              <Sizing
+                size={size!}
+                setSize={setSize}
+                inventory={product.inventory}
+              />
             </div>
             <button
               onClick={handleAddSize}
-              className="inline-flex items-center justify-center px-4 py-2 text-md text-center w-full bg-floc-yellow uppercase focus:bg-light-yellow hover:bg-light-yellow focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-md"
+              className={clsx("inline-flex items-center justify-center px-4 py-2 text-md text-center w-full bg-floc-yellow uppercase focus:bg-light-yellow hover:bg-light-yellow focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-md", size === "" ? "opacity-20" : "")}
+              disabled={size === ""}
             >
               {addSizeButtonText}
             </button>

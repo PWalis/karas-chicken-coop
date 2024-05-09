@@ -141,7 +141,6 @@ export const fetchAllProducts = async () => {
 
         // get new signed urls for expired images and add them to array of urls
         if (expiresAt < Date.now()) {
-          console.log("\nTHIS IMAGE IS EXPIRED", image);
           imageExpired = true;
           const imageName = getSignedURLImageName(image);
           const url = await getPresignedUrl(imageName ?? "");
@@ -161,14 +160,12 @@ export const fetchAllProducts = async () => {
                 images: newImageArray,
               },
             });
-            console.log("\nupdated product with new signed urls");
           } catch (error) {
             return { message: error };
           }
         }
       }
     }
-    // console.log("FETCHING PRODUCTS", products);
     return products;
   } catch (error) {
     console.log("Error fetching products ", error);
@@ -268,8 +265,6 @@ export async function createProduct(
     xxl: validatedData.data.xxl,
   };
 
-  // console.log("data", data.image)
-
   //upload images and get urls
   const imageUrls = await uploadProductImagesAndReturnUrls(data.image);
   const primaryImageUrl = await uploadProductImagesAndReturnUrls(
@@ -343,7 +338,6 @@ export async function deleteImage(imageName: string, productId: number) {
   } catch (error) {
     return { message: error };
   }
-  console.log("successfully delete image");
 
   try {
     await deleteFile(imageName);
@@ -410,8 +404,6 @@ export async function updateProduct(
     xl: formData.get("xl"),
     xxl: formData.get("xxl"),
   });
-
-  // console.log("validation step", formData.getAll("image"));
 
   if (!validatedData.success) {
     console.log(
