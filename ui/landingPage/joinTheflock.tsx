@@ -71,8 +71,7 @@ export default function JoinTheFlock() {
                 </div>
                 <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer ">
                   by submitting your email, you agree to sign up for our
-                  newsletter and receive promotional emails. You may unsubscribe
-                  at any time.{" "}
+                  newsletter and receive promotional emails.
                 </div>
               </form>
             </SectionWrapper>

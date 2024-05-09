@@ -38,7 +38,7 @@ export default function MobileNav() {
     >
       <div className="max-w-screen-xl flex flex-wrap gap-1 items-center justify-between mx-auto">
         <div className="flex justify-end items-center px-6 py-6">
-          <a className="flex items-center" href="/dashboard">
+          <a className="flex items-center" href="/dashboard/orders">
             <h2 className="text-2xl block">Kara's Dashboard</h2>
           </a>
         </div>

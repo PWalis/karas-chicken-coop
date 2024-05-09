@@ -40,19 +40,19 @@ export default function Shop(props: Props) {
           </div>
         </div>
 
-        <h2 className="text-4xl sm:text-5xl text-center justify-center mt-10 uppercase">
+        <h2 className="text-4xl sm:text-5xl text-center item-center justify-center mt-10 uppercase">
           Our Products
         </h2>
-        <hr className="flex justify-center items-center mt-6 border-gray-200 w-screen md:max-w-[400px] sm:mx-auto dark:border-gray-700" />
-        <div className="flex justify-center min-h-[500px] place-items-center">
-          <div className="flex justify-center pt-5 w-fit max-w-[800px] md:min-w-[300px]"> 
+        <hr className="flex justify-center items-center mt-6 border-gray-200 md:max-w-[400px] sm:mx-auto dark:border-gray-700" />
+        <div className="flex justify-center items-center min-h-[500px] mx-auto">
+          <div className="flex justify-center place-content-center pt-5 mx-auto"> 
             <Products />
           </div>
         </div>
         <hr className=" flex justify-center items-center mt-6 border-gray-200 w-screen md:max-w-[400px] sm:mx-auto dark:border-gray-700" />
         <h2 className="text-5xl text-center mb-10 uppercase mt-10 "> COMMON SHOP FAQ </h2>
         <div className="flex justify-center">
-          <div className="max-w-screen-md mb-20 mx-4 h-72 sm:h-64">
+          <div className="max-w-screen-lg mb-20 mx-4 sm:h-[300px]">
             <FAQ></FAQ>
           </div>
         </div>

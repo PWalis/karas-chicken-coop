@@ -13,7 +13,7 @@ export const SideNav: React.FC = () => {
           <h1 className="m-6 ml-6 mt-20 text-4xl uppercase max-w-[300px]">
             <Link
               className="text-lg sm:text-4xl mb-3 uppercase"
-              href="/dashboard"
+              href="/dashboard/orders"
             >
               Kara's Chicken Coop Dashboard
             </Link>

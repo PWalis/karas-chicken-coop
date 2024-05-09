@@ -62,7 +62,7 @@ const handleHamburgerClick = () => {
         </div>
         <div
           className={clsx(
-            "items-center justify-between md:flex md:w-auto md:order-1 text-lg sm:text-md text-floc-gray",
+            "items-center justify-between md:flex md:w-auto md:order-1 text-lg sm:text-sm tracking-wide text-floc-gray",
             navMenu ? "flex relative pr-2.5 w-full" : "hidden"
           )}
           id="navbar-cta"
@@ -104,7 +104,7 @@ const handleHamburgerClick = () => {
               <a
                 href="/#JoinTheFlock"
                 className={clsx(
-                  " py-3 px-3 md:p-0  rounded  hover:bg-floc-gray/90 md:hover:bg-transparent md:hover:text-floc-gray/40",
+                  " py-3 px-3 md:p-0  rounded  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40",
                   navMenu ? "block md:hidden" : "hidden"
                 )}
                 onClick={handleLinkClick}

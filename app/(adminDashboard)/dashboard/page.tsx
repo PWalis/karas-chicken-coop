@@ -14,10 +14,11 @@ export default async function DashBoard() {
       </div>
       <div className="flex flex-col justify-center">
         <h2 className="text-xl uppercase mb-3">Your Orders:</h2>
-        <div className="gap-14 justify-center h-fill">
+        <div className="gap-14 justify-center h-fill max-h-[90%] overflow-auto">
           {processedOrders &&
             processedOrders!.map((order) => (
               <OrderCard
+                isFulfilled={false}
                 orderId={order.id}
                 name={order.name}
                 date={order.createdAt.toDateString()}

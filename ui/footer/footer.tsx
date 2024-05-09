@@ -46,7 +46,7 @@ export default function Footer() {
                   <div>
                     <button
                       type="submit"
-                      className="py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300  bg-floc-gray"
+                      className="py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 mt-1 lg:mt-0  bg-floc-gray"
                     >
                       SUBMIT
                     </button>
@@ -54,8 +54,7 @@ export default function Footer() {
                 </form>
                 <p className="text-xs text-floc-gray/70 pt-2">
                   by submitting your email, you agree to sign up for our
-                  newsletter and receive promotional emails. You may unsubscribe
-                  at any time.
+                  newsletter and receive promotional emails.
                 </p>
               </div>
             </div>
@@ -183,21 +182,21 @@ export default function Footer() {
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
             >
               <InstagramIcon className="w-6 h-6"></InstagramIcon>
-              <span className="sr-only">Discord community</span>
+              <span className="sr-only">Instagram community</span>
             </a>
             <a
               href="#"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
             >
               <TiktokIcon className="w-6 h-6"></TiktokIcon>
-              <span className="sr-only">Twitter page</span>
+              <span className="sr-only">TikTok Page</span>
             </a>
             <a
               href="#"
               className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
             >
               <YoutubeIcon className="w-6 h-6"></YoutubeIcon>
-              <span className="sr-only">GitHub account</span>
+              <span className="sr-only">Youtube account</span>
             </a>
           </div>
         </div>
