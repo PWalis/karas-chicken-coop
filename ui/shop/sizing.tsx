@@ -13,13 +13,6 @@ export const Sizing: React.FC<SizingProps> = ({ size, setSize, inventory }) => {
   const handleSelectSize = (size: string) => {
     setSize(size);
   };
-  
-  console.log(inventory.xs_quantity)
-
-
-
-  
-
 
   return (
     <div className="flex gap-3 mb-3 w-full">
