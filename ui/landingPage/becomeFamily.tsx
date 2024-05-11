@@ -32,7 +32,7 @@ export default function BecomeFamilySection() {
         id={"ChickenGallery"}
         className="justify-center px-4 py-8 mx-auto max-w-[1400px]"
       >
-        <h2 className="text-4xl mt-20 md:text-5xl lg:text-8xl uppercase justify-center text-center mb-5">
+        <h2 className="text-6xl mt-20 lg:text-8xl uppercase justify-center text-center mb-5">
           Become Part Of Our Family
         </h2>
         <div className="justify-between mx-auto">
@@ -77,7 +77,7 @@ export default function BecomeFamilySection() {
             ></FamilyGallery>
           </div>
           <SectionWrapper>
-            <p className="text-center text-xl sm:text-2xl pb-5 uppercase tracking-wide"> Join us on social media! </p>
+            <p className="text-center text-2xl pb-5 uppercase tracking-wide"> Join us on social media! </p>
           <div className="flex flex-wrap justify-center place-self-center gap-5 lg:gap-10">
             <a
               style={{ display: "table-cell" }}

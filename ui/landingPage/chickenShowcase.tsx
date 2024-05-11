@@ -56,7 +56,7 @@ export default function ChickenSection() {
   return (
     <SectionWrapper>
     <section id={"MeetTheChickens"} className="max-w-[1500px] lg:px-4 py-8 mx-auto px-4 justify-center h-auto">
-      <h2 className="text-4xl md:text-5xl lg:text-8xl uppercase text-center mb-5 mt-20 lg:mb-20">
+      <h2 className="text-6xl lg:text-8xl uppercase text-center mb-5 mt-20 lg:mb-20">
         Meet The Chickens
       </h2>
       <div className="flex flex-col lg:flex-row lg:gap-4">

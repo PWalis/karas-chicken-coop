@@ -166,7 +166,7 @@ export default function Footer() {
             </a>
             . All Rights Reserved.
           </span>
-          <div className="flex mt-4 justify-center sm:mt-0">
+          <div className="flex mt-4  gap-3 justify-center sm:mt-0">
             <a
               className="hover:text-floc-gray/40"
               style={{ display: "table-cell" }}
