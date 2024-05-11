@@ -23,7 +23,7 @@ export default function HeroSection() {
       <section id="HeroSection">
         <div className="grid max-w-screen-2xl h-screen md:px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-10 lg:grid-cols-12 place-content-center">
           <div className=" lg:place-self-center lg:col-span-6 lg:text-left text-center place-items-center">
-            <h1 className=" text-6xl lg:text-7xl xl:text-9xl font-extrabold leading-none uppercase tracking-wider mx-3 lg:mx-0">
+            <h1 className="text-7xl md:text-8xl xl:text-9xl font-extrabold leading-none uppercase tracking-wider lg:mx-0">
               Welcome to the Coop!
             </h1>
             <h2 className=" font-light text-floc-gray lg:mb-2 text-xl lg:text-2xl dark:text-gray-400 tracking-wider uppercase">

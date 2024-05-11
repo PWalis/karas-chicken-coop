@@ -12,7 +12,7 @@ export default function ShopSection() {
         id="ShopSection"
         className="justify-center text-center px-4 py-8 mx-auto max-w-screen-lg"
       >
-        <h2 className="text-4xl md:text-5xl lg:text-8xl uppercase justify-center text-center mb-5 mt-20 ">
+        <h2 className="text-6xl lg:text-8xl uppercase justify-center text-center mb-5 mt-20 ">
           Shop Our Newest Styles
         </h2>
         <div className="flex justify-center">

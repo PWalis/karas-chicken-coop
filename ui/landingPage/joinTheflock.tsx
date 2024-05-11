@@ -17,7 +17,7 @@ export default function JoinTheFlock() {
       >
         <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
           <div className="mx-auto max-w-screen-md sm:text-center">
-            <h2 className="mb-4 text-3xl font-extrabold text-floc-gray sm:text-6xl lg:text-8xl mt-20 uppercase">
+            <h2 className="mb-4 font-extrabold text-floc-gray text-6xl lg:text-8xl mt-20 uppercase">
               Join The Flock
             </h2>
             <p className="mx-auto mb-2 font-light text-gray-500 md:mb-4 sm:text-xl max-w-screen-sm">
@@ -69,8 +69,8 @@ export default function JoinTheFlock() {
                     </button>
                   </div>
                 </div>
-                <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer ">
-                  by submitting your email, you agree to sign up for our
+                <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer bg-white/60 rounded-md p-1 backdrop-blur-sm">
+                  By submitting your email, you agree to sign up for our
                   newsletter and receive promotional emails. You may unsubscribe
                   at any time.{" "}
                 </div>
