@@ -59,7 +59,7 @@ export default function OurFlockSection() {
             alt={"Cassidy Pennartz"}
             name={"Cassidy"}
             description={
-              "is Joshua's husband, and is the best friend of Kara and Joshua. She has a deep love for chickens as well as other farm animals, and is always looking for ways to help out."
+              "is Joshua's wife, and is the best friend of Kara and Joshua. She has a deep love for chickens as well as other farm animals, and is always looking for ways to help out."
             }
           />
         </div>

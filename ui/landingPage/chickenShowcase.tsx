@@ -40,12 +40,12 @@ export default function ChickenSection() {
   
 
   const chickens: Chicken[] = [
-    { name: "Cornelius", description: "Cornelius was the first rooster to join the hall of fame and go viral on facebook! He loves flying in the snow and many akin him to a snowy barn owl. He stands proud as a barred candy corn polish rooster..", image: corn },
+    { name: "Cornelius", description: "Cornelius was the first rooster to join the hall of fame and go viral on facebook! He loves flying in the snow and many akin him to a snowy barn owl. He stands proud as a double-barred candy corn polish rooster..", image: corn },
     { name: "Bonnie", description: "Bonnie has his name because Kara originally thought he was a hen! Bonnie quickly stole the hearts of everyone watching and became a star (and a house rooster!) we love our Bo! ", image: bonnie_3 },
     { name: "Skeet", description: "Skeet became famous through his videos of running towards the camera when he is called. He has probably the loudest crow of all of the Kara's Chicken Coop Roosters! He is a lovable, loud, goofy, proud polish rooster.", image: skeet },
     { name: "Pengu", description: "Pengu, one of the runner ups in the flock! Pengu is known for his sassy emo styled hair, long legs and lovable personality. He is beautiful and very large! He is a tolblunt polish rooster.", image: pengu },
     { name: "Bean", description: "Bean is loved for her adorable face and beard, she has a beautiful crest of feathers. She loves to follow you around in hopes that you will hopefully drop her a piece of your delicious food!", image: bean },
-    { name: "Fiona", description: "Fiona (our househen!) is an adorable barred polish hen. She is Bonnies main girl, likes to cuddle in your chair and lay eggs where you least expect them!", image: fiona },
+    { name: "Fiona", description: "Fiona (our househen!) is an adorable cuckoo frizzle hen. She is Bonnies main girl, likes to cuddle in your chair and lay eggs where you least expect them!", image: fiona },
     { name: "Crunch", description: "Crunch is related to Mr. Frizzle (one of the original chickens!), he is a candy corn frizzle. Crunch is the coopb guard dog, and will attack anyone and anything that makes their way through to his hens. ", image: crunch },
     { name: "River", description: "River was a tiny bantam siverlace whom would follow you around the yard as if you were one of his hens. He was a rooster that we all held close to our hearts, unfortunatly passing away too soon. We will always remember you River!", image: river },
   ];
