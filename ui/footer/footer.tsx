@@ -21,10 +21,7 @@ export default function Footer() {
               </span>
             </a>
             <div className="flex-col flex lg:flex-row justify-center place-items-center lg:place-items-baseline lg:gap-2 text-center mt-4 m-2">
-              <p className="text-xl sm:text-left">
-                {" "}
-                Join the Flock!{" "}
-              </p>
+              <p className="text-xl sm:text-left"> Join the Flock! </p>
               <div className="w-full sm:max-w-[300px]">
                 <form
                   className="flex flex-col lg:flex-row"
@@ -171,29 +168,41 @@ export default function Footer() {
           </span>
           <div className="flex mt-4 justify-center sm:mt-0">
             <a
-              href="#"
-              className="text-floc-gray/40 hover:text-floc-gray/20 dark:hover:text-white"
+              className="hover:text-floc-gray/40"
+              style={{ display: "table-cell" }}
+              href="https://www.facebook.com/FlaminHotChickens"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <FacebookIcon className="w-8 h-8"></FacebookIcon>
               <span className="sr-only">Facebook page</span>
             </a>
             <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
+              className="hover:text-floc-gray/40"
+              style={{ display: "table-cell" }}
+              href="https://www.instagram.com/karaschickens/"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <InstagramIcon className="w-8 h-8"></InstagramIcon>
               <span className="sr-only">Instagram community</span>
             </a>
             <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
+              className="hover:text-floc-gray/40"
+              style={{ display: "table-cell" }}
+              href="https://www.tiktok.com/@karas.chicken.coop"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <TiktokIcon className="w-8 h-8"></TiktokIcon>
               <span className="sr-only">TikTok Page</span>
             </a>
             <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
+              className="hover:text-floc-gray/40"
+              style={{ display: "table-cell" }}
+              href="https://www.youtube.com/channel/UCs5wYfoADhI94TLGWbEMdYQ"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <YoutubeIcon className="w-8 h-8"></YoutubeIcon>
               <span className="sr-only">Youtube account</span>
