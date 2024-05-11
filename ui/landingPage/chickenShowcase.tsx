@@ -23,18 +23,14 @@ interface Chicken {
 }
 
 export default function ChickenSection() {
-  const [showImage, setShowImage] = useState<boolean>(true); // State to control image visibility
-  const [isFading, setIsFading] = useState<boolean>(false); // State to control fading effect
 
 
   const handleThumbnailClick = (chicken: Chicken) => {
-    setIsFading(true); // Start fading out the image
     setTimeout(() => {
       setMainImage(chicken.image);
       setChickenName(chicken.name);
       setChickenDescription(chicken.description);
-      setIsFading(false); // Start fading in the new image
-    }, 200); // Wait for the fade-out transition to complete
+    });
   };
 
   
@@ -73,9 +69,7 @@ export default function ChickenSection() {
               src={mainImage}
               quality={80}
               alt=""
-              style={{                  objectFit: "cover",
-              opacity: isFading ? 0 : 1, // Fade out or in based on isFading state
-              transition: "opacity 2s ease-out" }}
+              style={{                  objectFit: "cover", }}
             />
           </div>
         </div>
