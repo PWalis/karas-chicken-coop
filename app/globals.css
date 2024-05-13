@@ -77,7 +77,7 @@ button {
 
 .loading-bg {
   background-image: url(../ui/assets/karaschickenpattern-01.jpg);
-  background-size: 105%; /* Scale the background image by 10% */
+  background-size: cover;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
