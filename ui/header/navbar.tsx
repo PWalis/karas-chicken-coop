@@ -103,7 +103,7 @@ const handleHamburgerClick = () => {
               <a
                 href="/#JoinTheFlock"
                 className={clsx(
-                  " py-3 px-3 md:p-0  rounded  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40",
+                  " py-2 px-3 md:p-0  rounded  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40",
                   navMenu ? "block md:hidden" : "hidden"
                 )}
                 onClick={handleLinkClick}

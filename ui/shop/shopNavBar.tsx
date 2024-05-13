@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { HamburgerMenu } from "../header/buttons";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Kcc3 from "../assets/svgs/Kcc3";
 import { CartButton } from "./buttons";
 import SlideCart from "./slideCart";
@@ -17,7 +17,10 @@ export default function ShopNavBar() {
 
   const [hasItems, setHasItems] = useState(false);
 
+  const navRef = useRef<HTMLDivElement>(null);
+
   const cart = useCart()
+
 
   useEffect(() => {
     // Update hasItems whenever products array changes
@@ -32,9 +35,29 @@ export default function ShopNavBar() {
     setNavMenu(!navMenu);
   };
 
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setNavMenu(false);
+      }
+    };
+
+    if (navMenu) {
+      document.body.addEventListener("click", handleOutsideClick);
+    }
+
+    return () => {
+      document.body.removeEventListener("click", handleOutsideClick);
+    };
+  }, [navMenu]);
+
+  const handleLinkClick = () => {
+    setNavMenu(false); // Close the nav menu when a link is clicked
+  };
+
   return (
     <>
-      <nav className="bg-white/90 backdrop-blur-md border-gray-200 dark:bg-gray-900 font-bold text-sm uppercase fixed w-full top-0 z-50">
+      <nav ref={navRef} className="bg-white/90 backdrop-blur-md border-gray-200 dark:bg-gray-900 font-bold text-sm uppercase fixed w-full top-0 z-50">
         <div className="max-w-screen-2xl flex flex-wrap gap-1 items-center justify-between mx-auto">
           <div className="flex justify-end items-center">
             <Link className="flex items-center" href="/">
@@ -66,7 +89,7 @@ export default function ShopNavBar() {
           </div>
           <div
             className={clsx(
-              "items-center justify-between md:flex md:w-auto md:order-1 text-lg sm:text-sm text-floc-gray",
+              "items-center justify-between md:flex md:w-auto md:order-1 text-lg sm:text-sm tracking-wide text-floc-gray",
               navMenu ? "flex relative pr-2.5 w-full" : "hidden"
             )}
             id="navbar-cta"
@@ -81,6 +104,7 @@ export default function ShopNavBar() {
                 <a
                   href="/#MeetTheChickens"
                   className="block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40 jose"
+                  onClick={handleLinkClick}
                 >
                   Meet The Chickens
                 </a>
@@ -89,6 +113,7 @@ export default function ShopNavBar() {
                 <a
                   href="/#OurFlock"
                   className="block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40"
+                  onClick={handleLinkClick}
                 >
                   Who We Are
                 </a>
@@ -97,6 +122,7 @@ export default function ShopNavBar() {
                 <a
                   href="/#ChickenGallery"
                   className="block py-2 px-3 md:p-0  rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40"
+                  onClick={handleLinkClick}
                 >
                   Follow Us
                 </a>

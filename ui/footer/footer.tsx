@@ -24,7 +24,7 @@ export default function Footer() {
               <p className="text-xl sm:text-left"> Join the Flock! </p>
               <div className="w-full sm:max-w-[300px]">
                 <form
-                  className="flex flex-col lg:flex-row"
+                  className="flex flex-col lg:flex-row lg:place-items-center lg:gap-1"
                   ref={ref}
                   action={async (formData) => {
                     await createEmail(formData);
@@ -43,7 +43,7 @@ export default function Footer() {
                   <div>
                     <button
                       type="submit"
-                      className="py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 mt-1  bg-floc-gray"
+                      className="py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 mt-1 lg:mt-0  bg-floc-gray rounded-md"
                     >
                       SUBMIT
                     </button>
