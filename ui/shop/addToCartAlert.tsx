@@ -10,11 +10,12 @@ interface AddToCartAlertProps {
     return (
     <motion.div
       role="alert"
-      className="fixed bottom-10 lg:right-10 z-50 bg-yellow-200 p-6 rounded-lg flex items-center space-x-2"
+      className="fixed bottom-10 inset-x-2 sm:inset-x-auto sm:right-10 z-50 bg-yellow-200 p-6 rounded-lg flex justify-center items-center space-x-2"
       initial={{ opacity: 0, x: "100%" }}
       animate={{ opacity: showAlert ? 1 : 0, x: showAlert ? 0 : "100%" }}
       transition={{ duration: 0.3 }}
     >
+      <div className="flex items-center justify-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="stroke-current shrink-0 h-6 w-6"
@@ -43,6 +44,7 @@ interface AddToCartAlertProps {
           />
         </svg>
       </button>
+      </div>
     </motion.div>
   );
 }
