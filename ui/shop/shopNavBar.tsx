@@ -61,8 +61,8 @@ export default function ShopNavBar() {
         <div className="max-w-screen-2xl flex flex-wrap gap-1 items-center justify-between mx-auto">
           <div className="flex justify-end items-center">
             <Link className="flex items-center" href="/">
-              <Kcc3 className="h-20 lg:h-[90px] p-2 flex justify-end items-center w-auto" />
-              <h2 className="text-lg block md:text-xl">Kara's Chicken Coop</h2>
+              <Kcc3 className="h-20 lg:h-[90px] w-[90px] p-2 flex justify-end items-center" />
+              <h2 className="text-lg sm:text-xl">Kara's Chicken Coop</h2>
             </Link>
           </div>
           <div className="flex md:order-2 space-x-3 lg:gap-3 md:space-x-0 rtl:space-x-reverse items-center">

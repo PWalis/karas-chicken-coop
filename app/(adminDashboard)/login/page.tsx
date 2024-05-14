@@ -15,8 +15,7 @@ export default function Login() {
         </h1>
         <div className="max-w-[400px]">
           <h2 className="text-2xl font-bold tracking-wide p-2 text-center uppercase">
-            {" "}
-            Login{" "}
+            Login
           </h2>
           <form className="flex flex-col gap-2" action={action}>
             <label className="input input-bordered max-w-[400px] flex items-center gap-2 bg-white text-floc-gray">
@@ -59,7 +58,9 @@ export default function Login() {
               />
             </label>
             <SubmitButton />
-            {message && <p className="text-red">{message}</p>}
+            <div className="h-8 flex mx-auto">
+            {message && <p className="text-red-500">{message}</p>}
+            </div>
           </form>
         </div>
       </div>
@@ -72,7 +73,7 @@ function SubmitButton() {
 
   return (
     <button
-      className="mx-auto flex justify-center w-full px-4 py-2 bg-yellow-200"
+      className="mx-auto flex justify-center w-full px-4 py-2 bg-yellow-200 hover:bg-yellow-100"
       type="submit"
     >
       {pending ? "Logging in..." : "Login"}

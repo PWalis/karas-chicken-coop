@@ -75,6 +75,7 @@ export async function login(
   redirect("/dashboard/orders");
 }
 
+
 export async function logout() {
   // Destroy the session
   cookies().set("session", "", { expires: new Date(0) });

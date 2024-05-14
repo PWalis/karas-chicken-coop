@@ -43,7 +43,7 @@ const handleHamburgerClick = () => {
         <div className="flex justify-end items-center">
           <Link className="flex items-center" href="/">
             <Kcc3 className="h-20 lg:h-[90px] w-[90px] p-2 flex justify-end items-center" />
-            <h2 className="text-lg md:text-xl">Kara's Chicken Coop</h2>
+            <h2 className="text-lg sm:text-xl">Kara's Chicken Coop</h2>
           </Link>
         </div>
         <div className="flex md:order-2 space-x-3 gap-3 md:space-x-0 rtl:space-x-reverse">

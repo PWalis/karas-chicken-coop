@@ -5,7 +5,8 @@ import prisma from "./data";
 import { saltHashPassword } from "./utils";
 import { redirect } from "next/navigation";
 
-export async function register(formData: FormData) {
+export async function register(  currentMessage: string | undefined,
+  formData: FormData) {
   const FormSchema = zod.object({
     email: zod.string().email(),
     password: zod.string().min(8),
@@ -19,7 +20,7 @@ export async function register(formData: FormData) {
 
   if (!validatedData.success) {
     console.log(
-      validatedData.error.flatten().fieldErrors,
+      validatedData.error.flatten().fieldErrors.email as any || validatedData.error.flatten().fieldErrors.password as any,
     );
     return {
       error: validatedData.error.flatten().fieldErrors,
