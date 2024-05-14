@@ -84,7 +84,7 @@ export default function JoinTheFlock() {
                     </div>
                     <input
                       name="email"
-                      className={`block p-3 pl-10 w-full text-md text-gray-900 bg-white rounded-md border focus:ring-gray-200 focus:border-gray-100 ${
+                      className={`block p-3 pl-10 w-full text-lg text-gray-900 bg-white rounded-md border focus:ring-gray-200 focus:border-gray-100 ${
                        !emailValid? "border-red-500" : "border-gray-200"} `}
                       placeholder="Enter your email..."
                       type="email"
@@ -94,7 +94,7 @@ export default function JoinTheFlock() {
                   <div>
                     <button
                       type="submit"
-                      className=" rounded-md py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-floc-gray/90 focus:ring-4 focus:ring-gray-200  bg-floc-gray"
+                      className=" rounded-md py-3 px-5 w-full text-lg font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-floc-gray/90 focus:ring-4 focus:ring-gray-200  bg-floc-gray"
                     >
                       SUBMIT
                     </button>
