@@ -31,9 +31,6 @@ const ImageSchema = z
   .refine((file) => {
     return file!.size <= MAX_UPLOAD_SIZE;
   }, "File size must be less than 30MB")
-  .refine((file) => {
-    return ACCEPTED_IMAGE_TYPES.includes(file!.type);
-  }, "File type must be either jpeg or png");
 
 // this object will be used to validate the form data
 const FormSchema = z.object({
