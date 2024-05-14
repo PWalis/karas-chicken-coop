@@ -6,7 +6,10 @@ import { login } from "@/app/lib/sessionHandler";
 
 export default function Login() {
   const initialState = { message: "", error: {} };
-  const [state, formAction] = useFormState(login, initialState as any);
+  const [state, FormAction] = useFormState(login, initialState as any);
+
+  const emailError = state.error?.email;
+  const passwordError = state.error?.password;
 
   return (
     <div className="min-h-screen h-fit dashboard-bg bg-cover">
@@ -18,8 +21,8 @@ export default function Login() {
           <h2 className="text-2xl font-bold tracking-wide p-2 text-center uppercase">
             Login
           </h2>
-          <form className="flex flex-col gap-2" action={formAction}>
-            <label className="input input-bordered max-w-[400px] flex items-center gap-2 bg-white text-floc-gray">
+          <form className="flex flex-col gap-2" action={FormAction}>
+            <label className={`input input-bordered max-w-[400px] flex items-center gap-2 bg-white text-floc-gray ${ emailError ? "border-red-500" : ""}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -31,7 +34,7 @@ export default function Login() {
               <input
                 name="email"
                 type="text"
-                className="grow  border-white text-gray-500 focus:outline-none focus:border-gray-100 focus:border-0  focus:ring-transparent "
+                className="grow border-0 text-gray-500 focus:outline-none focus:border-gray-100 focus:border-0  focus:ring-transparent"
                 placeholder="Username"
               />
             </label>
@@ -43,7 +46,7 @@ export default function Login() {
               ))}
             <label
               htmlFor="password"
-              className="input input-bordered max-w-[400px] flex items-center gap-2 bg-white text-floc-gray"
+              className={`input input-bordered max-w-[400px] flex items-center gap-2 bg-white text-floc-gray ${ passwordError ? "border-red-500" : ""}`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +63,7 @@ export default function Login() {
               <input
                 name="password"
                 type="password"
-                className="grow border-white text-gray-500 focus:outline-none focus:border-gray-100 focus:border-0  focus:ring-transparent "
+                className="grow border-white text-gray-500 focus:outline-0 focus:border-0  focus:ring-transparent"
                 placeholder="Password"
               />
             </label>
@@ -73,13 +76,13 @@ export default function Login() {
             <SubmitButton />
             {state.error?.user &&
               state.error.user.map((error: string) => (
-                <p className="text-sm text-red-500" key={error}>
+                <p className="text-sm text-red-500 mx-auto" key={error}>
                   {error}
                 </p>
               ))}
             {state.error?.login &&
               state.error.login.map((error: string) => (
-                <p className="text-sm text-red-500" key={error}>
+                <p className="text-sm text-red-500 mx-auto" key={error}>
                   {error}
                 </p>
               ))}
