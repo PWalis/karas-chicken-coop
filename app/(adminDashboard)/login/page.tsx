@@ -23,7 +23,7 @@ export default function Login() {
             name="email"
             type="text"
             className="grow  border-white text-gray-500 focus:outline-none focus:border-gray-100 focus:border-0  focus:ring-transparent "
-            placeholder="Username"
+            placeholder="Email"
           />
         </label>
         <label htmlFor="password" className="input input-bordered max-w-[400px] flex items-center gap-2 bg-white text-floc-gray">
