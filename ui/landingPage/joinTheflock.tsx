@@ -69,9 +69,13 @@ export default function JoinTheFlock() {
                     </button>
                   </div>
                 </div>
-                <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer bg-white/60 rounded-md p-1 backdrop-blur-sm">
+                <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer rounded-md bg-white/20 backdrop-blur-sm p-2">
+                  <div className="bg-white/30 backdrop-blur-sm p-2">
+                    <p>
                   By submitting your email, you agree to sign up for our
                   newsletter and receive promotional emails.
+                  </p>
+                  </div>
                 </div>
               </form>
             </SectionWrapper>
