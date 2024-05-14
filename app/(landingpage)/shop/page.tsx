@@ -25,7 +25,7 @@ export default function Shop(props: Props) {
       <ShopNavBar></ShopNavBar>
       <SectionWrapper>
         <div className="flex justify-center pt-10">
-          <h1 className="text-5xl md:text-5xl lg:text-6xl text-center mt-20 mb-10">
+          <h1 className="text-6xl sm:text-8xl text-center mt-20 mb-10">
             KARA'S CHICKEN COOP SHOP
           </h1>
         </div>

@@ -17,7 +17,7 @@ export default function JoinTheFlock() {
       >
         <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
           <div className="mx-auto max-w-screen-md sm:text-center">
-            <h2 className="mb-4 text-3xl font-extrabold text-floc-gray sm:text-6xl lg:text-8xl mt-20 uppercase">
+            <h2 className="mb-4 font-extrabold text-floc-gray text-6xl lg:text-8xl mt-20 uppercase">
               Join The Flock
             </h2>
             <p className="mx-auto mb-2 font-light text-gray-500 md:mb-4 sm:text-xl max-w-screen-sm">
@@ -54,7 +54,7 @@ export default function JoinTheFlock() {
                     </div>
                     <input
                       name="email"
-                      className="block p-3 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500"
+                      className="block p-3 pl-10 w-full text-sm text-gray-900 bg-white rounded-md border border-gray-200 focus:ring-gray-200 focus:border-gray-100"
                       placeholder="Enter your email..."
                       type="email"
                       id="email"
@@ -63,15 +63,19 @@ export default function JoinTheFlock() {
                   <div>
                     <button
                       type="submit"
-                      className="py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300  bg-floc-gray"
+                      className=" rounded-md py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-floc-gray/90 focus:ring-4 focus:ring-gray-200  bg-floc-gray"
                     >
                       SUBMIT
                     </button>
                   </div>
                 </div>
-                <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer ">
-                  by submitting your email, you agree to sign up for our
+                <div className="mx-auto max-w-screen-sm text-sm text-left text-gray-500 newsletter-form-footer rounded-md bg-white/20 backdrop-blur-sm p-2">
+                  <div className="bg-white/30 backdrop-blur-sm p-2">
+                    <p>
+                  By submitting your email, you agree to sign up for our
                   newsletter and receive promotional emails.
+                  </p>
+                  </div>
                 </div>
               </form>
             </SectionWrapper>

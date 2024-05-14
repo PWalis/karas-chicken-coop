@@ -38,12 +38,12 @@ const handleHamburgerClick = () => {
   };
 
   return (
-    <nav ref={navRef} className="bg-white/90 backdrop-blur-md  dark:bg-gray-900 font-bold text-sm uppercase fixed w-full top-0 z-50">
+    <nav ref={navRef} className="bg-white/90 backdrop-blur-md font-bold text-sm uppercase fixed w-full top-0 z-50">
       <div className="max-w-screen-2xl flex flex-wrap gap-1 items-center justify-between mx-auto">
         <div className="flex justify-end items-center">
           <Link className="flex items-center" href="/">
-            <Kcc3 className="h-20 lg:h-[90px] p-2 flex justify-end items-center w-auto" />
-            <h2 className="text-lg block md:text-xl">Kara's Chicken Coop</h2>
+            <Kcc3 className="h-20 lg:h-[90px] w-[90px] p-2 flex justify-end items-center" />
+            <h2 className="text-lg md:text-xl">Kara's Chicken Coop</h2>
           </Link>
         </div>
         <div className="flex md:order-2 space-x-3 gap-3 md:space-x-0 rtl:space-x-reverse">
@@ -103,7 +103,7 @@ const handleHamburgerClick = () => {
               <a
                 href="/#JoinTheFlock"
                 className={clsx(
-                  " py-3 px-3 md:p-0  rounded  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40",
+                  " py-2 px-3 md:p-0  rounded  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-floc-gray/40",
                   navMenu ? "block md:hidden" : "hidden"
                 )}
                 onClick={handleLinkClick}

@@ -113,16 +113,22 @@ export const ItemCard: React.FC<ItemCardProps> = ({ product }) => {
   }, [showSizes]);
 
   return (
-    <div className="item-card relative mx-4 w-[300px]">
+    <div className="item-card relative mx-4 sm:w-[300px]">
       <Link href={`/shop/${product.id}`} className="relative group">
-        <img
-          className="w-fit group-hover:opacity-40 group-hover:blur-[1px] ease-in-out transition-all cursor-pointer group"
-          src={product.primaryImage}
-          alt="item"
-        />
+      <img
+        className="w-fit hidden lg:block group-hover:opacity-40 group-hover:blur-[1px] ease-in-out transition-all cursor-pointer group"
+        src={product.primaryImage}
+        alt="item"
+      />
+      <img
+        className="w-fit lg:hidden cursor-pointer"
+        src={product.primaryImage}
+        alt="item"
+      />
         <button
-          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-floc-gray px-4 py-2 rounded-md opacity-0 group-hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-200 uppercase font-bold bg-gray-100/90`}
-        >
+                  className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-floc-gray px-4 py-2 rounded-md opacity-0 group-hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-200 uppercase font-bold bg-gray-100/90 hidden lg:block`}
+                  
+        > 
           View item
         </button>
       </Link>

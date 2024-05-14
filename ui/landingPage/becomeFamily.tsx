@@ -32,7 +32,7 @@ export default function BecomeFamilySection() {
         id={"ChickenGallery"}
         className="justify-center px-4 py-8 mx-auto max-w-[1400px]"
       >
-        <h2 className="text-4xl mt-20 md:text-5xl lg:text-8xl uppercase justify-center text-center mb-5">
+        <h2 className="text-6xl mt-20 lg:text-8xl uppercase justify-center text-center mb-5">
           Become Part Of Our Family
         </h2>
         <div className="justify-between mx-auto">
@@ -77,7 +77,7 @@ export default function BecomeFamilySection() {
             ></FamilyGallery>
           </div>
           <SectionWrapper>
-            <p className="text-center text-xl sm:text-2xl pb-5 uppercase tracking-wide"> Join us on social media! </p>
+            <p className="text-center text-2xl pb-5 uppercase tracking-wide"> Join us on social media! </p>
           <div className="flex flex-wrap justify-center place-self-center gap-5 lg:gap-10">
             <a
               style={{ display: "table-cell" }}
@@ -85,7 +85,7 @@ export default function BecomeFamilySection() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FacebookIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6 text-floc-gray group"></FacebookIcon>
+              <FacebookIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6 text-floc-gray group hover:fill-floc-gray/40 ease-in-out transition-all"></FacebookIcon>
             </a>
             <a
               style={{ display: "table-cell" }}
@@ -93,7 +93,7 @@ export default function BecomeFamilySection() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <InstagramIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6"></InstagramIcon>
+              <InstagramIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6 hover:fill-floc-gray/40 ease-in-out transition-all"></InstagramIcon>
             </a>
             <div className="flex gap-5 lg:gap-10">
             <a
@@ -103,7 +103,7 @@ export default function BecomeFamilySection() {
               rel="noopener noreferrer"
             >
             
-              <YoutubeIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6"></YoutubeIcon>
+              <YoutubeIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6 hover:fill-floc-gray/40 ease-in-out transition-all"></YoutubeIcon>
             </a>
             <a
               style={{ display: "table-cell" }}
@@ -111,7 +111,7 @@ export default function BecomeFamilySection() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <TiktokIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6"></TiktokIcon>
+              <TiktokIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6 hover:fill-floc-gray/40 ease-in-out transition-all"></TiktokIcon>
             </a>
             </div>
           </div>

@@ -1,6 +1,6 @@
 "use client";
 import { createEmail } from "@/app/lib/email";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Kcc3 from "../assets/svgs/Kcc3";
 import FacebookIcon from "@/ui/assets/icons/Facebook-icon";
 import InstagramIcon from "@/ui/assets/icons/Instagram-icon";
@@ -9,6 +9,7 @@ import TiktokIcon from "@/ui/assets/icons/tiktok-icon";
 
 export default function Footer() {
   const ref = useRef<HTMLFormElement>(null);
+
   return (
     <footer className="bg-gray-50  dark:bg-gray-900">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
@@ -21,32 +22,30 @@ export default function Footer() {
               </span>
             </a>
             <div className="flex-col flex lg:flex-row justify-center place-items-center lg:place-items-baseline lg:gap-2 text-center mt-4 m-2">
-              <p className="text-xl text-center sm:text-left">
-                {" "}
-                Join the Flock!{" "}
-              </p>
-              <div className="max-w-[300px]">
+              <p className="text-xl sm:text-left"> Join the Flock! </p>
+              <div className="w-full sm:max-w-[300px]">
                 <form
-                  className="flex flex-col lg:flex-row"
+                  className="flex flex-col lg:flex-row lg:place-items-center lg:gap-1"
                   ref={ref}
                   action={async (formData) => {
                     await createEmail(formData);
                     ref.current?.reset();
                   }}
                 >
-                  <label className="input input-bordered flex items-center gap-2 bg-white text-floc-gray">
+                  <label htmlFor="email" className="input input-bordered flex items-center gap-2 bg-white text-floc-gray">
                     Email
                     <input
-                      type="text"
+                      type="email"
                       className="grow border-white text-gray-500 focus:outline-none focus:border-gray-100 focus:border-0  focus:ring-transparent "
                       placeholder="youremail@site.com"
                       name="email"
+                      id="email"
                     />
                   </label>
                   <div>
                     <button
                       type="submit"
-                      className="py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 mt-1 lg:mt-0  bg-floc-gray"
+                      className="hover:bg-floc-gray/90 py-3 px-5 w-full text-sm font-medium text-center text-white  border cursor-pointer bg-primary-700 border-primary-600 focus:ring-4 focus:ring-gray-200 mt-1 lg:mt-0  bg-floc-gray rounded-md"
                     >
                       SUBMIT
                     </button>
@@ -161,7 +160,7 @@ export default function Footer() {
           </div>
         </div>
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-        <div className="sm:flex sm:items-center sm:justify-between">
+        <div className="flex flex-col sm:flex-row items-center justify-between text-center">
           <span className="text-sm text-floc-gray/60 sm:text-center dark:text-gray-400">
             © 2024{" "}
             <a href="/" className="hover:text-floc-gray/30">
@@ -169,33 +168,45 @@ export default function Footer() {
             </a>
             . All Rights Reserved.
           </span>
-          <div className="flex mt-4 sm:justify-center sm:mt-0">
+          <div className="flex mt-4  gap-3 justify-center sm:mt-0">
             <a
-              href="#"
-              className="text-floc-gray/40 hover:text-floc-gray/20 dark:hover:text-white"
+              className="hover:text-floc-gray/40"
+              style={{ display: "table-cell" }}
+              href="https://www.facebook.com/FlaminHotChickens"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <FacebookIcon className="w-6 h-6"></FacebookIcon>
+              <FacebookIcon className="w-8 h-8 hover:fill-floc-gray/40 ease-in-out transition-all"></FacebookIcon>
               <span className="sr-only">Facebook page</span>
             </a>
             <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
+              className="hover:text-floc-gray/40 hover:fill-floc-gray/40 ease-in-out transition-all"
+              style={{ display: "table-cell" }}
+              href="https://www.instagram.com/karaschickens/"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <InstagramIcon className="w-6 h-6"></InstagramIcon>
+              <InstagramIcon className="w-8 h-8"></InstagramIcon>
               <span className="sr-only">Instagram community</span>
             </a>
             <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
+              className="hover:text-floc-gray/40 hover:fill-floc-gray/40 ease-in-out transition-all"
+              style={{ display: "table-cell" }}
+              href="https://www.tiktok.com/@karas.chicken.coop"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <TiktokIcon className="w-6 h-6"></TiktokIcon>
+              <TiktokIcon className="w-8 h-8 hover:fill-floc-gray/40 ease-in-out transition-all"></TiktokIcon>
               <span className="sr-only">TikTok Page</span>
             </a>
             <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
+              className="hover:text-floc-gray/40"
+              style={{ display: "table-cell" }}
+              href="https://www.youtube.com/channel/UCs5wYfoADhI94TLGWbEMdYQ"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <YoutubeIcon className="w-6 h-6"></YoutubeIcon>
+              <YoutubeIcon className="w-8 h-8 hover:fill-floc-gray/40 ease-in-out transition-all"></YoutubeIcon>
               <span className="sr-only">Youtube account</span>
             </a>
           </div>
