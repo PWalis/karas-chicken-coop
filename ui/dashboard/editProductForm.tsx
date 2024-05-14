@@ -37,11 +37,14 @@ export const EditProductForm: React.FC<ProductProps> = ({
   productId,
   categories,
 }) => {
-  const updateProductWithProductId = updateProduct.bind(null, {
-    productId: productId,
-    images: images,
-    primaryImage: primaryImage,
-  });
+  const initialState = {
+    message: "",
+    error: {},
+    images: [],
+    primaryImage: null,
+    productId: null,
+  };
+  const [state, formAction] = useFormState(updateProduct, initialState);
 
   const options = categories.map((category: any, index: number) => {
     return (
@@ -54,11 +57,14 @@ export const EditProductForm: React.FC<ProductProps> = ({
   return (
     <div className="flex justify-center w-full h-fit">
       <form
-        action={updateProductWithProductId}
+        action={formAction}
         className="flex flex-col gap-2 min-w-[346px] w-fit justify-center drop-shadow-md bg-white h-fill border rounded-md p-3 mb-4"
       >
         <div hidden>
-          <input name="productId" value={productId}></input>
+          {/*Hidden Fields do not un-hide please we need these here or things will break*/}
+          <input name="productId" defaultValue={productId} />
+          <input name="images" type="file" defaultValue={images} />
+          <input name="primaryImage" type="file" defaultValue={primaryImage} />
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
@@ -68,10 +74,15 @@ export const EditProductForm: React.FC<ProductProps> = ({
               type="text"
               id="name"
               name="name"
-              required
               defaultValue={name}
               className="w-full"
             />
+            {state.error?.name &&
+              state.error.name.map((error: string) => (
+                <p className="text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
           </div>
           <div className="flex flex-col">
             <label htmlFor="price">Price</label>
@@ -80,9 +91,14 @@ export const EditProductForm: React.FC<ProductProps> = ({
               type="number"
               id="price"
               name="price"
-              required
               defaultValue={Number(price) / 100}
             />
+            {state.error?.price &&
+              state.error.price.map((error: string) => (
+                <p className="text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
           </div>
         </div>
         <label htmlFor="description">Description</label>
@@ -90,9 +106,14 @@ export const EditProductForm: React.FC<ProductProps> = ({
           className="w-full"
           id="description"
           name="description"
-          required
           defaultValue={description}
         />
+        {state.error?.description &&
+          state.error.description.map((error: string) => (
+            <p className="text-sm text-red-500" key={error}>
+              {error}
+            </p>
+          ))}
         <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
           <div className="flex flex-col w-full">
             <label htmlFor="category">Category</label>
@@ -128,7 +149,6 @@ export const EditProductForm: React.FC<ProductProps> = ({
                   type="number"
                   id="xs"
                   name="xs"
-                  required
                   defaultValue={inventory.xs_quantity}
                 />
               </li>
@@ -139,7 +159,6 @@ export const EditProductForm: React.FC<ProductProps> = ({
                   type="number"
                   id="small"
                   name="small"
-                  required
                   defaultValue={inventory.s_quantity}
                 />
               </li>
@@ -150,7 +169,6 @@ export const EditProductForm: React.FC<ProductProps> = ({
                   type="number"
                   id="medium"
                   name="medium"
-                  required
                   defaultValue={inventory.m_quantity}
                 />
               </li>
@@ -163,7 +181,6 @@ export const EditProductForm: React.FC<ProductProps> = ({
                   type="number"
                   id="large"
                   name="large"
-                  required
                   defaultValue={inventory.l_quantity}
                 />
               </li>
@@ -174,7 +191,6 @@ export const EditProductForm: React.FC<ProductProps> = ({
                   type="number"
                   id="xl"
                   name="xl"
-                  required
                   defaultValue={inventory.xl_quantity}
                 />
               </li>
@@ -185,7 +201,6 @@ export const EditProductForm: React.FC<ProductProps> = ({
                   type="number"
                   id="xxl"
                   name="xxl"
-                  required
                   defaultValue={inventory.xxl_quantity}
                 />
               </li>
@@ -198,7 +213,6 @@ export const EditProductForm: React.FC<ProductProps> = ({
               type="number"
               id="quantity"
               name="quantity"
-              required
               defaultValue={inventory.quantity}
             />
           </div>
@@ -243,10 +257,18 @@ export const EditProductForm: React.FC<ProductProps> = ({
             </div>
           </div>
         </div>
-        <button className="dashboard-bg bg-cover py-3 uppercase" type="submit">
-          Submit
-        </button>
+        <SubmitButton />
       </form>
     </div>
   );
 };
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button className="dashboard-bg bg-cover py-3 uppercase" type="submit">
+      {pending ? "Editing Product..." : "Submit"}
+    </button>
+  );
+}

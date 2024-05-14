@@ -25,10 +25,6 @@ type updateBindData = {
   primaryImage: string;
 };
 
-type createProductBindData = {
-  size: boolean;
-};
-
 const ImageSchema = z
   .instanceof(File)
   .optional()
@@ -398,8 +394,20 @@ export async function deleteProduct(productId: number) {
   revalidatePath("/");
 }
 
+type updateProductState = {
+  error?: {
+    name?: string[],
+    price?:  string[],
+    description?: string[],
+  },
+  message?: string,
+  primaryImage?: any,
+  images?: any,
+  productId?: number
+}
+
 export async function updateProduct(
-  { productId, images, primaryImage }: updateBindData,
+  currentState: updateProductState,
   formData: FormData
 ) {
   noStore();
@@ -411,7 +419,7 @@ export async function updateProduct(
   const validatedData = FormSchemaNoImageRequired.refine(
     (data) => data.newCategory || data.category,
     {
-      message: "At least one of newCategory or category is required",
+      message: "Category or New Category is required",
       path: ["newCategory", "category"],
     }
   ).safeParse({
@@ -430,10 +438,6 @@ export async function updateProduct(
   });
 
   if (!validatedData.success) {
-    console.log(
-      validatedData.error.flatten().fieldErrors,
-      formData.getAll("image")
-    );
     return {
       error: validatedData.error.flatten().fieldErrors,
       message: "Validation failed",
@@ -461,12 +465,12 @@ export async function updateProduct(
 
   if (data.image[0].size != 0) {
     const imageUrls = await uploadProductImagesAndReturnUrls(data.image);
-    images = images.concat(imageUrls);
+    currentState.images = currentState.images.concat(imageUrls);
   }
 
   if (data.primaryImage.size != 0) {
     const primaryImageUrl = await uploadImageAndReturnUrl(data.primaryImage);
-    primaryImage = primaryImageUrl;
+    currentState.primaryImage = primaryImageUrl;
   }
 
   const priceInCents = data.price * 100;
@@ -474,7 +478,7 @@ export async function updateProduct(
   try {
     const product = await prisma.products.update({
       where: {
-        id: productId,
+        id: currentState.productId,
       },
       data: {
         name: data.name,
@@ -486,8 +490,8 @@ export async function updateProduct(
             create: { name: data.category! },
           },
         },
-        primaryImage: primaryImage,
-        images: images,
+        primaryImage: currentState.primaryImage,
+        images: currentState.images,
         inventory: {
           update: {
             data: {
