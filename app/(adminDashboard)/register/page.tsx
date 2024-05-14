@@ -3,7 +3,8 @@ import { register } from "@/app/lib/register";
 import { useFormStatus, useFormState } from "react-dom";
 
 export default function Page() {
-  const [message, action] = useFormState(register, undefined);
+  const initialState = { message: "", error: {} };
+  const [state, formAction] = useFormState(register, initialState);
 
   return (
     <div className="min-h-screen h-fit dashboard-bg bg-cover">
@@ -14,7 +15,7 @@ export default function Page() {
         <h2 className="text-2xl font-bold tracking-wide p-2 text-center uppercase">
           Register
         </h2>
-        <form className="flex flex-col gap-2" action={action}>
+        <form className="flex flex-col gap-2" action={formAction}>
           <label className="input input-bordered max-w-[400px] flex items-center gap-2 bg-white text-floc-gray">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -31,6 +32,12 @@ export default function Page() {
               placeholder="Email"
             />
           </label>
+            {state.error?.email &&
+              state.error.email.map((error: string) => (
+                <p className="text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
           <label
             htmlFor="password"
             className="input input-bordered max-w-[400px] flex items-center gap-2 bg-white text-floc-gray"
@@ -54,10 +61,13 @@ export default function Page() {
               placeholder="Password"
             />
           </label>
+            {state.error?.password &&
+              state.error.password.map((error: string) => (
+                <p className="text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
           <SubmitButton />
-          <div className="h-8 flex mx-auto">
-            {message && <p className="text-red-500">{message}</p>}
-            </div>
         </form>
       </div>
     </div>
