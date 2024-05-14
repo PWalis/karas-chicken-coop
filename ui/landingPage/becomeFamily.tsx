@@ -85,7 +85,7 @@ export default function BecomeFamilySection() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FacebookIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6 text-floc-gray group"></FacebookIcon>
+              <FacebookIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6 text-floc-gray group hover:fill-floc-gray/40 ease-in-out transition-all"></FacebookIcon>
             </a>
             <a
               style={{ display: "table-cell" }}
@@ -93,7 +93,7 @@ export default function BecomeFamilySection() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <InstagramIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6"></InstagramIcon>
+              <InstagramIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6 hover:fill-floc-gray/40 ease-in-out transition-all"></InstagramIcon>
             </a>
             <div className="flex gap-5 lg:gap-10">
             <a
@@ -103,7 +103,7 @@ export default function BecomeFamilySection() {
               rel="noopener noreferrer"
             >
             
-              <YoutubeIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6"></YoutubeIcon>
+              <YoutubeIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6 hover:fill-floc-gray/40 ease-in-out transition-all"></YoutubeIcon>
             </a>
             <a
               style={{ display: "table-cell" }}
@@ -111,7 +111,7 @@ export default function BecomeFamilySection() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <TiktokIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6"></TiktokIcon>
+              <TiktokIcon className="h-[120px] w-[120px] lg:h-[100px] lg:w-[100px] mb-6 hover:fill-floc-gray/40 ease-in-out transition-all"></TiktokIcon>
             </a>
             </div>
           </div>
