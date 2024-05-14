@@ -42,7 +42,7 @@ const handleHamburgerClick = () => {
       <div className="max-w-screen-2xl flex flex-wrap gap-1 items-center justify-between mx-auto">
         <div className="flex justify-end items-center">
           <Link className="flex items-center" href="/">
-            <Kcc3 className="h-20 lg:h-[90px] p-2 flex justify-end items-center w-auto" />
+            <Kcc3 className="h-20 lg:h-[90px] w-[90px] p-2 flex justify-end items-center" />
             <h2 className="text-lg md:text-xl">Kara's Chicken Coop</h2>
           </Link>
         </div>
