@@ -401,8 +401,8 @@ type updateProductState = {
     description?: string[],
   },
   message?: string,
-  primaryImage?: any,
-  images?: any,
+  primaryImageState?: any,
+  imagesState?: any,
   productId?: number
 }
 
@@ -415,6 +415,7 @@ export async function updateProduct(
     image: true,
     primaryImage: true,
   });
+  // console.log("product id, images and primary image in state", currentState.imagesState, currentState.primaryImageState, currentState.productId)
 
   const validatedData = FormSchemaNoImageRequired.refine(
     (data) => data.newCategory || data.category,
@@ -465,12 +466,12 @@ export async function updateProduct(
 
   if (data.image[0].size != 0) {
     const imageUrls = await uploadProductImagesAndReturnUrls(data.image);
-    currentState.images = currentState.images.concat(imageUrls);
+    currentState.imagesState = currentState.imagesState.concat(imageUrls);
   }
 
   if (data.primaryImage.size != 0) {
     const primaryImageUrl = await uploadImageAndReturnUrl(data.primaryImage);
-    currentState.primaryImage = primaryImageUrl;
+    currentState.primaryImageState = primaryImageUrl;
   }
 
   const priceInCents = data.price * 100;
@@ -490,8 +491,8 @@ export async function updateProduct(
             create: { name: data.category! },
           },
         },
-        primaryImage: currentState.primaryImage,
-        images: currentState.images,
+        primaryImage: currentState.primaryImageState,
+        images: currentState.imagesState,
         inventory: {
           update: {
             data: {
