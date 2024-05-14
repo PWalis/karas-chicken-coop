@@ -6,9 +6,48 @@ import FacebookIcon from "@/ui/assets/icons/Facebook-icon";
 import InstagramIcon from "@/ui/assets/icons/Instagram-icon";
 import YoutubeIcon from "@/ui/assets/icons/Youtube-icon";
 import TiktokIcon from "@/ui/assets/icons/tiktok-icon";
+import { isValid, set } from "zod";
 
 export default function Footer() {
   const ref = useRef<HTMLFormElement>(null);
+  const [message, setMessage] = useState<string>('');
+  const [valid, setValid] = useState<boolean>(false);
+  const [emailValid, setEmailValid] = useState<boolean>(true);
+
+  const isValidEmail = (email: string): boolean => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('email') as string;
+
+    if (!isValidEmail(email)) {
+      setMessage('Please enter a valid email.');
+        setValid(false);
+        setEmailValid(false);
+
+      return;
+    }
+
+    try {
+      // Submit form logic
+      setValid(true)
+      setEmailValid(true);
+      setMessage('Your email has been successfully submitted!');
+      await createEmail(formData);
+      ref.current?.reset();
+      setTimeout(() => {
+        setValid(true);
+        setMessage('');
+      }, 5000);
+
+    } catch (error) {
+      console.error('Error submitting email:', error);
+    }
+  };
 
   return (
     <footer className="bg-gray-50  dark:bg-gray-900">
@@ -27,12 +66,12 @@ export default function Footer() {
                 <form
                   className="flex flex-col lg:flex-row lg:place-items-center lg:gap-1"
                   ref={ref}
-                  action={async (formData) => {
-                    await createEmail(formData);
-                    ref.current?.reset();
-                  }}
+                  onSubmit={handleSubmit}
                 >
-                  <label htmlFor="email" className="input input-bordered flex items-center gap-2 bg-white text-floc-gray">
+                  <label
+                    htmlFor="email"
+                    className={`input input-bordered flex items-center gap-2 bg-white text-floc-gray ${!emailValid ? 'border-red-500' : ''} `}
+                  >
                     Email
                     <input
                       type="email"
@@ -51,6 +90,9 @@ export default function Footer() {
                     </button>
                   </div>
                 </form>
+                <div className="">
+                {message && <p className={`text-sm text-center sm:text-left ${valid ? "text-[#5a8a54]" : "text-red-500"}`}>{message}</p>}
+                </div>
                 <p className="text-xs text-floc-gray/70 pt-2">
                   by submitting your email, you agree to sign up for our
                   newsletter and receive promotional emails.
