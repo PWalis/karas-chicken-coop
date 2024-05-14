@@ -1,8 +1,10 @@
 "use client";
 import { register } from "@/app/lib/register";
-import { useFormStatus } from "react-dom";
+import { useFormStatus, useFormState } from "react-dom";
 
 export default function Page() {
+  const [message, action] = useFormState(register, undefined);
+
   return (
     <div className="min-h-screen h-fit dashboard-bg bg-cover">
       <div className="flex flex-col items-center justify-center h-screen">
@@ -10,10 +12,9 @@ export default function Page() {
           Kara's Chicken Coop Registration
         </h1>
         <h2 className="text-2xl font-bold tracking-wide p-2 text-center uppercase">
-          {" "}
-          Register{" "}
+          Register
         </h2>
-        <form className="flex flex-col gap-2" action={register}>
+        <form className="flex flex-col gap-2" action={action}>
           <label className="input input-bordered max-w-[400px] flex items-center gap-2 bg-white text-floc-gray">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +26,7 @@ export default function Page() {
             </svg>
             <input
               name="email"
-              type="text"
+              type="email"
               className="grow  border-white text-gray-500 focus:outline-none focus:border-gray-100 focus:border-0  focus:ring-transparent "
               placeholder="Email"
             />
@@ -54,6 +55,9 @@ export default function Page() {
             />
           </label>
           <SubmitButton />
+          <div className="h-8 flex mx-auto">
+            {message && <p className="text-red-500">{message}</p>}
+            </div>
         </form>
       </div>
     </div>

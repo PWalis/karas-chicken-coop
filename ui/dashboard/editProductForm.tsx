@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { ImageEditor } from "./imageEditor";
 import { updateProduct } from "@/app/lib/actions";
+import { useFormState, useFormStatus } from "react-dom";
 interface ProductProps {
   productId: number;
   name: string;
@@ -56,17 +57,21 @@ export const EditProductForm: React.FC<ProductProps> = ({
         action={updateProductWithProductId}
         className="flex flex-col gap-2 min-w-[346px] w-fit justify-center drop-shadow-md bg-white h-fill border rounded-md p-3 mb-4"
       >
+        <div hidden>
+          <input name="productId" value={productId}></input>
+        </div>
+
         <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
           <div className="flex w-full flex-col">
             <label htmlFor="name">Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                defaultValue={name}
-                className="w-full"
-              />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              defaultValue={name}
+              className="w-full"
+            />
           </div>
           <div className="flex flex-col">
             <label htmlFor="price">Price</label>
@@ -222,23 +227,25 @@ export const EditProductForm: React.FC<ProductProps> = ({
             />
           </div>
           <div className="flex flex-col w-full">
-          <label>Secondary Images: </label>
-          <div className="w-full h-full max-w-[400px] overflow-x-scroll overflow-y-hidden">
-            <div className="flex flex-row gap-2 h-full">
-              {images.map((image, index) => {
-                return (
-                  <ImageEditor
-                    image={image}
-                    key={index}
-                    productId={productId}
-                  />
-                );
-              })}
+            <label>Secondary Images: </label>
+            <div className="w-full h-full max-w-[400px] overflow-x-scroll overflow-y-hidden">
+              <div className="flex flex-row gap-2 h-full">
+                {images.map((image, index) => {
+                  return (
+                    <ImageEditor
+                      image={image}
+                      key={index}
+                      productId={productId}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
         </div>
-        <button className="dashboard-bg bg-cover py-3 uppercase" type="submit">Submit</button>
+        <button className="dashboard-bg bg-cover py-3 uppercase" type="submit">
+          Submit
+        </button>
       </form>
     </div>
   );
