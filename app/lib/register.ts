@@ -17,7 +17,7 @@ export async function register(  currentMessage: registerState,
   formData: FormData) {
   const FormSchema = zod.object({
     email: zod.string().email(),
-    password: zod.string().min(8),
+    password: zod.string().min(8, {message: "Password must be at least 8 characters long"}),
   });
 
   // Validate the form data
