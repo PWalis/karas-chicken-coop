@@ -8,12 +8,12 @@ import prisma from "./data";
 import zod from "zod";
 import { hashPassword } from "./utils";
 
-const secretKey = process.env.JWT_SECRET // create a secret key and save it in a .env file
+const secretKey = process.env.JWT_SECRET; // create a secret key and save it in a .env file
 const key = new TextEncoder().encode(secretKey);
 
 const formSchema = zod.object({
   email: zod.string().email(),
-  password: zod.string().min(8),
+  password: zod.string().min(8, "Password invalid"),
 });
 
 export async function encrypt(payload: any) {
@@ -31,7 +31,10 @@ export async function decrypt(input: string): Promise<any> {
   return payload;
 }
 
-export async function login(formData: FormData) {
+export async function login(
+  currentMessage: string | undefined,
+  formData: FormData
+) {
   // Verify credentials && get the user
   const validatedData = formSchema.safeParse({
     email: formData.get("email"),
@@ -39,11 +42,8 @@ export async function login(formData: FormData) {
   });
 
   if (!validatedData.success) {
-    console.log(validatedData.error.flatten().fieldErrors);
-    return {
-      error: validatedData.error.flatten().fieldErrors,
-      message: "Validation failed",
-    };
+    
+    return validatedData.error.flatten().fieldErrors.email as any || validatedData.error.flatten().fieldErrors.password as any;
   }
   const data = {
     email: validatedData.data.email,
@@ -56,29 +56,21 @@ export async function login(formData: FormData) {
     });
 
     if (!user) {
-      console.log("User not found");
-      return {
-        error: "User not found",
-        message: "User not found",
-      };
+      return "User not found";
     }
 
     const hash = hashPassword(data.password, user.salt);
 
     if (hash !== user.password) {
-      console.log("Incorrect password");
-      return {
-        error: "Incorrect password",
-        message: "Incorrect password",
-      };
+      return "Incorrect password";
     }
-    const expires = new Date(Date.now() + (2 * 60 * 60 * 1000)); // 2 hours
+    const expires = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
     const session = await encrypt({ user, expires });
 
     // Save the session in a cookie
     cookies().set("session", session, { expires, httpOnly: true });
   } catch (error) {
-    console.log("error logging in", error);
+    return "error logging in";
   }
   redirect("/dashboard/orders");
 }
@@ -111,7 +103,7 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (parsed.user.role === "ADMIN") {
-    parsed.expires = new Date(Date.now() + (2 * 60 * 60 * 1000)); // 2 hours
+    parsed.expires = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
     const res = NextResponse.next();
     res.cookies.set({
       name: "session",

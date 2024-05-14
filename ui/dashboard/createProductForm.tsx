@@ -2,6 +2,7 @@
 import { createProduct } from "@/app/lib/actions";
 import { CheckMark } from "./sizingButton";
 import React, { useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
 
 interface CreateProps {
   categories: any;
@@ -9,7 +10,8 @@ interface CreateProps {
 
 export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
   const [showOptions, setShowOptions] = useState(false);
-  const createProductWithSize = createProduct.bind(null, { size: showOptions });
+  const initialState = { message: "", errors: {}, size: null };
+  const [state, formAction] = useFormState(createProduct, initialState);
 
   const toggleOptions = () => {
     setShowOptions(!showOptions);
@@ -25,21 +27,41 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
   return (
     <div className="flex justify-center w-full h-fit">
       <form
-        action={createProductWithSize}
+        action={formAction}
         className="flex flex-col gap-2 min-w-[346px] w-fit justify-center drop-shadow-md bg-white h-fill border rounded-md p-3 mb-4"
       >
         <div className="flex flex-col sm:flex-row sm:gap-3">
           <div className="flex flex-col">
             <label htmlFor="name">Name</label>
-            <input type="text" id="name" name="name" required />
+            <input type="text" id="name" name="name" />
+            {state.error?.name &&
+              state.error.name.map((error: string) => (
+                <p className="text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
           </div>
           <div className="flex flex-col">
             <label htmlFor="price">Price</label>
-            <input type="number" id="price" name="price" required />
+            <input type="number" id="price" name="price" />
+            <div className="flex flex-row gap-2">
+              {state.error?.price &&
+                state.error.price.map((error: string) => (
+                  <p className="text-sm text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
+            </div>
           </div>
         </div>
         <label htmlFor="description">Description</label>
-        <textarea id="description" name="description" required />
+        <textarea id="description" name="description" />
+        {state.error?.description &&
+          state.error.description.map((error: string) => (
+            <p className="text-sm text-red-500" key={error}>
+              {error}
+            </p>
+          ))}
         <div className="flex flex-col sm:flex-row sm:gap-3 w-fill justify-between">
           <div className="flex flex-col">
             <label className="rounded-none" htmlFor="category">
@@ -62,12 +84,21 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
             <input type="text" name="newCategory" id="newCategory" />
           </div>
         </div>
+        {state.error?.newCategory &&
+          state.error.newCategory.map((error: string) => (
+            <p className="text-sm text-red-500" key={error}>
+              {error}
+            </p>
+          ))}
         <div className="flex-row justify-center place-items-center">
           <div className="place-items-center flex">
             <label htmlFor="SizeOptions">Size Options?</label>
             <button onClick={toggleOptions}>
               <CheckMark />
             </button>
+            <div hidden>
+              <input type="radio" name="size" checked={showOptions} />
+            </div>
           </div>
           {showOptions ? (
             <ul className="flex flex-wrap gap-4 justify-center">
@@ -78,7 +109,6 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
                   type="number"
                   id="xs"
                   name="xs"
-                  required
                   defaultValue={0}
                 />
               </li>
@@ -89,7 +119,6 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
                   type="number"
                   id="small"
                   name="small"
-                  required
                   defaultValue={0}
                 />
               </li>
@@ -100,7 +129,6 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
                   type="number"
                   id="medium"
                   name="medium"
-                  required
                   defaultValue={0}
                 />
               </li>
@@ -112,7 +140,6 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
                     type="number"
                     id="large"
                     name="large"
-                    required
                     defaultValue={0}
                   />
                 </li>
@@ -123,7 +150,6 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
                     type="number"
                     id="xl"
                     name="xl"
-                    required
                     defaultValue={0}
                   />
                 </li>
@@ -134,7 +160,6 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
                     type="number"
                     id="xxl"
                     name="xxl"
-                    required
                     defaultValue={0}
                   />
                 </li>
@@ -147,27 +172,57 @@ export const CreateProductForm: React.FC<CreateProps> = ({ categories }) => {
                 type="number"
                 id="quantity"
                 name="quantity"
-                required
                 defaultValue={0}
               />
+              {state.error?.quantity &&
+                state.error.quantity.map((error: string) => (
+                  <p className="text-sm text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
             </div>
           )}
         </div>
         <div className="flex flex-col">
           <label htmlFor="primaryImage">Primary Image</label>
-          <input className="" type="file" id="primaryImage" name="primaryImage" required />
+          <input
+            className=""
+            type="file"
+            id="primaryImage"
+            name="primaryImage"
+          />
+          {state.error?.primaryImage &&
+            state.error.primaryImage.map((error: string) => (
+              <p className="text-sm text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
         </div>
         <label htmlFor="image">Choose Images</label>
-        <input type="file" id="image" name="image" multiple required />
+        <input type="file" id="image" name="image" multiple />
+        {state.error?.image &&
+          state.error.image.map((error: string) => (
+            <p className="text-sm text-red-500" key={error}>
+              {error}
+            </p>
+          ))}
         <div className="flex justify-center">
-          <button
-            className="bg-cover dashboard-bg hover:bg-cyan-400 w-full px-10 py-3 justify-center uppercase"
-            type="submit"
-          >
-            Submit
-          </button>
+          <SubmitButton />
         </div>
       </form>
     </div>
   );
 };
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      className="bg-cover dashboard-bg hover:bg-cyan-400 w-full px-10 py-3 justify-center uppercase"
+      type="submit"
+    >
+      {pending ? "Creating Product..." : "Submit"}
+    </button>
+  );
+}

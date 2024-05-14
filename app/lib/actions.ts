@@ -17,7 +17,7 @@ import {
 import { unstable_noStore as noStore } from "next/cache";
 
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 30; //30MB
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/HIEC"];
 
 type updateBindData = {
   productId: number;
@@ -33,22 +33,27 @@ const ImageSchema = z
   .instanceof(File)
   .optional()
   .refine((file) => {
-    return !file || file.size <= MAX_UPLOAD_SIZE;
-  }, "File size must be less than 7MB")
+    return file!.size <= MAX_UPLOAD_SIZE;
+  }, "File size must be less than 30MB")
   .refine((file) => {
     return ACCEPTED_IMAGE_TYPES.includes(file!.type);
   }, "File type must be either jpeg or png");
 
 // this object will be used to validate the form data
 const FormSchema = z.object({
-  name: z.string({ required_error: "Name is required" }),
-  price: z.coerce.number({ required_error: "Price is required" }),
-  description: z.string({ required_error: "Description is required" }),
+  name: z.string().min(1, { message: "Name Required" }),
+  price: z.coerce
+    .number()
+    .min(1, { message: "Price must be at least 1 dollar" }),
+  description: z.string().min(1, { message: "Description required" }),
   primaryImage: z.array(ImageSchema).nonempty({ message: "Image is required" }),
   image: z.array(ImageSchema).nonempty({ message: "Image is required" }),
   category: z.string().nullable(),
   newCategory: z.string().nullable(),
-  quantity: z.coerce.number().nullable(),
+  quantity: z.coerce
+    .number()
+    .min(0, { message: "Quantity must be at least 0" }),
+  size: z.coerce.boolean(),
   xs: z.coerce.number().nullable(),
   small: z.coerce.number().nullable(),
   medium: z.coerce.number().nullable(),
@@ -74,7 +79,7 @@ const CartSchema = z.object({
 });
 
 export const fetchProductPrices = async (productId: number) => {
-  noStore()
+  noStore();
   try {
     const price = await prisma.products.findUnique({
       where: {
@@ -96,7 +101,7 @@ interface productAndQuantity {
 }
 
 export const fetchProductsTotal = async (products: productAndQuantity[]) => {
-  noStore()
+  noStore();
   try {
     let total = 0;
     for (let product of products) {
@@ -110,7 +115,7 @@ export const fetchProductsTotal = async (products: productAndQuantity[]) => {
 };
 
 export const fetchAllProducts = async () => {
-  noStore()
+  noStore();
   try {
     const products = await prisma.products.findMany({
       include: {
@@ -173,7 +178,7 @@ export const fetchAllProducts = async () => {
 };
 
 export const fetchProductById = async (id: number) => {
-  noStore()
+  noStore();
   try {
     const product = await prisma.products.findUnique({
       where: {
@@ -192,7 +197,7 @@ export const fetchProductById = async (id: number) => {
 };
 
 export const fetchProductsIdArray = async (productIds: number[]) => {
-  noStore()
+  noStore();
   try {
     const products = await prisma.products.findMany({
       where: {
@@ -207,15 +212,36 @@ export const fetchProductsIdArray = async (productIds: number[]) => {
   }
 };
 
+export type createProductState = {
+  error?: {
+    name?: string[];
+    price?: string[];
+    description?: string[];
+    primaryImage?: string[];
+    image?: string[];
+    category?: string[];
+    newCategory?: string[];
+    quantity?: string[];
+    xs?: string[];
+    small?: string[];
+    medium?: string[];
+    large?: string[];
+    xl?: string[];
+    xxl?: string[];
+  };
+  message?: string | null;
+  size?: boolean;
+};
+
 export async function createProduct(
-  { size }: createProductBindData,
+  currentState: createProductState | any,
   formData: FormData
 ) {
-  noStore()
+  noStore();
   const validatedData = FormSchema.refine(
     (data) => data.newCategory || data.category,
     {
-      message: "At least one of newCategory or category is required",
+      message: "Category or New Category is required",
       path: ["newCategory", "category"],
     }
   ).safeParse({
@@ -227,6 +253,7 @@ export async function createProduct(
     category: formData.get("category"),
     newCategory: formData.get("newCategory"),
     quantity: formData.get("quantity"),
+    size: formData.get("size"),
     xs: formData.get("xs"),
     small: formData.get("small"),
     medium: formData.get("medium"),
@@ -236,10 +263,6 @@ export async function createProduct(
   });
 
   if (!validatedData.success) {
-    console.log(
-      validatedData.error.flatten().fieldErrors
-      // formData.getAll("image")
-    );
     return {
       error: validatedData.error.flatten().fieldErrors,
       message: "Validation failed",
@@ -256,6 +279,7 @@ export async function createProduct(
       : validatedData.data.category,
     primaryImage: validatedData.data.primaryImage,
     image: validatedData.data.image,
+    size: validatedData.data.size,
     quantity: validatedData.data.quantity,
     xs: validatedData.data.xs,
     small: validatedData.data.small,
@@ -289,7 +313,7 @@ export async function createProduct(
         images: imageUrls,
         inventory: {
           create: {
-            hasSizes: size,
+            hasSizes: data.size ?? false,
             quantity: data.quantity ?? 0,
             xs_quantity: data.xs != null ? data.xs : 0,
             s_quantity: data.small != null ? data.small : 0,
@@ -306,7 +330,7 @@ export async function createProduct(
       },
     });
   } catch (error) {
-    console.log("Error Creating product", error);
+    return { message: "error creating product" };
   }
 
   revalidatePath("/");
@@ -314,7 +338,7 @@ export async function createProduct(
 }
 
 export async function deleteImage(imageName: string, productId: number) {
-  noStore()
+  noStore();
   //deletes the file from S3 and postgresql db
   try {
     const product = await prisma.products.findUnique({
@@ -348,7 +372,7 @@ export async function deleteImage(imageName: string, productId: number) {
 }
 
 export async function deleteProduct(productId: number) {
-  noStore()
+  noStore();
   try {
     const product = await prisma.products.findUnique({
       where: {
@@ -378,7 +402,7 @@ export async function updateProduct(
   { productId, images, primaryImage }: updateBindData,
   formData: FormData
 ) {
-  noStore()
+  noStore();
   const FormSchemaNoImageRequired = FormSchema.omit({
     image: true,
     primaryImage: true,
@@ -492,7 +516,7 @@ export async function updateProduct(
 }
 
 export async function fetchCategories() {
-  noStore()
+  noStore();
   try {
     const categories = await prisma.categories.findMany();
     return categories;
@@ -506,7 +530,7 @@ export async function createOrder(
   cart: any,
   paymentIntentId: string
 ) {
-  noStore()
+  noStore();
   //create order
   try {
     const order = await prisma.order.create({
@@ -553,7 +577,7 @@ type OrderStatus =
   | "DELIVERED";
 
 export async function setOrderStatus(orderId: string, status: OrderStatus) {
-  noStore()
+  noStore();
   try {
     const order = await prisma.order.update({
       where: {
@@ -571,7 +595,7 @@ export async function setOrderStatus(orderId: string, status: OrderStatus) {
 }
 
 export async function fetchOrderById(id: string) {
-  noStore()
+  noStore();
   try {
     const order = await prisma.order.findUnique({
       where: {
@@ -588,7 +612,7 @@ export async function fetchOrderById(id: string) {
 }
 
 export async function fetchAllProcessedOrders() {
-  noStore()
+  noStore();
   try {
     const orders = await prisma.order.findMany({
       where: {
@@ -605,7 +629,7 @@ export async function fetchAllProcessedOrders() {
 }
 
 export async function fetchAllFulfilledOrders() {
-  noStore()
+  noStore();
   try {
     const orders = await prisma.order.findMany({
       where: {
@@ -626,7 +650,7 @@ async function setSizeInventory(
   size: string,
   quantity: number
 ) {
-  noStore()
+  noStore();
   try {
     await prisma.inventory.update({
       where: {
@@ -642,7 +666,7 @@ async function setSizeInventory(
 }
 
 async function setInventory(productId: number, quantity: number) {
-  noStore()
+  noStore();
   try {
     await prisma.inventory.update({
       where: {
@@ -658,7 +682,7 @@ async function setInventory(productId: number, quantity: number) {
 }
 
 export async function processOrder(orderId: string) {
-  noStore()
+  noStore();
   return prisma.$transaction(async (prisma) => {
     const fetchedOrder = await fetchOrderById(orderId);
     if (fetchedOrder!.status != "PAID") {
@@ -734,7 +758,7 @@ export async function processOrder(orderId: string) {
 }
 
 export async function checkInventory(cart: any) {
-  noStore()
+  noStore();
   try {
     for (let item of cart.items) {
       const inventory = await prisma.inventory.findUnique({
