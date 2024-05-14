@@ -49,7 +49,7 @@ export async function register(  currentMessage: registerState,
       },
     });
   } catch (error) {
-    return {message: "failed to register user"};
+    return { message: "failed to register user" };
   }
   redirect("/login")
 }

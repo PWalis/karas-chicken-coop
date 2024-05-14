@@ -6,7 +6,7 @@ import { login } from "@/app/lib/sessionHandler";
 
 export default function Login() {
   const initialState = { message: "", error: {} };
-  const [state, FormAction] = useFormState(login, initialState);
+  const [state, formAction] = useFormState(login, initialState as any);
 
   return (
     <div className="min-h-screen h-fit dashboard-bg bg-cover">
@@ -18,7 +18,7 @@ export default function Login() {
           <h2 className="text-2xl font-bold tracking-wide p-2 text-center uppercase">
             Login
           </h2>
-          <form className="flex flex-col gap-2" action={FormAction}>
+          <form className="flex flex-col gap-2" action={formAction}>
             <label className="input input-bordered max-w-[400px] flex items-center gap-2 bg-white text-floc-gray">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
