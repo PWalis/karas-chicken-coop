@@ -40,9 +40,9 @@ export const EditProductForm: React.FC<ProductProps> = ({
   const initialState = {
     message: "",
     error: {},
-    images: [],
-    primaryImage: null,
-    productId: null,
+    imagesState: images,
+    primaryImageState: primaryImage,
+    productId: productId,
   };
   const [state, formAction] = useFormState(updateProduct, initialState);
 
@@ -60,12 +60,12 @@ export const EditProductForm: React.FC<ProductProps> = ({
         action={formAction}
         className="flex flex-col gap-2 min-w-[346px] w-fit justify-center drop-shadow-md bg-white h-fill border rounded-md p-3 mb-4"
       >
-        <div hidden>
-          {/*Hidden Fields do not un-hide please we need these here or things will break*/}
+        {/* <div hidden>
+          Hidden Fields do not un-hide please we need these here or things will break
           <input name="productId" defaultValue={productId} />
-          <input name="images" type="file" defaultValue={images} />
-          <input name="primaryImage" type="file" defaultValue={primaryImage} />
-        </div>
+          <input name="images" type="text" defaultValue={images} />
+          <input name="primaryImage" type="text" defaultValue={primaryImage} />
+        </div> */}
 
         <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
           <div className="flex w-full flex-col">
