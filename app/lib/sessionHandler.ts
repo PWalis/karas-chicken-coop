@@ -33,10 +33,10 @@ export async function decrypt(input: string): Promise<any> {
 
 type loginState = {
   error?: {
-    email?: string[];
-    password?: string[];
-    user?: string[];
-    login?: string[];
+    email?: string[],
+    password?: string[],
+    user?: string[],
+    login?: string[],
   };
   message?: string;
 };
