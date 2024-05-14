@@ -9,18 +9,16 @@ interface Props {
 
 export function FlockCard({ src, alt, name, description }: Props) {
   return (
-    <div className="w-[300px] h-full mb-20">
+    <div className="w-[300px] h-full mb-5 sm:mb-20">
     <div className="group"> 
-      <a href="#">
         <div className="">
           <Image
             src={src}
             alt={alt}
-            className="object-cover w-full h-80 rounded-[200px] drop-shadow-sm pb-2"
+            className="object-cover w-full h-[400px] rounded-[500px] drop-shadow-sm pb-2 grayscale grouphover:scale-105 group-hover:grayscale-0 ease-in-out transition-all duration-300"
           />
         </div>
-      </a>
-      <div className="drop-shadow-lg h-[250px] sm:h-[212px] bg-white rounded-lg group-hover:drop-shadow-2xl ease-in-out transition-all duration-300">
+      <div className="drop-shadow-lg h-[200px] sm:h-[212px] bg-white rounded-lg group-hover:drop-shadow-2xl ease-in-out transition-all duration-300">
       <div className="p-5 ease-in transition-opacity duration-300">
           <h4 className="mb-2 text-2xl font-bold tracking-tight text-floc-gray">
             {name},

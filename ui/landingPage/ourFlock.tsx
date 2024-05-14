@@ -10,12 +10,12 @@ import { SectionWrapper } from "../assets/animation/section-wrapper";
 export default function OurFlockSection() {
   return (
     <SectionWrapper>
-    <section id="OurFlock" className="justify-center md:px-4 py-8 mx-auto h-auto px-1">
-      <h2 className="text-6xl lg:text-8xl uppercase justify-center text-center mb-5 mt-20 lg:mb-20">
+    <section id="OurFlock" className="justify-center lg:px-4 py-8 mx-auto h-auto">
+      <h2 className="text-6xl lg:text-8xl uppercase justify-center text-center mt-20">
         Our Flock
       </h2>
-      <div className="flex overflow-x-auto 3xl:justify-center gap-4 lg:gap-10">
-        <div className="">
+      <div className="flex overflow-x-auto 3xl:justify-center gap-4 lg:gap-10 pt-10">
+        <div className="pl-8">
           <FlockCard
             src={Kara}
             alt={"Kara Leino"}
@@ -55,7 +55,7 @@ export default function OurFlockSection() {
             }
           />
         </div>
-        <div>
+        <div className="pr-8">
           <FlockCard
             src={Cassidy}
             alt={"Cassidy Pennartz"}
