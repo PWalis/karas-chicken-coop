@@ -5,7 +5,15 @@ import prisma from "./data";
 import { saltHashPassword } from "./utils";
 import { redirect } from "next/navigation";
 
-export async function register(  currentMessage: string | undefined,
+type registerState = {
+  error?: {
+    email?: string[],
+    password?: string[]
+  }, 
+  message?: string
+}
+
+export async function register(  currentMessage: registerState,
   formData: FormData) {
   const FormSchema = zod.object({
     email: zod.string().email(),
@@ -19,9 +27,6 @@ export async function register(  currentMessage: string | undefined,
   });
 
   if (!validatedData.success) {
-    console.log(
-      validatedData.error.flatten().fieldErrors.email as any || validatedData.error.flatten().fieldErrors.password as any,
-    );
     return {
       error: validatedData.error.flatten().fieldErrors,
       message: "Validation failed",
@@ -44,7 +49,7 @@ export async function register(  currentMessage: string | undefined,
       },
     });
   } catch (error) {
-    console.log("error registering user", error);
+    return {message: "failed to register user"};
   }
   redirect("/login")
 }

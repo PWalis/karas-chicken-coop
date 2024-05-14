@@ -5,7 +5,8 @@ import { useFormState, useFormStatus } from "react-dom";
 import { login } from "@/app/lib/sessionHandler";
 
 export default function Login() {
-  const [message, action] = useFormState(login, undefined);
+  const initialState = { message: "", error: {} };
+  const [state, FormAction] = useFormState(login, initialState);
 
   return (
     <div className="min-h-screen h-fit dashboard-bg bg-cover">
@@ -17,7 +18,7 @@ export default function Login() {
           <h2 className="text-2xl font-bold tracking-wide p-2 text-center uppercase">
             Login
           </h2>
-          <form className="flex flex-col gap-2" action={action}>
+          <form className="flex flex-col gap-2" action={FormAction}>
             <label className="input input-bordered max-w-[400px] flex items-center gap-2 bg-white text-floc-gray">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -34,6 +35,12 @@ export default function Login() {
                 placeholder="Username"
               />
             </label>
+            {state.error?.email &&
+              state.error.email.map((error: string) => (
+                <p className="text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
             <label
               htmlFor="password"
               className="input input-bordered max-w-[400px] flex items-center gap-2 bg-white text-floc-gray"
@@ -57,10 +64,25 @@ export default function Login() {
                 placeholder="Password"
               />
             </label>
+            {state.error?.password &&
+              state.error.password.map((error: string) => (
+                <p className="text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
             <SubmitButton />
-            <div className="h-8 flex mx-auto">
-            {message && <p className="text-red-500">{message}</p>}
-            </div>
+            {state.error?.user &&
+              state.error.user.map((error: string) => (
+                <p className="text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+            {state.error?.login &&
+              state.error.login.map((error: string) => (
+                <p className="text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
           </form>
         </div>
       </div>

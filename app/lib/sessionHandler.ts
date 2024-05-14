@@ -31,10 +31,17 @@ export async function decrypt(input: string): Promise<any> {
   return payload;
 }
 
-export async function login(
-  currentMessage: string | undefined,
-  formData: FormData
-) {
+type loginState = {
+  error?: {
+    email?: string[];
+    password?: string[];
+    user?: string[];
+    login?: string[];
+  };
+  message?: string;
+};
+
+export async function login(currentMessage: loginState, formData: FormData) {
   // Verify credentials && get the user
   const validatedData = formSchema.safeParse({
     email: formData.get("email"),
@@ -42,8 +49,10 @@ export async function login(
   });
 
   if (!validatedData.success) {
-    
-    return validatedData.error.flatten().fieldErrors.email as any || validatedData.error.flatten().fieldErrors.password as any;
+    return {
+      error: validatedData.error.flatten().fieldErrors,
+      message: "Validation failed",
+    };
   }
   const data = {
     email: validatedData.data.email,
@@ -56,13 +65,19 @@ export async function login(
     });
 
     if (!user) {
-      return "User not found";
+      return {
+        error: { user: ["User not found"] },
+        message: "Failed to find user",
+      };
     }
 
     const hash = hashPassword(data.password, user.salt);
 
     if (hash !== user.password) {
-      return "Incorrect password";
+      return {
+        error: { user: ["Incorrect password"] },
+        message: "Failed to validate user",
+      };
     }
     const expires = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
     const session = await encrypt({ user, expires });
@@ -70,11 +85,13 @@ export async function login(
     // Save the session in a cookie
     cookies().set("session", session, { expires, httpOnly: true });
   } catch (error) {
-    return "error logging in";
+    return {
+      message: "Login failed",
+      error: { login: ["Login failed please try again"] },
+    };
   }
   redirect("/dashboard/orders");
 }
-
 
 export async function logout() {
   // Destroy the session
