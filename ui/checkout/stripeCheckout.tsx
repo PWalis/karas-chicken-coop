@@ -14,7 +14,7 @@ import { formatCurrency } from "@/app/lib/utils";
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
 const stripePromise = loadStripe(
-  "pk_test_51Jra2XLG2GmA2ElmqyWFRkyDKs91573iTTJi6Z3tehA6FvPFCYvuB7X1r9WffXNCNnMZjw0PftZMGT5hENZCQWhu00mYVlgC9Z"
+  "pk_live_51PEgINFcHdteIG09YbndzBvA8F4V9muzBgSiB6zJPLbb6emt7Kf5txP7DBMvDoGnO5lUthpJH0NJNnhlx5yHcCON00EqeNZVha"
 );
 
 export default function App() {
